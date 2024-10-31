@@ -2,7 +2,8 @@
   "name": "barcode-scanner",
   "version": "1.0.0",
   "description": "A Progressive Web Application (PWA) that scans barcodes of various formats, using the Barcode Detection API.",
-  "source": "src/index.html",
+  "source": "src/js/index.js",
+  "main": "dist/main.js",
   "scripts": {
     "lint": "eslint src/js/**",
     "format": "prettier --ignore-unknown --write .",
