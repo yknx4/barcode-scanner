@@ -20,6 +20,6 @@ export async function triggerScanEffects(options = {}) {
     ? { duration: 200, frequency: 860, volume: 0.03, type: 'square' }
     : { duration: 300, frequency: 200, volume: 0.05, type: 'sawtooth' };
 
-  settings.beep && beep(beepConfig);
-  settings.vibrate && vibrate(success ? 100 : 200);
+  beep(beepConfig);
+  vibrate(success ? 100 : 200);
 }
