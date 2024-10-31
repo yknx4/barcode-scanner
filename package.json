@@ -6,6 +6,10 @@
   "pkg": "dist/barcode-scanner.js",
   "targets": {
     "pkg": {
+      "sourceMap": {
+        "inlineSources": true
+      },
+      "scopeHoist": false,
       "context": "browser",
       "outputFormat": "global",
       "isLibrary": false,

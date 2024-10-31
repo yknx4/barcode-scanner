@@ -1,49 +1,176 @@
-(function () {
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
 
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
+(function (modules, entry, mainEntry, parcelRequireName, globalName) {
+  /* eslint-disable no-undef */
+  var globalObject =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof self !== 'undefined'
+      ? self
+      : typeof window !== 'undefined'
+      ? window
+      : typeof global !== 'undefined'
+      ? global
+      : {};
+  /* eslint-enable no-undef */
 
-      var $parcel$global =
-        typeof globalThis !== 'undefined'
-          ? globalThis
-          : typeof self !== 'undefined'
-          ? self
-          : typeof window !== 'undefined'
-          ? window
-          : typeof global !== 'undefined'
-          ? global
-          : {};
-  var parcelRequire = $parcel$global["parcelRequirea202"];
-var parcelRegister = parcelRequire.register;
-parcelRegister("gDv21", function(module, exports) {
+  // Save the require from previous bundle to this closure if any
+  var previousRequire =
+    typeof globalObject[parcelRequireName] === 'function' &&
+    globalObject[parcelRequireName];
 
-$parcel$export(module.exports, "BarcodeDetector", function () { return (parcelRequire("164gk")).BarcodeDetector; });
-$parcel$export(module.exports, "setZXingModuleOverrides", function () { return (parcelRequire("164gk")).setZXingModuleOverrides; });
-parcelRequire("8ISJh");
+  var cache = previousRequire.cache || {};
+  // Do not use `require` to prevent Webpack from trying to bundle this call
+  var nodeRequire =
+    typeof module !== 'undefined' &&
+    typeof module.require === 'function' &&
+    module.require.bind(module);
 
-var $164gk = parcelRequire("164gk");
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire =
+          typeof globalObject[parcelRequireName] === 'function' &&
+          globalObject[parcelRequireName];
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
 
-});
-parcelRegister("8ISJh", function(module, exports) {
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
 
-var $164gk = parcelRequire("164gk");
-var $659ce2e3820104e6$var$e;
-($659ce2e3820104e6$var$e = globalThis.BarcodeDetector) != null || (globalThis.BarcodeDetector = (0, $164gk.BarcodeDetector));
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
 
-});
-parcelRegister("164gk", function(module, exports) {
+        var err = new Error("Cannot find module '" + name + "'");
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
 
-$parcel$export(module.exports, "setZXingModuleOverrides", function () { return $0cc9a8663886c485$export$dfa3a52876bf392; });
-$parcel$export(module.exports, "BarcodeDetector", function () { return $0cc9a8663886c485$export$8e93fbbb640edaee; });
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
 
-var $lM80H = parcelRequire("lM80H");
-var $0cc9a8663886c485$var$Ze = (o)=>{
+      var module = (cache[name] = new newRequire.Module(name));
+
+      modules[name][0].call(
+        module.exports,
+        localRequire,
+        module,
+        module.exports,
+        this
+      );
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x) {
+      var res = localRequire.resolve(x);
+      return res === false ? {} : newRequire(res);
+    }
+
+    function resolve(x) {
+      var id = modules[name][1][x];
+      return id != null ? id : x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [
+      function (require, module) {
+        module.exports = exports;
+      },
+      {},
+    ];
+  };
+
+  Object.defineProperty(newRequire, 'root', {
+    get: function () {
+      return globalObject[parcelRequireName];
+    },
+  });
+
+  globalObject[parcelRequireName] = newRequire;
+
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
+
+  if (mainEntry) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(mainEntry);
+
+    // CommonJS
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+      module.exports = mainExports;
+
+      // RequireJS
+    } else if (typeof define === 'function' && define.amd) {
+      define(function () {
+        return mainExports;
+      });
+
+      // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+})({"gllhm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "BarcodeDetector", ()=>(0, _pureJs.BarcodeDetector));
+parcelHelpers.export(exports, "setZXingModuleOverrides", ()=>(0, _pureJs.setZXingModuleOverrides));
+var _sideEffectsJs = require("./side-effects.js");
+var _pureJs = require("./pure.js");
+
+},{"./side-effects.js":"3bi33","./pure.js":"1NaWU","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"3bi33":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "setZXingModuleOverrides", ()=>(0, _pureJs.setZXingModuleOverrides));
+var _pureJs = require("./pure.js");
+var e;
+(e = globalThis.BarcodeDetector) != null || (globalThis.BarcodeDetector = (0, _pureJs.BarcodeDetector));
+
+},{"./pure.js":"1NaWU","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"1NaWU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "BarcodeDetector", ()=>To);
+parcelHelpers.export(exports, "setZXingModuleOverrides", ()=>Co);
+var process = require("777cf5a1c5cdae66");
+var global = arguments[3];
+var Ze = (o)=>{
     throw TypeError(o);
 };
-var $0cc9a8663886c485$var$Je = (o, d, p)=>d.has(o) || $0cc9a8663886c485$var$Ze("Cannot " + p);
-var $0cc9a8663886c485$var$Ke = (o, d, p)=>($0cc9a8663886c485$var$Je(o, d, "read from private field"), p ? p.call(o) : d.get(o)), $0cc9a8663886c485$var$tr = (o, d, p)=>d.has(o) ? $0cc9a8663886c485$var$Ze("Cannot add the same private member more than once") : d instanceof WeakSet ? d.add(o) : d.set(o, p), $0cc9a8663886c485$var$er = (o, d, p, y)=>($0cc9a8663886c485$var$Je(o, d, "write to private field"), y ? y.call(o, p) : d.set(o, p), p);
-const $0cc9a8663886c485$var$rr = [
+var Je = (o, d, p)=>d.has(o) || Ze("Cannot " + p);
+var Ke = (o, d, p)=>(Je(o, d, "read from private field"), p ? p.call(o) : d.get(o)), tr = (o, d, p)=>d.has(o) ? Ze("Cannot add the same private member more than once") : d instanceof WeakSet ? d.add(o) : d.set(o, p), er = (o, d, p, y)=>(Je(o, d, "write to private field"), y ? y.call(o, p) : d.set(o, p), p);
+const rr = [
     "Aztec",
     "Codabar",
     "Code128",
@@ -67,29 +194,29 @@ const $0cc9a8663886c485$var$rr = [
     "UPC-A",
     "UPC-E"
 ];
-function $0cc9a8663886c485$var$za(o) {
+function za(o) {
     return o.join("|");
 }
-function $0cc9a8663886c485$var$Na(o) {
-    const d = $0cc9a8663886c485$var$nr(o);
-    let p = 0, y = $0cc9a8663886c485$var$rr.length - 1;
+function Na(o) {
+    const d = nr(o);
+    let p = 0, y = rr.length - 1;
     for(; p <= y;){
-        const c = Math.floor((p + y) / 2), $ = $0cc9a8663886c485$var$rr[c], x = $0cc9a8663886c485$var$nr($);
+        const c = Math.floor((p + y) / 2), $ = rr[c], x = nr($);
         if (x === d) return $;
         x < d ? p = c + 1 : y = c - 1;
     }
     return "None";
 }
-function $0cc9a8663886c485$var$nr(o) {
+function nr(o) {
     return o.toLowerCase().replace(/_-\[\]/g, "");
 }
-function $0cc9a8663886c485$var$Ga(o, d) {
+function Ga(o, d) {
     return o.Binarizer[d];
 }
-function $0cc9a8663886c485$var$Xa(o, d) {
+function Xa(o, d) {
     return o.CharacterSet[d];
 }
-const $0cc9a8663886c485$var$Ya = [
+const Ya = [
     "Text",
     "Binary",
     "Mixed",
@@ -97,16 +224,16 @@ const $0cc9a8663886c485$var$Ya = [
     "ISO15434",
     "UnknownECI"
 ];
-function $0cc9a8663886c485$var$qa(o) {
-    return $0cc9a8663886c485$var$Ya[o.value];
+function qa(o) {
+    return Ya[o.value];
 }
-function $0cc9a8663886c485$var$Qa(o, d) {
+function Qa(o, d) {
     return o.EanAddOnSymbol[d];
 }
-function $0cc9a8663886c485$var$Za(o, d) {
+function Za(o, d) {
     return o.TextMode[d];
 }
-const $0cc9a8663886c485$var$st = {
+const st = {
     formats: [],
     tryHarder: !0,
     tryRotate: !0,
@@ -127,85 +254,85 @@ const $0cc9a8663886c485$var$st = {
     textMode: "Plain",
     characterSet: "Unknown"
 };
-function $0cc9a8663886c485$var$or(o, d) {
+function or(o, d) {
     return {
         ...d,
-        formats: $0cc9a8663886c485$var$za(d.formats),
-        binarizer: $0cc9a8663886c485$var$Ga(o, d.binarizer),
-        eanAddOnSymbol: $0cc9a8663886c485$var$Qa(o, d.eanAddOnSymbol),
-        textMode: $0cc9a8663886c485$var$Za(o, d.textMode),
-        characterSet: $0cc9a8663886c485$var$Xa(o, d.characterSet)
+        formats: za(d.formats),
+        binarizer: Ga(o, d.binarizer),
+        eanAddOnSymbol: Qa(o, d.eanAddOnSymbol),
+        textMode: Za(o, d.textMode),
+        characterSet: Xa(o, d.characterSet)
     };
 }
-function $0cc9a8663886c485$var$ir(o) {
+function ir(o) {
     return {
         ...o,
-        format: $0cc9a8663886c485$var$Na(o.format),
+        format: Na(o.format),
         eccLevel: o.eccLevel,
-        contentType: $0cc9a8663886c485$var$qa(o.contentType)
+        contentType: qa(o.contentType)
     };
 }
-const $0cc9a8663886c485$var$Ja = {
+const Ja = {
     locateFile: (o, d)=>{
         const p = o.match(/_(.+?)\.wasm$/);
         return p ? `https://fastly.jsdelivr.net/npm/zxing-wasm@1.2.14/dist/${p[1]}/${o}` : d + o;
     }
 };
-let $0cc9a8663886c485$var$se = /* @__PURE__ */ new WeakMap();
-function $0cc9a8663886c485$var$ce(o, d) {
+let se = /* @__PURE__ */ new WeakMap();
+function ce(o, d) {
     var p;
-    const y = $0cc9a8663886c485$var$se.get(o);
+    const y = se.get(o);
     if (y != null && y.modulePromise && d === void 0) return y.modulePromise;
-    const c = (p = y == null ? void 0 : y.moduleOverrides) != null ? p : $0cc9a8663886c485$var$Ja, $ = o({
+    const c = (p = y == null ? void 0 : y.moduleOverrides) != null ? p : Ja, $ = o({
         ...c
     });
-    return $0cc9a8663886c485$var$se.set(o, {
+    return se.set(o, {
         moduleOverrides: c,
         modulePromise: $
     }), $;
 }
-function $0cc9a8663886c485$var$Ka(o, d) {
-    $0cc9a8663886c485$var$se.set(o, {
+function Ka(o, d) {
+    se.set(o, {
         moduleOverrides: d
     });
 }
-async function $0cc9a8663886c485$var$to(o, d, p = $0cc9a8663886c485$var$st) {
+async function to(o, d, p = st) {
     const y = {
-        ...$0cc9a8663886c485$var$st,
+        ...st,
         ...p
-    }, c = await $0cc9a8663886c485$var$ce(o), { size: $ } = d, x = new Uint8Array(await d.arrayBuffer()), k = c._malloc($);
+    }, c = await ce(o), { size: $ } = d, x = new Uint8Array(await d.arrayBuffer()), k = c._malloc($);
     c.HEAPU8.set(x, k);
-    const V = c.readBarcodesFromImage(k, $, $0cc9a8663886c485$var$or(c, y));
+    const V = c.readBarcodesFromImage(k, $, or(c, y));
     c._free(k);
     const W = [];
-    for(let I = 0; I < V.size(); ++I)W.push($0cc9a8663886c485$var$ir(V.get(I)));
+    for(let I = 0; I < V.size(); ++I)W.push(ir(V.get(I)));
     return W;
 }
-async function $0cc9a8663886c485$var$eo(o, d, p = $0cc9a8663886c485$var$st) {
+async function eo(o, d, p = st) {
     const y = {
-        ...$0cc9a8663886c485$var$st,
+        ...st,
         ...p
-    }, c = await $0cc9a8663886c485$var$ce(o), { data: $, width: x, height: k, data: { byteLength: V } } = d, W = c._malloc(V);
+    }, c = await ce(o), { data: $, width: x, height: k, data: { byteLength: V } } = d, W = c._malloc(V);
     c.HEAPU8.set($, W);
-    const I = c.readBarcodesFromPixmap(W, x, k, $0cc9a8663886c485$var$or(c, y));
+    const I = c.readBarcodesFromPixmap(W, x, k, or(c, y));
     c._free(W);
     const N = [];
-    for(let L = 0; L < I.size(); ++L)N.push($0cc9a8663886c485$var$ir(I.get(L)));
+    for(let L = 0; L < I.size(); ++L)N.push(ir(I.get(L)));
     return N;
 }
 ({
-    ...$0cc9a8663886c485$var$st,
+    ...st,
     formats: [
-        ...$0cc9a8663886c485$var$st.formats
+        ...st.formats
     ]
 });
-var $0cc9a8663886c485$var$Ut = (()=>{
+var Ut = (()=>{
     var o, d = typeof document < "u" && ((o = document.currentScript) == null ? void 0 : o.tagName.toUpperCase()) === "SCRIPT" ? document.currentScript.src : void 0;
     return function(p = {}) {
         var y, c = p, $, x, k = new Promise((t, e)=>{
             $ = t, x = e;
         }), V = typeof window == "object", W = typeof Bun < "u", I = typeof importScripts == "function";
-        typeof $lM80H == "object" && typeof $lM80H.versions == "object" && typeof $lM80H.versions.node == "string" && $lM80H.type;
+        typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && process.type;
         var N = Object.assign({}, c), L = "./this.program", R = "";
         function ut(t) {
             return c.locateFile ? c.locateFile(t, R) : R + t;
@@ -1243,7 +1370,7 @@ var $0cc9a8663886c485$var$Ut = (()=>{
                 var r = typeof $$$embind_global$$$ == "object" && e.$$$embind_global$$$ == e;
                 return r || delete e.$$$embind_global$$$, r;
             }
-            if (typeof $$$embind_global$$$ == "object" || (typeof $parcel$global == "object" && t($parcel$global) ? $$$embind_global$$$ = $parcel$global : typeof self == "object" && t(self) && ($$$embind_global$$$ = self), typeof $$$embind_global$$$ == "object")) return $$$embind_global$$$;
+            if (typeof $$$embind_global$$$ == "object" || (typeof global == "object" && t(global) ? $$$embind_global$$$ = global : typeof self == "object" && t(self) && ($$$embind_global$$$ = self), typeof $$$embind_global$$$ == "object")) return $$$embind_global$$$;
             throw Error("unable to get global object.");
         }, Zn = (t)=>t === 0 ? Y.toHandle(Re()) : (t = Qn(t), Y.toHandle(Re()[t])), Jn = (t)=>{
             var e = ae.length;
@@ -1637,19 +1764,19 @@ var $0cc9a8663886c485$var$Ut = (()=>{
         return Ge(), y = k, y;
     };
 })();
-function $0cc9a8663886c485$var$ro(o) {
-    return $0cc9a8663886c485$var$ce($0cc9a8663886c485$var$Ut, o);
+function ro(o) {
+    return ce(Ut, o);
 }
-function $0cc9a8663886c485$export$dfa3a52876bf392(o) {
-    return $0cc9a8663886c485$var$Ka($0cc9a8663886c485$var$Ut, o);
+function Co(o) {
+    return Ka(Ut, o);
 }
-async function $0cc9a8663886c485$var$no(o, d) {
-    return $0cc9a8663886c485$var$to($0cc9a8663886c485$var$Ut, o, d);
+async function no(o, d) {
+    return to(Ut, o, d);
 }
-async function $0cc9a8663886c485$var$ao(o, d) {
-    return $0cc9a8663886c485$var$eo($0cc9a8663886c485$var$Ut, o, d);
+async function ao(o, d) {
+    return eo(Ut, o, d);
 }
-const $0cc9a8663886c485$var$sr = [
+const sr = [
     [
         "aztec",
         "Aztec"
@@ -1734,48 +1861,48 @@ const $0cc9a8663886c485$var$sr = [
         "matrix_codes",
         "Matrix-Codes"
     ]
-], $0cc9a8663886c485$var$oo = [
-    ...$0cc9a8663886c485$var$sr,
+], oo = [
+    ...sr,
     [
         "unknown"
     ]
-].map((o)=>o[0]), $0cc9a8663886c485$var$ue = new Map($0cc9a8663886c485$var$sr);
-function $0cc9a8663886c485$var$io(o) {
-    for (const [d, p] of $0cc9a8663886c485$var$ue)if (o === p) return d;
+].map((o)=>o[0]), ue = new Map(sr);
+function io(o) {
+    for (const [d, p] of ue)if (o === p) return d;
     return "unknown";
 }
-function $0cc9a8663886c485$var$so(o) {
-    if ($0cc9a8663886c485$var$ur(o)) return {
+function so(o) {
+    if (ur(o)) return {
         width: o.naturalWidth,
         height: o.naturalHeight
     };
-    if ($0cc9a8663886c485$var$cr(o)) return {
+    if (cr(o)) return {
         width: o.width.baseVal.value,
         height: o.height.baseVal.value
     };
-    if ($0cc9a8663886c485$var$lr(o)) return {
+    if (lr(o)) return {
         width: o.videoWidth,
         height: o.videoHeight
     };
-    if ($0cc9a8663886c485$var$fr(o)) return {
+    if (fr(o)) return {
         width: o.width,
         height: o.height
     };
-    if ($0cc9a8663886c485$var$pr(o)) return {
+    if (pr(o)) return {
         width: o.displayWidth,
         height: o.displayHeight
     };
-    if ($0cc9a8663886c485$var$dr(o)) return {
+    if (dr(o)) return {
         width: o.width,
         height: o.height
     };
-    if ($0cc9a8663886c485$var$hr(o)) return {
+    if (hr(o)) return {
         width: o.width,
         height: o.height
     };
     throw new TypeError("The provided value is not of type '(Blob or HTMLCanvasElement or HTMLImageElement or HTMLVideoElement or ImageBitmap or ImageData or OffscreenCanvas or SVGImageElement or VideoFrame)'.");
 }
-function $0cc9a8663886c485$var$ur(o) {
+function ur(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.HTMLImageElement);
@@ -1783,7 +1910,7 @@ function $0cc9a8663886c485$var$ur(o) {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$cr(o) {
+function cr(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.SVGImageElement);
@@ -1791,7 +1918,7 @@ function $0cc9a8663886c485$var$cr(o) {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$lr(o) {
+function lr(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.HTMLVideoElement);
@@ -1799,7 +1926,7 @@ function $0cc9a8663886c485$var$lr(o) {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$dr(o) {
+function dr(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.HTMLCanvasElement);
@@ -1807,42 +1934,42 @@ function $0cc9a8663886c485$var$dr(o) {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$fr(o) {
+function fr(o) {
     try {
         return o instanceof ImageBitmap || Object.prototype.toString.call(o) === "[object ImageBitmap]";
     } catch  {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$hr(o) {
+function hr(o) {
     try {
         return o instanceof OffscreenCanvas || Object.prototype.toString.call(o) === "[object OffscreenCanvas]";
     } catch  {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$pr(o) {
+function pr(o) {
     try {
         return o instanceof VideoFrame || Object.prototype.toString.call(o) === "[object VideoFrame]";
     } catch  {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$vr(o) {
+function vr(o) {
     try {
         return o instanceof Blob || Object.prototype.toString.call(o) === "[object Blob]";
     } catch  {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$uo(o) {
+function uo(o) {
     try {
         return o instanceof ImageData || Object.prototype.toString.call(o) === "[object ImageData]";
     } catch  {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$co(o, d) {
+function co(o, d) {
     try {
         const p = new OffscreenCanvas(o, d);
         if (p.getContext("2d") instanceof OffscreenCanvasRenderingContext2D) return p;
@@ -1852,15 +1979,15 @@ function $0cc9a8663886c485$var$co(o, d) {
         return p.width = o, p.height = d, p;
     }
 }
-async function $0cc9a8663886c485$var$yr(o) {
-    if ($0cc9a8663886c485$var$ur(o) && !await $0cc9a8663886c485$var$po(o)) throw new DOMException("Failed to load or decode HTMLImageElement.", "InvalidStateError");
-    if ($0cc9a8663886c485$var$cr(o) && !await $0cc9a8663886c485$var$vo(o)) throw new DOMException("Failed to load or decode SVGImageElement.", "InvalidStateError");
-    if ($0cc9a8663886c485$var$pr(o) && $0cc9a8663886c485$var$yo(o)) throw new DOMException("VideoFrame is closed.", "InvalidStateError");
-    if ($0cc9a8663886c485$var$lr(o) && (o.readyState === 0 || o.readyState === 1)) throw new DOMException("Invalid element or state.", "InvalidStateError");
-    if ($0cc9a8663886c485$var$fr(o) && $0cc9a8663886c485$var$go(o)) throw new DOMException("The image source is detached.", "InvalidStateError");
-    const { width: d, height: p } = $0cc9a8663886c485$var$so(o);
+async function yr(o) {
+    if (ur(o) && !await po(o)) throw new DOMException("Failed to load or decode HTMLImageElement.", "InvalidStateError");
+    if (cr(o) && !await vo(o)) throw new DOMException("Failed to load or decode SVGImageElement.", "InvalidStateError");
+    if (pr(o) && yo(o)) throw new DOMException("VideoFrame is closed.", "InvalidStateError");
+    if (lr(o) && (o.readyState === 0 || o.readyState === 1)) throw new DOMException("Invalid element or state.", "InvalidStateError");
+    if (fr(o) && go(o)) throw new DOMException("The image source is detached.", "InvalidStateError");
+    const { width: d, height: p } = so(o);
     if (d === 0 || p === 0) return null;
-    const c = $0cc9a8663886c485$var$co(d, p).getContext("2d");
+    const c = co(d, p).getContext("2d");
     c.drawImage(o, 0, 0);
     try {
         return c.getImageData(0, 0, d, p);
@@ -1868,7 +1995,7 @@ async function $0cc9a8663886c485$var$yr(o) {
         throw new DOMException("Source would taint origin.", "SecurityError");
     }
 }
-async function $0cc9a8663886c485$var$lo(o) {
+async function lo(o) {
     let d;
     try {
         if (globalThis.createImageBitmap) d = await createImageBitmap(o);
@@ -1884,9 +2011,9 @@ async function $0cc9a8663886c485$var$lo(o) {
     } catch  {
         throw new DOMException("Failed to load or decode Blob.", "InvalidStateError");
     }
-    return await $0cc9a8663886c485$var$yr(d);
+    return await yr(d);
 }
-function $0cc9a8663886c485$var$fo(o) {
+function fo(o) {
     const { width: d, height: p } = o;
     if (d === 0 || p === 0) return null;
     const y = o.getContext("2d");
@@ -1896,22 +2023,22 @@ function $0cc9a8663886c485$var$fo(o) {
         throw new DOMException("Source would taint origin.", "SecurityError");
     }
 }
-async function $0cc9a8663886c485$var$ho(o) {
-    if ($0cc9a8663886c485$var$vr(o)) return await $0cc9a8663886c485$var$lo(o);
-    if ($0cc9a8663886c485$var$uo(o)) {
-        if ($0cc9a8663886c485$var$mo(o)) throw new DOMException("The image data has been detached.", "InvalidStateError");
+async function ho(o) {
+    if (vr(o)) return await lo(o);
+    if (uo(o)) {
+        if (mo(o)) throw new DOMException("The image data has been detached.", "InvalidStateError");
         return o;
     }
-    return $0cc9a8663886c485$var$dr(o) || $0cc9a8663886c485$var$hr(o) ? $0cc9a8663886c485$var$fo(o) : await $0cc9a8663886c485$var$yr(o);
+    return dr(o) || hr(o) ? fo(o) : await yr(o);
 }
-async function $0cc9a8663886c485$var$po(o) {
+async function po(o) {
     try {
         return await o.decode(), !0;
     } catch  {
         return !1;
     }
 }
-async function $0cc9a8663886c485$var$vo(o) {
+async function vo(o) {
     var d;
     try {
         return await ((d = o.decode) == null ? void 0 : d.call(o)), !0;
@@ -1919,35 +2046,35 @@ async function $0cc9a8663886c485$var$vo(o) {
         return !1;
     }
 }
-function $0cc9a8663886c485$var$yo(o) {
+function yo(o) {
     return o.format === null;
 }
-function $0cc9a8663886c485$var$mo(o) {
+function mo(o) {
     return o.data.buffer.byteLength === 0;
 }
-function $0cc9a8663886c485$var$go(o) {
+function go(o) {
     return o.width === 0 && o.height === 0;
 }
-function $0cc9a8663886c485$var$ar(o, d) {
-    return $0cc9a8663886c485$var$wo(o) ? new DOMException(`${d}: ${o.message}`, o.name) : $0cc9a8663886c485$var$$o(o) ? new o.constructor(`${d}: ${o.message}`) : new Error(`${d}: ${o}`);
+function ar(o, d) {
+    return wo(o) ? new DOMException(`${d}: ${o.message}`, o.name) : $o(o) ? new o.constructor(`${d}: ${o.message}`) : new Error(`${d}: ${o}`);
 }
-function $0cc9a8663886c485$var$wo(o) {
+function wo(o) {
     return o instanceof DOMException || Object.prototype.toString.call(o) === "[object DOMException]";
 }
-function $0cc9a8663886c485$var$$o(o) {
+function $o(o) {
     return o instanceof Error || Object.prototype.toString.call(o) === "[object Error]";
 }
-var $0cc9a8663886c485$var$bt;
-class $0cc9a8663886c485$export$8e93fbbb640edaee extends EventTarget {
+var bt;
+class To extends EventTarget {
     constructor(p = {}){
         var y;
         super();
-        $0cc9a8663886c485$var$tr(this, $0cc9a8663886c485$var$bt);
+        tr(this, bt);
         try {
             const c = (y = p == null ? void 0 : p.formats) == null ? void 0 : y.filter(($)=>$ !== "unknown");
             if ((c == null ? void 0 : c.length) === 0) throw new TypeError("Hint option provided, but is empty.");
-            for (const $ of c != null ? c : [])if (!$0cc9a8663886c485$var$ue.has($)) throw new TypeError(`Failed to read the 'formats' property from 'BarcodeDetectorOptions': The provided value '${$}' is not a valid enum value of type BarcodeFormat.`);
-            $0cc9a8663886c485$var$er(this, $0cc9a8663886c485$var$bt, c != null ? c : []), $0cc9a8663886c485$var$ro().then(($)=>{
+            for (const $ of c != null ? c : [])if (!ue.has($)) throw new TypeError(`Failed to read the 'formats' property from 'BarcodeDetectorOptions': The provided value '${$}' is not a valid enum value of type BarcodeFormat.`);
+            er(this, bt, c != null ? c : []), ro().then(($)=>{
                 this.dispatchEvent(new CustomEvent("load", {
                     detail: $
                 }));
@@ -1957,25 +2084,25 @@ class $0cc9a8663886c485$export$8e93fbbb640edaee extends EventTarget {
                 }));
             });
         } catch (c) {
-            throw $0cc9a8663886c485$var$ar(c, "Failed to construct 'BarcodeDetector'");
+            throw ar(c, "Failed to construct 'BarcodeDetector'");
         }
     }
     static async getSupportedFormats() {
-        return $0cc9a8663886c485$var$oo.filter((p)=>p !== "unknown");
+        return oo.filter((p)=>p !== "unknown");
     }
     async detect(p) {
         try {
-            const y = await $0cc9a8663886c485$var$ho(p);
+            const y = await ho(p);
             if (y === null) return [];
             let c;
             const $ = {
                 tryHarder: !0,
                 // https://github.com/Sec-ant/barcode-detector/issues/91
                 returnCodabarStartEnd: !0,
-                formats: $0cc9a8663886c485$var$Ke(this, $0cc9a8663886c485$var$bt).map((x)=>$0cc9a8663886c485$var$ue.get(x))
+                formats: Ke(this, bt).map((x)=>ue.get(x))
             };
             try {
-                $0cc9a8663886c485$var$vr(y) ? c = await $0cc9a8663886c485$var$no(y, $) : c = await $0cc9a8663886c485$var$ao(y, $);
+                vr(y) ? c = await no(y, $) : c = await ao(y, $);
             } catch (x) {
                 throw console.error(x), new DOMException("Barcode detection service unavailable.", "NotSupportedError");
             }
@@ -1984,7 +2111,7 @@ class $0cc9a8663886c485$export$8e93fbbb640edaee extends EventTarget {
                 return {
                     boundingBox: new DOMRectReadOnly(ct, rt, lt - ct, Vt - rt),
                     rawValue: x.text,
-                    format: $0cc9a8663886c485$var$io(x.format),
+                    format: io(x.format),
                     cornerPoints: [
                         {
                             x: k,
@@ -2006,162 +2133,157 @@ class $0cc9a8663886c485$export$8e93fbbb640edaee extends EventTarget {
                 };
             });
         } catch (y) {
-            throw $0cc9a8663886c485$var$ar(y, "Failed to execute 'detect' on 'BarcodeDetector'");
+            throw ar(y, "Failed to execute 'detect' on 'BarcodeDetector'");
         }
     }
 }
-$0cc9a8663886c485$var$bt = new WeakMap();
+bt = new WeakMap();
 
-});
-parcelRegister("lM80H", function(module, exports) {
+},{"777cf5a1c5cdae66":"3tdeh","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"3tdeh":[function(require,module,exports) {
 // shim for using process in browser
-var $fda44b525f7c9b6d$var$process = module.exports = {};
+var process = module.exports = {};
 // cached from whatever global is present so that test runners that stub it
 // don't break things.  But we need to wrap it in a try catch in case it is
 // wrapped in strict mode code which doesn't define any globals.  It's inside a
 // function because try/catches deoptimize in certain engines.
-var $fda44b525f7c9b6d$var$cachedSetTimeout;
-var $fda44b525f7c9b6d$var$cachedClearTimeout;
-function $fda44b525f7c9b6d$var$defaultSetTimout() {
+var cachedSetTimeout;
+var cachedClearTimeout;
+function defaultSetTimout() {
     throw new Error("setTimeout has not been defined");
 }
-function $fda44b525f7c9b6d$var$defaultClearTimeout() {
+function defaultClearTimeout() {
     throw new Error("clearTimeout has not been defined");
 }
 (function() {
     try {
-        if (typeof setTimeout === "function") $fda44b525f7c9b6d$var$cachedSetTimeout = setTimeout;
-        else $fda44b525f7c9b6d$var$cachedSetTimeout = $fda44b525f7c9b6d$var$defaultSetTimout;
+        if (typeof setTimeout === "function") cachedSetTimeout = setTimeout;
+        else cachedSetTimeout = defaultSetTimout;
     } catch (e) {
-        $fda44b525f7c9b6d$var$cachedSetTimeout = $fda44b525f7c9b6d$var$defaultSetTimout;
+        cachedSetTimeout = defaultSetTimout;
     }
     try {
-        if (typeof clearTimeout === "function") $fda44b525f7c9b6d$var$cachedClearTimeout = clearTimeout;
-        else $fda44b525f7c9b6d$var$cachedClearTimeout = $fda44b525f7c9b6d$var$defaultClearTimeout;
+        if (typeof clearTimeout === "function") cachedClearTimeout = clearTimeout;
+        else cachedClearTimeout = defaultClearTimeout;
     } catch (e) {
-        $fda44b525f7c9b6d$var$cachedClearTimeout = $fda44b525f7c9b6d$var$defaultClearTimeout;
+        cachedClearTimeout = defaultClearTimeout;
     }
 })();
-function $fda44b525f7c9b6d$var$runTimeout(fun) {
-    if ($fda44b525f7c9b6d$var$cachedSetTimeout === setTimeout) //normal enviroments in sane situations
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) //normal enviroments in sane situations
     return setTimeout(fun, 0);
     // if setTimeout wasn't available but was latter defined
-    if (($fda44b525f7c9b6d$var$cachedSetTimeout === $fda44b525f7c9b6d$var$defaultSetTimout || !$fda44b525f7c9b6d$var$cachedSetTimeout) && setTimeout) {
-        $fda44b525f7c9b6d$var$cachedSetTimeout = setTimeout;
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
         return setTimeout(fun, 0);
     }
     try {
         // when when somebody has screwed with setTimeout but no I.E. maddness
-        return $fda44b525f7c9b6d$var$cachedSetTimeout(fun, 0);
+        return cachedSetTimeout(fun, 0);
     } catch (e) {
         try {
             // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return $fda44b525f7c9b6d$var$cachedSetTimeout.call(null, fun, 0);
+            return cachedSetTimeout.call(null, fun, 0);
         } catch (e) {
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return $fda44b525f7c9b6d$var$cachedSetTimeout.call(this, fun, 0);
+            return cachedSetTimeout.call(this, fun, 0);
         }
     }
 }
-function $fda44b525f7c9b6d$var$runClearTimeout(marker) {
-    if ($fda44b525f7c9b6d$var$cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
     return clearTimeout(marker);
     // if clearTimeout wasn't available but was latter defined
-    if (($fda44b525f7c9b6d$var$cachedClearTimeout === $fda44b525f7c9b6d$var$defaultClearTimeout || !$fda44b525f7c9b6d$var$cachedClearTimeout) && clearTimeout) {
-        $fda44b525f7c9b6d$var$cachedClearTimeout = clearTimeout;
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
         return clearTimeout(marker);
     }
     try {
         // when when somebody has screwed with setTimeout but no I.E. maddness
-        return $fda44b525f7c9b6d$var$cachedClearTimeout(marker);
+        return cachedClearTimeout(marker);
     } catch (e) {
         try {
             // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return $fda44b525f7c9b6d$var$cachedClearTimeout.call(null, marker);
+            return cachedClearTimeout.call(null, marker);
         } catch (e) {
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
             // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return $fda44b525f7c9b6d$var$cachedClearTimeout.call(this, marker);
+            return cachedClearTimeout.call(this, marker);
         }
     }
 }
-var $fda44b525f7c9b6d$var$queue = [];
-var $fda44b525f7c9b6d$var$draining = false;
-var $fda44b525f7c9b6d$var$currentQueue;
-var $fda44b525f7c9b6d$var$queueIndex = -1;
-function $fda44b525f7c9b6d$var$cleanUpNextTick() {
-    if (!$fda44b525f7c9b6d$var$draining || !$fda44b525f7c9b6d$var$currentQueue) return;
-    $fda44b525f7c9b6d$var$draining = false;
-    if ($fda44b525f7c9b6d$var$currentQueue.length) $fda44b525f7c9b6d$var$queue = $fda44b525f7c9b6d$var$currentQueue.concat($fda44b525f7c9b6d$var$queue);
-    else $fda44b525f7c9b6d$var$queueIndex = -1;
-    if ($fda44b525f7c9b6d$var$queue.length) $fda44b525f7c9b6d$var$drainQueue();
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) return;
+    draining = false;
+    if (currentQueue.length) queue = currentQueue.concat(queue);
+    else queueIndex = -1;
+    if (queue.length) drainQueue();
 }
-function $fda44b525f7c9b6d$var$drainQueue() {
-    if ($fda44b525f7c9b6d$var$draining) return;
-    var timeout = $fda44b525f7c9b6d$var$runTimeout($fda44b525f7c9b6d$var$cleanUpNextTick);
-    $fda44b525f7c9b6d$var$draining = true;
-    var len = $fda44b525f7c9b6d$var$queue.length;
+function drainQueue() {
+    if (draining) return;
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+    var len = queue.length;
     while(len){
-        $fda44b525f7c9b6d$var$currentQueue = $fda44b525f7c9b6d$var$queue;
-        $fda44b525f7c9b6d$var$queue = [];
-        while(++$fda44b525f7c9b6d$var$queueIndex < len)if ($fda44b525f7c9b6d$var$currentQueue) $fda44b525f7c9b6d$var$currentQueue[$fda44b525f7c9b6d$var$queueIndex].run();
-        $fda44b525f7c9b6d$var$queueIndex = -1;
-        len = $fda44b525f7c9b6d$var$queue.length;
+        currentQueue = queue;
+        queue = [];
+        while(++queueIndex < len)if (currentQueue) currentQueue[queueIndex].run();
+        queueIndex = -1;
+        len = queue.length;
     }
-    $fda44b525f7c9b6d$var$currentQueue = null;
-    $fda44b525f7c9b6d$var$draining = false;
-    $fda44b525f7c9b6d$var$runClearTimeout(timeout);
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
 }
-$fda44b525f7c9b6d$var$process.nextTick = function(fun) {
+process.nextTick = function(fun) {
     var args = new Array(arguments.length - 1);
     if (arguments.length > 1) for(var i = 1; i < arguments.length; i++)args[i - 1] = arguments[i];
-    $fda44b525f7c9b6d$var$queue.push(new $fda44b525f7c9b6d$var$Item(fun, args));
-    if ($fda44b525f7c9b6d$var$queue.length === 1 && !$fda44b525f7c9b6d$var$draining) $fda44b525f7c9b6d$var$runTimeout($fda44b525f7c9b6d$var$drainQueue);
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) runTimeout(drainQueue);
 };
 // v8 likes predictible objects
-function $fda44b525f7c9b6d$var$Item(fun, array) {
+function Item(fun, array) {
     this.fun = fun;
     this.array = array;
 }
-$fda44b525f7c9b6d$var$Item.prototype.run = function() {
+Item.prototype.run = function() {
     this.fun.apply(null, this.array);
 };
-$fda44b525f7c9b6d$var$process.title = "browser";
-$fda44b525f7c9b6d$var$process.browser = true;
-$fda44b525f7c9b6d$var$process.env = {};
-$fda44b525f7c9b6d$var$process.argv = [];
-$fda44b525f7c9b6d$var$process.version = ""; // empty string to avoid regexp issues
-$fda44b525f7c9b6d$var$process.versions = {};
-function $fda44b525f7c9b6d$var$noop() {}
-$fda44b525f7c9b6d$var$process.on = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.addListener = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.once = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.off = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.removeListener = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.removeAllListeners = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.emit = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.prependListener = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.prependOnceListener = $fda44b525f7c9b6d$var$noop;
-$fda44b525f7c9b6d$var$process.listeners = function(name) {
+process.title = "browser";
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ""; // empty string to avoid regexp issues
+process.versions = {};
+function noop() {}
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+process.listeners = function(name) {
     return [];
 };
-$fda44b525f7c9b6d$var$process.binding = function(name) {
+process.binding = function(name) {
     throw new Error("process.binding is not supported");
 };
-$fda44b525f7c9b6d$var$process.cwd = function() {
+process.cwd = function() {
     return "/";
 };
-$fda44b525f7c9b6d$var$process.chdir = function(dir) {
+process.chdir = function(dir) {
     throw new Error("process.chdir is not supported");
 };
-$fda44b525f7c9b6d$var$process.umask = function() {
+process.umask = function() {
     return 0;
 };
 
-});
+},{}]},[], null, "parcelRequirea202")
 
-
-
-
-})();
-//# sourceMappingURL=es.2b1bee23.js.map
+//# sourceMappingURL=es.321f06f5.js.map

@@ -1,196 +1,583 @@
-(function () {
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
 
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
+(function (modules, entry, mainEntry, parcelRequireName, globalName) {
+  /* eslint-disable no-undef */
+  var globalObject =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof self !== 'undefined'
+      ? self
+      : typeof window !== 'undefined'
+      ? window
+      : typeof global !== 'undefined'
+      ? global
+      : {};
+  /* eslint-enable no-undef */
 
-      var $parcel$global =
-        typeof globalThis !== 'undefined'
-          ? globalThis
-          : typeof self !== 'undefined'
-          ? self
-          : typeof window !== 'undefined'
-          ? window
-          : typeof global !== 'undefined'
-          ? global
-          : {};
-  
-var $parcel$modules = {};
-var $parcel$inits = {};
+  // Save the require from previous bundle to this closure if any
+  var previousRequire =
+    typeof globalObject[parcelRequireName] === 'function' &&
+    globalObject[parcelRequireName];
 
-var parcelRequire = $parcel$global["parcelRequirea202"];
+  var cache = previousRequire.cache || {};
+  // Do not use `require` to prevent Webpack from trying to bundle this call
+  var nodeRequire =
+    typeof module !== 'undefined' &&
+    typeof module.require === 'function' &&
+    module.require.bind(module);
 
-if (parcelRequire == null) {
-  parcelRequire = function(id) {
-    if (id in $parcel$modules) {
-      return $parcel$modules[id].exports;
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire =
+          typeof globalObject[parcelRequireName] === 'function' &&
+          globalObject[parcelRequireName];
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error("Cannot find module '" + name + "'");
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = (cache[name] = new newRequire.Module(name));
+
+      modules[name][0].call(
+        module.exports,
+        localRequire,
+        module,
+        module.exports,
+        this
+      );
     }
-    if (id in $parcel$inits) {
-      var init = $parcel$inits[id];
-      delete $parcel$inits[id];
-      var module = {id: id, exports: {}};
-      $parcel$modules[id] = module;
-      init.call(module.exports, module, module.exports);
-      return module.exports;
+
+    return cache[name].exports;
+
+    function localRequire(x) {
+      var res = localRequire.resolve(x);
+      return res === false ? {} : newRequire(res);
     }
-    var err = new Error("Cannot find module '" + id + "'");
-    err.code = 'MODULE_NOT_FOUND';
-    throw err;
+
+    function resolve(x) {
+      var id = modules[name][1][x];
+      return id != null ? id : x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [
+      function (require, module) {
+        module.exports = exports;
+      },
+      {},
+    ];
   };
 
-  parcelRequire.register = function register(id, init) {
-    $parcel$inits[id] = init;
-  };
+  Object.defineProperty(newRequire, 'root', {
+    get: function () {
+      return globalObject[parcelRequireName];
+    },
+  });
 
-  $parcel$global["parcelRequirea202"] = parcelRequire;
-}
+  globalObject[parcelRequireName] = newRequire;
 
-var parcelRegister = parcelRequire.register;
-parcelRegister("9xqYB", function(module, exports) {
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
 
-$parcel$export(module.exports, "register", function () { return $6f1c1f1b2dada3ed$export$6503ec6e8aabbaf; }, function (v) { return $6f1c1f1b2dada3ed$export$6503ec6e8aabbaf = v; });
-$parcel$export(module.exports, "resolve", function () { return $6f1c1f1b2dada3ed$export$f7ad0328861e2f03; }, function (v) { return $6f1c1f1b2dada3ed$export$f7ad0328861e2f03 = v; });
-var $6f1c1f1b2dada3ed$export$6503ec6e8aabbaf;
-var $6f1c1f1b2dada3ed$export$f7ad0328861e2f03;
+  if (mainEntry) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(mainEntry);
+
+    // CommonJS
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+      module.exports = mainExports;
+
+      // RequireJS
+    } else if (typeof define === 'function' && define.amd) {
+      define(function () {
+        return mainExports;
+      });
+
+      // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+})({"kTXNP":[function(require,module,exports) {
+require("732e961cdc16cecc").register(require("6d99b85730c3d7f0").getBundleURL("2Q5Xk"), JSON.parse('["2Q5Xk","barcode-scanner.js","2xxfu","es.321f06f5.js"]'));
+
+},{"732e961cdc16cecc":"fmMSb","6d99b85730c3d7f0":"aygt9"}],"fmMSb":[function(require,module,exports) {
 "use strict";
-var $6f1c1f1b2dada3ed$var$mapping = new Map();
-function $6f1c1f1b2dada3ed$var$register(baseUrl, manifest) {
-    for(var i = 0; i < manifest.length - 1; i += 2)$6f1c1f1b2dada3ed$var$mapping.set(manifest[i], {
+var mapping = new Map();
+function register(baseUrl, manifest) {
+    for(var i = 0; i < manifest.length - 1; i += 2)mapping.set(manifest[i], {
         baseUrl: baseUrl,
         path: manifest[i + 1]
     });
 }
-function $6f1c1f1b2dada3ed$var$resolve(id) {
-    var resolved = $6f1c1f1b2dada3ed$var$mapping.get(id);
+function resolve(id) {
+    var resolved = mapping.get(id);
     if (resolved == null) throw new Error("Could not resolve bundle with id " + id);
     return new URL(resolved.path, resolved.baseUrl).toString();
 }
-$6f1c1f1b2dada3ed$export$6503ec6e8aabbaf = $6f1c1f1b2dada3ed$var$register;
-$6f1c1f1b2dada3ed$export$f7ad0328861e2f03 = $6f1c1f1b2dada3ed$var$resolve;
+module.exports.register = register;
+module.exports.resolve = resolve;
 
-});
-
-parcelRegister("cHmwT", function(module, exports) {
-
-$parcel$export(module.exports, "getBundleURL", function () { return $93eafa1434f2e08a$export$bdfd709ae4826697; }, function (v) { return $93eafa1434f2e08a$export$bdfd709ae4826697 = v; });
-var $93eafa1434f2e08a$export$bdfd709ae4826697;
-var $93eafa1434f2e08a$export$c9e73fbda7da57b6;
-var $93eafa1434f2e08a$export$5a759dc7a1cfb72a;
+},{}],"aygt9":[function(require,module,exports) {
 "use strict";
-var $93eafa1434f2e08a$var$bundleURL = {};
-function $93eafa1434f2e08a$var$getBundleURLCached(id) {
-    var value = $93eafa1434f2e08a$var$bundleURL[id];
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
     if (!value) {
-        value = $93eafa1434f2e08a$var$getBundleURL();
-        $93eafa1434f2e08a$var$bundleURL[id] = value;
+        value = getBundleURL();
+        bundleURL[id] = value;
     }
     return value;
 }
-function $93eafa1434f2e08a$var$getBundleURL() {
+function getBundleURL() {
     try {
         throw new Error();
     } catch (err) {
         var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
         if (matches) // The first two stack frames will be this function and getBundleURLCached.
         // Use the 3rd one, which will be a runtime in the original bundle.
-        return $93eafa1434f2e08a$var$getBaseURL(matches[2]);
+        return getBaseURL(matches[2]);
     }
     return "/";
 }
-function $93eafa1434f2e08a$var$getBaseURL(url) {
+function getBaseURL(url) {
     return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
 }
 // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function $93eafa1434f2e08a$var$getOrigin(url) {
+function getOrigin(url) {
     var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
     if (!matches) throw new Error("Origin not found");
     return matches[0];
 }
-$93eafa1434f2e08a$export$bdfd709ae4826697 = $93eafa1434f2e08a$var$getBundleURLCached;
-$93eafa1434f2e08a$export$c9e73fbda7da57b6 = $93eafa1434f2e08a$var$getBaseURL;
-$93eafa1434f2e08a$export$5a759dc7a1cfb72a = $93eafa1434f2e08a$var$getOrigin;
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
 
-});
-
-parcelRegister("cG93Q", function(module, exports) {
-
-
-module.exports = (parcelRequire("iZaa8"))((parcelRequire("9xqYB")).resolve("6sibP")).then(()=>parcelRequire("gDv21"));
-
-});
-parcelRegister("iZaa8", function(module, exports) {
-"use strict";
-
-var $aj6Nf = parcelRequire("aj6Nf");
-module.exports = $aj6Nf(function(bundle) {
-    return new Promise(function(resolve, reject) {
-        // Don't insert the same script twice (e.g. if it was already in the HTML)
-        var existingScripts = document.getElementsByTagName("script");
-        if ([].concat(existingScripts).some(function isCurrentBundle(script) {
-            return script.src === bundle;
-        })) {
-            resolve();
-            return;
-        }
-        var preloadLink = document.createElement("link");
-        preloadLink.href = bundle;
-        preloadLink.rel = "preload";
-        preloadLink.as = "script";
-        document.head.appendChild(preloadLink);
-        var script = document.createElement("script");
-        script.async = true;
-        script.type = "text/javascript";
-        script.src = bundle;
-        script.onerror = function(e) {
-            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
-            script.onerror = script.onload = null;
-            script.remove();
-            reject(error);
-        };
-        script.onload = function() {
-            script.onerror = script.onload = null;
-            resolve();
-        };
-        document.getElementsByTagName("head")[0].appendChild(script);
-    });
-});
-
-});
-parcelRegister("aj6Nf", function(module, exports) {
-"use strict";
-var $7810f2bc935532b7$var$cachedBundles = {};
-var $7810f2bc935532b7$var$cachedPreloads = {};
-var $7810f2bc935532b7$var$cachedPrefetches = {};
-function $7810f2bc935532b7$var$getCache(type) {
-    switch(type){
-        case "preload":
-            return $7810f2bc935532b7$var$cachedPreloads;
-        case "prefetch":
-            return $7810f2bc935532b7$var$cachedPrefetches;
-        default:
-            return $7810f2bc935532b7$var$cachedBundles;
+},{}],"2gcWu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "setupVideo", ()=>setupVideo);
+var _aTabGroupJs = require("@georapbox/a-tab-group/dist/a-tab-group.js");
+var _webShareDefinedJs = require("@georapbox/web-share-element/dist/web-share-defined.js");
+var _filesDropzoneDefinedJs = require("@georapbox/files-dropzone-element/dist/files-dropzone-defined.js");
+var _resizeObserverDefinedJs = require("@georapbox/resize-observer-element/dist/resize-observer-defined.js");
+var _modalElementDefinedJs = require("@georapbox/modal-element/dist/modal-element-defined.js");
+var _constantsJs = require("./constants.js");
+var _storageJs = require("./services/storage.js");
+var _debounceJs = require("./utils/debounce.js");
+var _logJs = require("./utils/log.js");
+var _isDialogElementSupportedJs = require("./utils/isDialogElementSupported.js");
+var _renderSupportedFormatsJs = require("./helpers/renderSupportedFormats.js");
+var _historyJs = require("./helpers/history.js");
+var _resultsJs = require("./helpers/results.js");
+var _triggerScanEffectsJs = require("./helpers/triggerScanEffects.js");
+var _resizeScanFrameJs = require("./helpers/resizeScanFrame.js");
+var _barcodeReaderJs = require("./helpers/BarcodeReader.js");
+var _initializeSettingsFormJs = require("./helpers/initializeSettingsForm.js");
+var _toggleTorchButtonStatusJs = require("./helpers/toggleTorchButtonStatus.js");
+var _videoCaptureJs = require("./components/video-capture.js");
+var _clipboardCopyJs = require("./components/clipboard-copy.js");
+var _scanResultJs = require("./components/scan-result.js");
+async function setupVideo() {
+    const tabGroupEl = document.querySelector("a-tab-group");
+    const videoCaptureEl = document.querySelector("video-capture");
+    const cameraPanel = document.getElementById("cameraPanel");
+    const filePanel = document.getElementById("filePanel");
+    const scanInstructionsEl = document.getElementById("scanInstructions");
+    const scanBtn = document.getElementById("scanBtn");
+    const dropzoneEl = document.getElementById("dropzone");
+    const resizeObserverEl = document.querySelector("resize-observer");
+    const scanFrameEl = document.getElementById("scanFrame");
+    const torchButton = document.getElementById("torchButton");
+    const globalActionsEl = document.getElementById("globalActions");
+    const historyBtn = document.getElementById("historyBtn");
+    const historyDialog = document.getElementById("historyDialog");
+    const settingsBtn = document.getElementById("settingsBtn");
+    const settingsDialog = document.getElementById("settingsDialog");
+    const settingsForm = document.forms["settings-form"];
+    const cameraSelect = document.getElementById("cameraSelect");
+    let shouldScan = true;
+    let rafId;
+    // By default the dialog elements are hidden for browsers that don't support the dialog element.
+    // If the dialog element is supported, we remove the hidden attribute and the dialogs' visibility
+    // is controlled by using the `showModal()` and `close()` methods.
+    if ((0, _isDialogElementSupportedJs.isDialogElementSupported)()) {
+        globalActionsEl?.removeAttribute("hidden");
+        historyDialog?.removeAttribute("hidden");
+        settingsDialog?.removeAttribute("hidden");
     }
-}
-module.exports = function(loader, type) {
-    return function(bundle) {
-        var cache = $7810f2bc935532b7$var$getCache(type);
-        if (cache[bundle]) return cache[bundle];
-        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
-            delete cache[bundle];
-            throw e;
+    const { barcodeReader, barcodeFormats, barcodeReaderError } = await (0, _barcodeReaderJs.BarcodeReader).init();
+    if (barcodeReaderError) {
+        const alertEl = document.getElementById("barcodeReaderError");
+        shouldScan = false;
+        globalActionsEl?.setAttribute("hidden", "");
+        tabGroupEl?.setAttribute("hidden", "");
+        alertEl?.removeAttribute("hidden");
+        alertEl.textContent = barcodeReaderError?.message;
+        return; // Stop the script execution as BarcodeDetector API is not supported.
+    }
+    videoCaptureEl.addEventListener("video-capture:video-play", handleVideoCapturePlay, {
+        once: true
+    });
+    videoCaptureEl.addEventListener("video-capture:error", handleVideoCaptureError, {
+        once: true
+    });
+    (0, _videoCaptureJs.VideoCapture).defineCustomElement();
+    const videoCaptureShadowRoot = videoCaptureEl?.shadowRoot;
+    const videoCaptureVideoEl = videoCaptureShadowRoot?.querySelector("video");
+    const videoCaptureActionsEl = videoCaptureShadowRoot?.querySelector('[part="actions-container"]');
+    dropzoneEl.accept = (0, _constantsJs.ACCEPTED_MIME_TYPES).join(",");
+    (0, _initializeSettingsFormJs.initializeSettingsForm)(settingsForm);
+    (0, _renderSupportedFormatsJs.renderSupportedFormats)(barcodeFormats);
+    (0, _historyJs.renderHistoryList)((await (0, _storageJs.getHistory)())[1] || []);
+    /**
+   * Scans for barcodes.
+   * If a barcode is detected, it stops scanning and displays the result.
+   *
+   * @returns {Promise<void>} - A Promise that resolves when the barcode is detected.
+   */ async function scan() {
+        (0, _logJs.log)("Scanning...");
+        scanInstructionsEl?.removeAttribute("hidden");
+        try {
+            const barcode = await barcodeReader.detect(videoCaptureVideoEl);
+            const barcodeValue = barcode?.rawValue ?? "";
+            if (!barcodeValue) throw new Error((0, _constantsJs.NO_BARCODE_DETECTED));
+            window.cancelAnimationFrame(rafId);
+            (0, _resultsJs.showResult)(cameraPanel, barcodeValue);
+            (0, _historyJs.addToHistory)(barcodeValue);
+            scanInstructionsEl?.setAttribute("hidden", "");
+            scanBtn?.removeAttribute("hidden");
+            scanFrameEl?.setAttribute("hidden", "");
+            videoCaptureActionsEl?.setAttribute("hidden", "");
+            (0, _triggerScanEffectsJs.triggerScanEffects)();
+            return;
+        } catch  {
+        // If no barcode is detected, the error is caught here.
+        // We can ignore the error and continue scanning.
+        }
+        if (shouldScan) rafId = window.requestAnimationFrame(()=>scan());
+    }
+    /**
+   * Handles the click event on the scan button.
+   * It is responsible for clearing previous results and starting the scan process again.
+   */ function handleScanButtonClick() {
+        scanBtn?.setAttribute("hidden", "");
+        scanFrameEl?.removeAttribute("hidden");
+        videoCaptureActionsEl?.removeAttribute("hidden");
+        (0, _resultsJs.hideResult)(cameraPanel);
+        scan();
+    }
+    /**
+   * Handles the tab show event.
+   * It is responsible for starting or stopping the scan process based on the selected tab.
+   *
+   * @param {CustomEvent} evt - The event object.
+   */ function handleTabShow(evt) {
+        const tabId = evt.detail.tabId;
+        const videoCaptureEl = document.querySelector("video-capture"); // Get the latest instance of video-capture element to ensure we don't use the cached one.
+        if (tabId === "cameraTab") {
+            shouldScan = true;
+            if (!videoCaptureEl) return;
+            const hasResult = cameraPanel.querySelector("scan-result") != null;
+            if (!videoCaptureEl.loading && !hasResult) {
+                scanFrameEl?.removeAttribute("hidden");
+                videoCaptureActionsEl?.removeAttribute("hidden");
+                scan();
+            }
+            if (typeof videoCaptureEl.startVideoStream === "function") {
+                const videoDeviceId = cameraSelect?.value || undefined;
+                videoCaptureEl.startVideoStream(videoDeviceId);
+            }
+        } else if (tabId === "fileTab") {
+            shouldScan = false;
+            if (videoCaptureEl != null && typeof videoCaptureEl.stopVideoStream === "function") videoCaptureEl.stopVideoStream();
+            scanFrameEl?.setAttribute("hidden", "");
+            videoCaptureActionsEl?.setAttribute("hidden", "");
+        }
+    }
+    /**
+   * Handles the selection of a file.
+   * It is responsible for displaying the selected file in the dropzone.
+   *
+   * @param {File} file - The selected file.
+   */ function handleFileSelect(file) {
+        if (!file) return;
+        const image = new Image();
+        const reader = new FileReader();
+        reader.onload = (evt)=>{
+            const data = evt.target.result;
+            image.onload = async ()=>{
+                try {
+                    const barcode = await barcodeReader.detect(image);
+                    const barcodeValue = barcode?.rawValue ?? "";
+                    if (!barcodeValue) throw new Error((0, _constantsJs.NO_BARCODE_DETECTED));
+                    (0, _resultsJs.showResult)(filePanel, barcodeValue);
+                    (0, _historyJs.addToHistory)(barcodeValue);
+                    (0, _triggerScanEffectsJs.triggerScanEffects)();
+                } catch (err) {
+                    (0, _logJs.log)(err);
+                    (0, _resultsJs.showResult)(filePanel, (0, _constantsJs.NO_BARCODE_DETECTED));
+                    (0, _triggerScanEffectsJs.triggerScanEffects)({
+                        success: false
+                    });
+                }
+            };
+            image.src = data;
+            image.alt = "Image preview";
+            dropzoneEl.replaceChildren();
+            const preview = document.createElement("div");
+            preview.className = "dropzone-preview";
+            preview.setAttribute("aria-hidden", "true");
+            const imageWrapper = document.createElement("div");
+            imageWrapper.className = "dropzone-preview__image-wrapper";
+            const fileNameWrapper = document.createElement("div");
+            fileNameWrapper.className = "dropzone-preview__file-name";
+            fileNameWrapper.textContent = file.name;
+            imageWrapper.appendChild(image);
+            preview.appendChild(imageWrapper);
+            preview.appendChild(fileNameWrapper);
+            dropzoneEl.prepend(preview);
+        };
+        reader.readAsDataURL(file);
+    }
+    /**
+   * Handles the drop event on the dropzone.
+   *
+   * @param {CustomEvent} evt - The event object.
+   */ function handleFileDrop(evt) {
+        const file = evt.detail.acceptedFiles[0];
+        handleFileSelect(file);
+    }
+    /**
+   * Handles the resize event on the video-capture element.
+   * It is responsible for resizing the scan frame based on the video element.
+   */ function handleVideoCaptureResize() {
+        (0, _resizeScanFrameJs.resizeScanFrame)(videoCaptureEl.shadowRoot.querySelector("video"), scanFrameEl);
+    }
+    /**
+   * Handles the video play event on the video-capture element.
+   * It is responsible for displaying the scan frame and starting the scan process.
+   * It also handles the zoom controls if the browser supports it.
+   *
+   * @param {CustomEvent} evt - The event object.
+   */ async function handleVideoCapturePlay(evt) {
+        scanFrameEl?.removeAttribute("hidden");
+        (0, _resizeScanFrameJs.resizeScanFrame)(evt.detail.video, scanFrameEl);
+        scan();
+        const trackSettings = evt.target.getTrackSettings();
+        const trackCapabilities = evt.target.getTrackCapabilities();
+        const zoomLevelEl = document.getElementById("zoomLevel");
+        if (trackCapabilities?.torch) {
+            torchButton?.removeAttribute("hidden");
+            if (videoCaptureEl.hasAttribute("torch")) (0, _toggleTorchButtonStatusJs.toggleTorchButtonStatus)({
+                el: torchButton,
+                isTorchOn: true
+            });
+        }
+        if (trackSettings?.zoom && trackCapabilities?.zoom) {
+            const zoomControls = document.getElementById("zoomControls");
+            const minZoom = trackCapabilities?.zoom?.min || 0;
+            const maxZoom = trackCapabilities?.zoom?.max || 10;
+            let currentZoom = trackSettings?.zoom || 1;
+            zoomControls?.removeAttribute("hidden");
+            zoomLevelEl.textContent = currentZoom;
+            const handleZoomControlsClick = (evt)=>{
+                const zoomInBtn = evt.target.closest('[data-action="zoom-in"]');
+                const zoomOutBtn = evt.target.closest('[data-action="zoom-out"]');
+                if (zoomInBtn && currentZoom < maxZoom) currentZoom += 0.5;
+                if (zoomOutBtn && currentZoom > minZoom) currentZoom -= 0.5;
+                zoomLevelEl.textContent = currentZoom;
+                videoCaptureEl.zoom = currentZoom;
+            };
+            zoomControls.addEventListener("click", handleZoomControlsClick);
+        }
+        const videoInputDevices = await (0, _videoCaptureJs.VideoCapture).getVideoInputDevices();
+        videoInputDevices.forEach((device, index)=>{
+            const option = document.createElement("option");
+            option.value = device.deviceId;
+            option.textContent = device.label || `Camera ${index + 1}`;
+            cameraSelect.appendChild(option);
         });
-    };
-};
+        if (videoInputDevices.length > 1) cameraSelect?.removeAttribute("hidden");
+    }
+    /**
+   * Handles the error event on the video-capture element.
+   * It is responsible for displaying an error message if the camera cannot be accessed or permission is denied.
+   *
+   * @param {CustomEvent} evt - The event object.
+   */ function handleVideoCaptureError(evt) {
+        const error = evt.detail.error;
+        if (error.name === "NotFoundError") // If the browser cannot find all media tracks with the specified types that meet the constraints given.
+        return;
+        const errorMessage = error.name === "NotAllowedError" ? "Permission to use webcam was denied or video Autoplay is disabled. Reload the page to give appropriate permissions to webcam." : error.message;
+        cameraPanel.innerHTML = /* html */ `<div class="alert alert-danger" role="alert" style="margin: 0;">${errorMessage}</div>`;
+    }
+    /**
+   * Handles the settings button click event.
+   * It is responsible for displaying the settings dialog.
+   */ function handleSettingsButtonClick() {
+        settingsDialog.open = true;
+    }
+    /**
+   * Handles the change event on the settings form.
+   * It is responsible for saving the settings to persistent storage and updating the settings.
+   *
+   * @param {Event} evt - The event object.
+   */ function handleSettingsFormChange(evt) {
+        const settings = {};
+        const checkboxes = evt.currentTarget.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((item)=>settings[item.name] = item.checked);
+        (0, _storageJs.setSettings)(settings);
+    }
+    /**
+   * Handles the click event on the history button.
+   * It is responsible for displaying the history dialog.
+   */ function handleHistoryButtonClick() {
+        historyDialog.open = true;
+    }
+    /**
+   * Handles the click event on the history dialog.
+   * It is responsible for closing the dialog, deleting an item from the history, or emptying the history.
+   *
+   * @param {MouseEvent} evt - The event object.
+   */ function handleHistoryDialogClick(evt) {
+        const target = evt.target;
+        // Handle delete action
+        if (target.closest('[data-action="delete"]')) {
+            const value = target.closest("li").dataset.value;
+            if (window.confirm(`Delete history item ${value}?`)) {
+                (0, _historyJs.removeFromHistory)(value);
+                return;
+            }
+        }
+        // Handle empty history action
+        if (target.closest("#emptyHistoryBtn")) {
+            if (window.confirm("Empty history? This action cannot be undone.")) {
+                (0, _historyJs.emptyHistory)();
+                return;
+            }
+        }
+    }
+    /**
+   * Handles the click event on the torch button.
+   * It is responsible for toggling the torch on and off.
+   *
+   * @param {MouseEvent} evt - The event object.
+   */ function handleTorchButtonClick(evt) {
+        videoCaptureEl.torch = !videoCaptureEl.torch;
+        (0, _toggleTorchButtonStatusJs.toggleTorchButtonStatus)({
+            el: evt.currentTarget,
+            isTorchOn: videoCaptureEl.hasAttribute("torch")
+        });
+    }
+    /**
+   * Handles the change event on the camera select element.
+   * It is responsible for restarting the video stream with the selected video input device id.
+   *
+   * @param {Event} evt - The event object.
+   */ function handleCameraSelectChange(evt) {
+        if (typeof videoCaptureEl.restartVideoStream !== "function") return;
+        const videoDeviceId = evt.target.value || undefined;
+        videoCaptureEl.restartVideoStream(videoDeviceId);
+    }
+    /**
+   * Handles the visibility change event on the document.
+   * It is responsible for stopping the scan process when the document is not visible.
+   */ function handleDocumentVisibilityChange() {
+        const selectedTab = tabGroupEl.querySelector("[selected]");
+        const tabId = selectedTab.getAttribute("id");
+        if (tabId !== "cameraTab") return;
+        if (document.visibilityState === "hidden") {
+            shouldScan = false;
+            if (videoCaptureEl != null && typeof videoCaptureEl.stopVideoStream === "function") videoCaptureEl.stopVideoStream();
+        } else {
+            shouldScan = true;
+            // Get the latest instance of video-capture element to ensure we don't use the cached one.
+            const videoCaptureEl = document.querySelector("video-capture");
+            if (!videoCaptureEl) return;
+            if (!videoCaptureEl.loading && !cameraPanel.querySelector("scan-result")) scan();
+            if (typeof videoCaptureEl.startVideoStream === "function") {
+                const videoDeviceId = cameraSelect?.value || undefined;
+                videoCaptureEl.startVideoStream(videoDeviceId);
+            }
+        }
+    }
+    /**
+   * Handles the escape key press event on the document.
+   * It is responsible for triggering the scan button click event if there is already a barcode detected.
+   */ function handleDocumentEscapeKey() {
+        const cameraTabSelected = tabGroupEl.querySelector("#cameraTab").hasAttribute("selected");
+        const scanBtnVisible = !scanBtn.hidden;
+        const settingsDialogOpen = settingsDialog.hasAttribute("open");
+        const historyDialogOpen = historyDialog.hasAttribute("open");
+        const anyDialogOpen = settingsDialogOpen || historyDialogOpen;
+        if (!scanBtnVisible || !cameraTabSelected || anyDialogOpen) return;
+        scanBtn.click();
+    }
+    /**
+   * Handles the key down event on the document.
+   */ function handleDocumentKeyDown(evt) {
+        if (evt.key === "Escape") handleDocumentEscapeKey();
+    }
+    scanBtn.addEventListener("click", handleScanButtonClick);
+    tabGroupEl.addEventListener("a-tab-show", (0, _debounceJs.debounce)(handleTabShow, 250));
+    dropzoneEl.addEventListener("files-dropzone-drop", handleFileDrop);
+    resizeObserverEl.addEventListener("resize-observer:resize", handleVideoCaptureResize);
+    settingsBtn.addEventListener("click", handleSettingsButtonClick);
+    settingsForm.addEventListener("change", handleSettingsFormChange);
+    historyBtn.addEventListener("click", handleHistoryButtonClick);
+    historyDialog.addEventListener("click", handleHistoryDialogClick);
+    torchButton.addEventListener("click", handleTorchButtonClick);
+    cameraSelect.addEventListener("change", handleCameraSelectChange);
+    document.addEventListener("visibilitychange", handleDocumentVisibilityChange);
+    document.addEventListener("keydown", handleDocumentKeyDown);
+}
 
-});
-
-
-
-var $d48be591334430bd$exports = {};
-
-
-(parcelRequire("9xqYB")).register((parcelRequire("cHmwT")).getBundleURL("j7CX6"), JSON.parse('["j7CX6","barcode-scanner.js","6sibP","es.2b1bee23.js"]'));
-
+},{"@georapbox/a-tab-group/dist/a-tab-group.js":"2lBNR","@georapbox/web-share-element/dist/web-share-defined.js":"iMJ6A","@georapbox/files-dropzone-element/dist/files-dropzone-defined.js":"jzKL3","@georapbox/resize-observer-element/dist/resize-observer-defined.js":"cl4Ac","@georapbox/modal-element/dist/modal-element-defined.js":"2YBrX","./constants.js":"lop3z","./services/storage.js":"hD7R4","./utils/debounce.js":"iGYuM","./utils/log.js":"1LMzH","./utils/isDialogElementSupported.js":"aHaM8","./helpers/renderSupportedFormats.js":"hg2pQ","./helpers/history.js":"b6yEv","./helpers/results.js":"j4rPJ","./helpers/triggerScanEffects.js":"kjGai","./helpers/resizeScanFrame.js":"dSRAh","./helpers/BarcodeReader.js":"d28BW","./helpers/initializeSettingsForm.js":"35ZJG","./helpers/toggleTorchButtonStatus.js":"ivKFA","./components/video-capture.js":"cn3e0","./components/clipboard-copy.js":"etXXK","./components/scan-result.js":"1Rzot","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"2lBNR":[function(require,module,exports) {
 /*!
  * @georapbox/a-tab-group
  * A custom element to create a group of tabs and tab panels.
@@ -199,17 +586,22 @@ var $d48be591334430bd$exports = {};
  * @homepage https://github.com/georapbox/a-tab-group#readme
  * @author George Raptis <georapbox@gmail.com>
  * @license MIT
- */ var $4095dca5aa2eb39f$var$h = (a = "", t = "")=>{
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ATab", ()=>u);
+parcelHelpers.export(exports, "ATabGroup", ()=>f);
+parcelHelpers.export(exports, "ATabPanel", ()=>p);
+var h = (a = "", t = "")=>{
     let e = typeof a == "string" && a !== "" ? a + "-" : "", s = typeof t == "string" && t !== "" ? "-" + t : "", i = Math.random().toString(36).substring(2, 8);
     return `${e}${i}${s}`;
 };
-var $4095dca5aa2eb39f$var$b = (a, t)=>{
+var b = (a, t)=>{
     if (Object.prototype.hasOwnProperty.call(t, a)) {
         let e = t[a];
         delete t[a], t[a] = e;
     }
 };
-var $4095dca5aa2eb39f$var$E = 0, $4095dca5aa2eb39f$var$C = `
+var E = 0, C = `
   :host {
     box-sizing: border-box;
     display: inline-block;
@@ -255,21 +647,21 @@ var $4095dca5aa2eb39f$var$E = 0, $4095dca5aa2eb39f$var$C = `
     font-size: inherit;
     cursor: pointer;
   }
-`, $4095dca5aa2eb39f$var$w = document.createElement("template");
-$4095dca5aa2eb39f$var$w.innerHTML = `
+`, w = document.createElement("template");
+w.innerHTML = `
   <style>
-    ${$4095dca5aa2eb39f$var$C}
+    ${C}
   </style>
 
   <div part="base" class="tab">
     <slot></slot>
   </div>
 `;
-var $4095dca5aa2eb39f$export$6824c350c20eab3a = class a extends HTMLElement {
+var u = class a extends HTMLElement {
     constructor(){
         super(), this.shadowRoot || this.attachShadow({
             mode: "open"
-        }).appendChild($4095dca5aa2eb39f$var$w.content.cloneNode(!0));
+        }).appendChild(w.content.cloneNode(!0));
     }
     static get observedAttributes() {
         return [
@@ -290,7 +682,7 @@ var $4095dca5aa2eb39f$export$6824c350c20eab3a = class a extends HTMLElement {
         }
     }
     connectedCallback() {
-        this.#s("selected"), this.#s("disabled"), this.#s("closable"), this.id || (this.id = $4095dca5aa2eb39f$var$h("tab", (++$4095dca5aa2eb39f$var$E).toString())), this.setAttribute("slot", "tab"), this.setAttribute("role", "tab"), this.setAttribute("aria-selected", "false"), this.setAttribute("tabindex", this.disabled || !this.selected ? "-1" : "0");
+        this.#s("selected"), this.#s("disabled"), this.#s("closable"), this.id || (this.id = h("tab", (++E).toString())), this.setAttribute("slot", "tab"), this.setAttribute("role", "tab"), this.setAttribute("aria-selected", "false"), this.setAttribute("tabindex", this.disabled || !this.selected ? "-1" : "0");
     }
     disconnectedCallback() {
         this.shadowRoot?.querySelector(".tab__close")?.removeEventListener("click", this.#e);
@@ -323,14 +715,14 @@ var $4095dca5aa2eb39f$export$6824c350c20eab3a = class a extends HTMLElement {
         }));
     };
     #s(t) {
-        return $4095dca5aa2eb39f$var$b(t, this);
+        return b(t, this);
     }
     static defineCustomElement(t = "a-tab") {
         typeof window < "u" && !window.customElements.get(t) && window.customElements.define(t, a);
     }
 };
-$4095dca5aa2eb39f$export$6824c350c20eab3a.defineCustomElement();
-var $4095dca5aa2eb39f$var$L = 0, $4095dca5aa2eb39f$var$S = `
+u.defineCustomElement();
+var L = 0, S = `
   :host {
     box-sizing: border-box;
     display: block;
@@ -347,42 +739,42 @@ var $4095dca5aa2eb39f$var$L = 0, $4095dca5aa2eb39f$var$S = `
   :host *::after {
     box-sizing: inherit;
   }
-`, $4095dca5aa2eb39f$var$T = document.createElement("template");
-$4095dca5aa2eb39f$var$T.innerHTML = `
+`, T = document.createElement("template");
+T.innerHTML = `
   <style>
-    ${$4095dca5aa2eb39f$var$S}
+    ${S}
   </style>
 
   <div part="base" class="tab-panel">
     <slot></slot>
   </div>
 `;
-var $4095dca5aa2eb39f$export$185adf5fa2c760b1 = class a extends HTMLElement {
+var p = class a extends HTMLElement {
     constructor(){
         super(), this.shadowRoot || this.attachShadow({
             mode: "open"
-        }).appendChild($4095dca5aa2eb39f$var$T.content.cloneNode(!0));
+        }).appendChild(T.content.cloneNode(!0));
     }
     connectedCallback() {
-        this.setAttribute("slot", "panel"), this.setAttribute("role", "tabpanel"), this.setAttribute("hidden", ""), this.id || (this.id = $4095dca5aa2eb39f$var$h("panel", (++$4095dca5aa2eb39f$var$L).toString()));
+        this.setAttribute("slot", "panel"), this.setAttribute("role", "tabpanel"), this.setAttribute("hidden", ""), this.id || (this.id = h("panel", (++L).toString()));
     }
     static defineCustomElement(t = "a-tab-panel") {
         typeof window < "u" && !window.customElements.get(t) && window.customElements.define(t, a);
     }
 };
-$4095dca5aa2eb39f$export$185adf5fa2c760b1.defineCustomElement();
-var $4095dca5aa2eb39f$var$y = 200, $4095dca5aa2eb39f$var$n = {
+p.defineCustomElement();
+var y = 200, n = {
     TOP: "top",
     BOTTOM: "bottom",
     START: "start",
     END: "end"
-}, $4095dca5aa2eb39f$var$l = {
+}, l = {
     LTR: "ltr",
     RTL: "rtl"
-}, $4095dca5aa2eb39f$var$R = Object.entries($4095dca5aa2eb39f$var$n).map(([, a])=>a), $4095dca5aa2eb39f$var$r = {
+}, R = Object.entries(n).map(([, a])=>a), r = {
     AUTO: "auto",
     MANUAL: "manual"
-}, $4095dca5aa2eb39f$var$c = {
+}, c = {
     DOWN: "ArrowDown",
     LEFT: "ArrowLeft",
     RIGHT: "ArrowRight",
@@ -391,7 +783,7 @@ var $4095dca5aa2eb39f$var$y = 200, $4095dca5aa2eb39f$var$n = {
     END: "End",
     ENTER: "Enter",
     SPACE: " "
-}, $4095dca5aa2eb39f$var$x = `
+}, x = `
   :host {
     --selected-tab-color: #005fcc;
     --selected-tab-bg-color: transparent;
@@ -462,15 +854,15 @@ var $4095dca5aa2eb39f$var$y = 200, $4095dca5aa2eb39f$var$n = {
     right: var(--scroll-button-inline-offset);
   }
 
-  :host([dir="${$4095dca5aa2eb39f$var$l.RTL}"]) .tab-group__scroll-button--start,
-  :host(:dir(${$4095dca5aa2eb39f$var$l.RTL})) .tab-group__scroll-button--start {
+  :host([dir="${l.RTL}"]) .tab-group__scroll-button--start,
+  :host(:dir(${l.RTL})) .tab-group__scroll-button--start {
     right: var(--scroll-button-inline-offset);
     left: auto;
     transform: translateY(-50%) rotate(180deg);
   }
 
-  :host([dir="${$4095dca5aa2eb39f$var$l.RTL}"]) .tab-group__scroll-button--end,
-  :host(:dir(${$4095dca5aa2eb39f$var$l.RTL})) .tab-group__scroll-button--end {
+  :host([dir="${l.RTL}"]) .tab-group__scroll-button--end,
+  :host(:dir(${l.RTL})) .tab-group__scroll-button--end {
     left: var(--scroll-button-inline-offset);
     right: auto;
     transform: translateY(-50%) rotate(180deg);
@@ -494,55 +886,55 @@ var $4095dca5aa2eb39f$var$y = 200, $4095dca5aa2eb39f$var$n = {
 
   /* placement="top" */
   .tab-group,
-  :host([placement="${$4095dca5aa2eb39f$var$n.TOP}"]) .tab-group {
+  :host([placement="${n.TOP}"]) .tab-group {
     flex-direction: column;
   }
 
   /* placement="bottom" */
-  :host([placement="${$4095dca5aa2eb39f$var$n.BOTTOM}"]) .tab-group {
+  :host([placement="${n.BOTTOM}"]) .tab-group {
     flex-direction: column;
   }
 
-  :host([placement="${$4095dca5aa2eb39f$var$n.BOTTOM}"]) .tab-group__nav {
+  :host([placement="${n.BOTTOM}"]) .tab-group__nav {
     order: 1;
   }
 
   /* placement="start" */
-  :host([placement="${$4095dca5aa2eb39f$var$n.START}"]) .tab-group {
+  :host([placement="${n.START}"]) .tab-group {
     flex-direction: row;
   }
 
-  :host([placement="${$4095dca5aa2eb39f$var$n.START}"]) .tab-group__tabs {
+  :host([placement="${n.START}"]) .tab-group__tabs {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  :host([placement="${$4095dca5aa2eb39f$var$n.START}"]) .tab-group__panels {
+  :host([placement="${n.START}"]) .tab-group__panels {
     flex: 1;
     padding: 0 1rem;
   }
 
   /* placement="end" */
-  :host([placement="${$4095dca5aa2eb39f$var$n.END}"]) .tab-group {
+  :host([placement="${n.END}"]) .tab-group {
     flex-direction: row;
   }
 
-  :host([placement="${$4095dca5aa2eb39f$var$n.END}"]) .tab-group__nav {
+  :host([placement="${n.END}"]) .tab-group__nav {
     order: 1;
   }
 
-  :host([placement="${$4095dca5aa2eb39f$var$n.END}"]) .tab-group__tabs {
+  :host([placement="${n.END}"]) .tab-group__tabs {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  :host([placement="${$4095dca5aa2eb39f$var$n.END}"]) .tab-group__panels {
+  :host([placement="${n.END}"]) .tab-group__panels {
     flex: 1;
     padding: 0 1rem;
   }
-`, $4095dca5aa2eb39f$var$A = document.createElement("template");
-$4095dca5aa2eb39f$var$A.innerHTML = `
-  <style>${$4095dca5aa2eb39f$var$x}</style>
+`, A = document.createElement("template");
+A.innerHTML = `
+  <style>${x}</style>
 
   <div part="base" class="tab-group">
     <div part="nav" class="tab-group__nav">
@@ -568,14 +960,14 @@ $4095dca5aa2eb39f$var$A.innerHTML = `
     </div>
   </div>
 `;
-var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
+var f = class a extends HTMLElement {
     #e = null;
     #s = null;
     #l = !1;
     constructor(){
         super(), this.shadowRoot || this.attachShadow({
             mode: "open"
-        }).appendChild($4095dca5aa2eb39f$var$A.content.cloneNode(!0));
+        }).appendChild(A.content.cloneNode(!0));
     }
     static get observedAttributes() {
         return [
@@ -587,7 +979,7 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
         t === "placement" && e !== s && this.#i(), t === "no-scroll-controls" && e !== s && this.#i();
     }
     get placement() {
-        return this.getAttribute("placement") || $4095dca5aa2eb39f$var$n.TOP;
+        return this.getAttribute("placement") || n.TOP;
     }
     set placement(t) {
         t != null && this.setAttribute("placement", t);
@@ -600,16 +992,16 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
     }
     get scrollDistance() {
         let t = Number(this.getAttribute("scroll-distance"));
-        return Math.abs(t) || $4095dca5aa2eb39f$var$y;
+        return Math.abs(t) || y;
     }
     set scrollDistance(t) {
-        this.setAttribute("scroll-distance", Math.abs(t).toString() || $4095dca5aa2eb39f$var$y.toString());
+        this.setAttribute("scroll-distance", Math.abs(t).toString() || y.toString());
     }
     get activation() {
-        return this.getAttribute("activation") || $4095dca5aa2eb39f$var$r.AUTO;
+        return this.getAttribute("activation") || r.AUTO;
     }
     set activation(t) {
-        this.setAttribute("activation", t || $4095dca5aa2eb39f$var$r.AUTO);
+        this.setAttribute("activation", t || r.AUTO);
     }
     get noTabCycling() {
         return this.hasAttribute("no-tab-cycling");
@@ -640,7 +1032,7 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
         this.#e && (this.#e.disconnect(), this.#s !== null && (window.cancelAnimationFrame(this.#s), this.#s = null));
     }
     #d() {
-        return window.CSS.supports("selector(:dir(ltr))") ? this.matches(":dir(ltr)") ? $4095dca5aa2eb39f$var$l.LTR : $4095dca5aa2eb39f$var$l.RTL : window.getComputedStyle(this).direction || $4095dca5aa2eb39f$var$l.LTR;
+        return window.CSS.supports("selector(:dir(ltr))") ? this.matches(":dir(ltr)") ? l.LTR : l.RTL : window.getComputedStyle(this).direction || l.LTR;
     }
     #h() {
         this.hidden = this.#t().length === 0;
@@ -672,12 +1064,12 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
         return null;
     }
     #a() {
-        let t = this.#t(), e = this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? t.findIndex((s)=>s.matches(":focus")) - 1 : t.findIndex((s)=>s.selected) - 1;
+        let t = this.#t(), e = this.activation === r.MANUAL ? t.findIndex((s)=>s.matches(":focus")) - 1 : t.findIndex((s)=>s.selected) - 1;
         for(; t[(e + t.length) % t.length].disabled;)e--;
         return this.noTabCycling && e < 0 ? null : t[(e + t.length) % t.length];
     }
     #r() {
-        let t = this.#t(), e = this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? t.findIndex((s)=>s.matches(":focus")) + 1 : t.findIndex((s)=>s.selected) + 1;
+        let t = this.#t(), e = this.activation === r.MANUAL ? t.findIndex((s)=>s.matches(":focus")) + 1 : t.findIndex((s)=>s.selected) + 1;
         for(; t[e % t.length].disabled;)e++;
         return this.noTabCycling && e >= t.length ? null : t[e % t.length];
     }
@@ -687,7 +1079,7 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
     }
     #i() {
         let t = this.shadowRoot?.querySelector(".tab-group__nav"), e = this.shadowRoot?.querySelector(".tab-group__tabs"), s = Array.from(this.shadowRoot?.querySelectorAll(".tab-group__scroll-button") || []);
-        this.noScrollControls || this.placement === $4095dca5aa2eb39f$var$n.START || this.placement === $4095dca5aa2eb39f$var$n.END ? (this.#c(), s.forEach((i)=>i.hidden = !0), t?.part.remove("nav--has-scroll-controls"), t?.classList.remove("tab-group__nav--has-scroll-controls"), e?.setAttribute("aria-orientation", "vertical")) : (this.#v(), s.forEach((i)=>i.hidden = !1), e?.setAttribute("aria-orientation", "horizontal"));
+        this.noScrollControls || this.placement === n.START || this.placement === n.END ? (this.#c(), s.forEach((i)=>i.hidden = !0), t?.part.remove("nav--has-scroll-controls"), t?.classList.remove("tab-group__nav--has-scroll-controls"), e?.setAttribute("aria-orientation", "vertical")) : (this.#v(), s.forEach((i)=>i.hidden = !1), e?.setAttribute("aria-orientation", "horizontal"));
     }
     #E() {
         let t = this.#t(), e = t.find((s)=>s.selected && !s.disabled) || t.find((s)=>!s.disabled);
@@ -709,31 +1101,31 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
     };
     #p = (t)=>{
         if (t.target.tagName.toLowerCase() !== "a-tab" || t.altKey) return;
-        let e = $4095dca5aa2eb39f$var$R.includes(this.placement || "") ? this.placement : $4095dca5aa2eb39f$var$n.TOP, s = [
-            $4095dca5aa2eb39f$var$n.TOP,
-            $4095dca5aa2eb39f$var$n.BOTTOM
+        let e = R.includes(this.placement || "") ? this.placement : n.TOP, s = [
+            n.TOP,
+            n.BOTTOM
         ].includes(e || "") ? "horizontal" : "vertical", i = this.#d(), o = null;
         switch(t.key){
-            case $4095dca5aa2eb39f$var$c.LEFT:
-                s === "horizontal" && (o = i === $4095dca5aa2eb39f$var$l.LTR ? this.#a() : this.#r(), o && (this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? o.focus() : this.selectTab(o)));
+            case c.LEFT:
+                s === "horizontal" && (o = i === l.LTR ? this.#a() : this.#r(), o && (this.activation === r.MANUAL ? o.focus() : this.selectTab(o)));
                 break;
-            case $4095dca5aa2eb39f$var$c.RIGHT:
-                s === "horizontal" && (o = i === $4095dca5aa2eb39f$var$l.LTR ? this.#r() : this.#a(), o && (this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? o.focus() : this.selectTab(o)));
+            case c.RIGHT:
+                s === "horizontal" && (o = i === l.LTR ? this.#r() : this.#a(), o && (this.activation === r.MANUAL ? o.focus() : this.selectTab(o)));
                 break;
-            case $4095dca5aa2eb39f$var$c.UP:
-                s === "vertical" && (o = this.#a(), o && (this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? o.focus() : this.selectTab(o)));
+            case c.UP:
+                s === "vertical" && (o = this.#a(), o && (this.activation === r.MANUAL ? o.focus() : this.selectTab(o)));
                 break;
-            case $4095dca5aa2eb39f$var$c.DOWN:
-                s === "vertical" && (o = this.#r(), o && (this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? o.focus() : this.selectTab(o)));
+            case c.DOWN:
+                s === "vertical" && (o = this.#r(), o && (this.activation === r.MANUAL ? o.focus() : this.selectTab(o)));
                 break;
-            case $4095dca5aa2eb39f$var$c.HOME:
-                o = this.#y(), o && (this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? o.focus() : this.selectTab(o));
+            case c.HOME:
+                o = this.#y(), o && (this.activation === r.MANUAL ? o.focus() : this.selectTab(o));
                 break;
-            case $4095dca5aa2eb39f$var$c.END:
-                o = this.#A(), o && (this.activation === $4095dca5aa2eb39f$var$r.MANUAL ? o.focus() : this.selectTab(o));
+            case c.END:
+                o = this.#A(), o && (this.activation === r.MANUAL ? o.focus() : this.selectTab(o));
                 break;
-            case $4095dca5aa2eb39f$var$c.ENTER:
-            case $4095dca5aa2eb39f$var$c.SPACE:
+            case c.ENTER:
+            case c.SPACE:
                 o = t.target, o && this.selectTab(o);
                 break;
             default:
@@ -748,7 +1140,7 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
     #f = (t)=>{
         let e = t.target.closest(".tab-group__scroll-button"), s = this.shadowRoot?.querySelector(".tab-group__tabs");
         if (!e || !s) return;
-        let i = e.classList.contains("tab-group__scroll-button--start"), o = this.#d() === $4095dca5aa2eb39f$var$l.LTR, d = i ? o ? -1 : 1 : o ? 1 : -1, m = s.scrollLeft;
+        let i = e.classList.contains("tab-group__scroll-button--start"), o = this.#d() === l.LTR, d = i ? o ? -1 : 1 : o ? 1 : -1, m = s.scrollLeft;
         s.scrollTo({
             left: m + d * this.scrollDistance
         });
@@ -764,7 +1156,7 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
         }))), s && s.tagName.toLowerCase() === "a-tab-panel" && s.remove();
     };
     #o(t) {
-        return $4095dca5aa2eb39f$var$b(t, this);
+        return b(t, this);
     }
     selectTabByIndex(t) {
         let s = this.#t()[t];
@@ -799,9 +1191,39 @@ var $4095dca5aa2eb39f$export$4ac05a649254e913 = class a extends HTMLElement {
         typeof window < "u" && !window.customElements.get(t) && window.customElements.define(t, a);
     }
 };
-$4095dca5aa2eb39f$export$4ac05a649254e913.defineCustomElement();
+f.defineCustomElement();
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"73vyb":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
+},{}],"iMJ6A":[function(require,module,exports) {
 /*!
  * @georapbox/web-share-element
  * A custom element that implements the Web Share API to share user-defined data.
@@ -810,16 +1232,19 @@ $4095dca5aa2eb39f$export$4ac05a649254e913.defineCustomElement();
  * @homepage https://github.com/georapbox/web-share-element#readme
  * @author George Raptis <georapbox@gmail.com>
  * @license MIT
- */ var $9dea7ad1e1990670$var$h = `
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "WebShare", ()=>s);
+var h = `
   :host {
     display: inline-block;
   }
-`, $9dea7ad1e1990670$var$r = document.createElement("template");
-$9dea7ad1e1990670$var$r.innerHTML = `
-  <style>${$9dea7ad1e1990670$var$h}</style>
+`, r = document.createElement("template");
+r.innerHTML = `
+  <style>${h}</style>
   <slot name="button"><button type="button" part="button"><slot name="button-content">Share</slot></button></slot>
 `;
-var $9dea7ad1e1990670$export$30b344bef3e55b67 = class a extends HTMLElement {
+var s = class a extends HTMLElement {
     #e;
     #t;
     #r = [];
@@ -827,7 +1252,7 @@ var $9dea7ad1e1990670$export$30b344bef3e55b67 = class a extends HTMLElement {
         super(), this.shadowRoot || this.attachShadow({
             mode: "open",
             delegatesFocus: !0
-        }).appendChild($9dea7ad1e1990670$var$r.content.cloneNode(!0)), this.#e = this.shadowRoot?.querySelector('slot[name="button"]') || null, this.#t = this.#h();
+        }).appendChild(r.content.cloneNode(!0)), this.#e = this.shadowRoot?.querySelector('slot[name="button"]') || null, this.#t = this.#h();
     }
     static get observedAttributes() {
         return [
@@ -927,9 +1352,9 @@ var $9dea7ad1e1990670$export$30b344bef3e55b67 = class a extends HTMLElement {
         typeof window < "u" && !window.customElements.get(t) && window.customElements.define(t, a);
     }
 };
-$9dea7ad1e1990670$export$30b344bef3e55b67.defineCustomElement();
+s.defineCustomElement();
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"jzKL3":[function(require,module,exports) {
 /*!
  * @georapbox/files-dropzone-element
  * A custom element that creates a drag and drop zone for files
@@ -938,7 +1363,10 @@ $9dea7ad1e1990670$export$30b344bef3e55b67.defineCustomElement();
  * @homepage https://github.com/georapbox/files-dropzone-element#readme
  * @author George Raptis <georapbox@gmail.com>
  * @license MIT
- */ function $743f94428e066832$var$u(o, e = "") {
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FilesDropzone", ()=>d);
+function u(o, e = "") {
     if (!e) return !0;
     let t = [
         ...new Set(e.split(",").map((r)=>r.trim()).filter(Boolean))
@@ -950,7 +1378,7 @@ $9dea7ad1e1990670$export$30b344bef3e55b67.defineCustomElement();
     } else if (i === r) return !0;
     return !1;
 }
-var $743f94428e066832$var$x = new Map([
+var x = new Map([
     [
         "aac",
         "audio/aac"
@@ -1283,13 +1711,13 @@ var $743f94428e066832$var$x = new Map([
         "msg",
         "application/vnd.ms-outlook"
     ]
-]), $743f94428e066832$var$b = [
+]), b = [
     ".DS_Store",
     "Thumbs.db"
-], $743f94428e066832$var$y = (o)=>{
+], y = (o)=>{
     let { name: e } = o;
     if (e && e.lastIndexOf(".") !== -1 && !o.type) {
-        let i = (e.split(".").pop() || "").toLowerCase(), s = $743f94428e066832$var$x.get(i);
+        let i = (e.split(".").pop() || "").toLowerCase(), s = x.get(i);
         s && Object.defineProperty(o, "type", {
             value: s,
             writable: !1,
@@ -1298,8 +1726,8 @@ var $743f94428e066832$var$x = new Map([
         });
     }
     return o;
-}, $743f94428e066832$var$g = (o, e)=>{
-    let t = $743f94428e066832$var$y(o);
+}, g = (o, e)=>{
+    let t = y(o);
     if (typeof t.path != "string") {
         let { webkitRelativePath: i } = o;
         Object.defineProperty(t, "path", {
@@ -1310,15 +1738,15 @@ var $743f94428e066832$var$x = new Map([
         });
     }
     return t;
-}, $743f94428e066832$var$m = async (o)=>await new Promise((e, t)=>{
+}, m = async (o)=>await new Promise((e, t)=>{
         o.readEntries(e, t);
-    }), $743f94428e066832$var$w = async (o)=>{
-    let e = [], t = await $743f94428e066832$var$m(o);
-    for(; t.length > 0;)e.push(...t), t = await $743f94428e066832$var$m(o);
+    }), w = async (o)=>{
+    let e = [], t = await m(o);
+    for(; t.length > 0;)e.push(...t), t = await m(o);
     return e;
-}, $743f94428e066832$var$E = (o)=>new Promise((e, t)=>{
-        o.file((i)=>e($743f94428e066832$var$g(i, o.fullPath)), t);
-    }), $743f94428e066832$var$F = async (o)=>{
+}, E = (o)=>new Promise((e, t)=>{
+        o.file((i)=>e(g(i, o.fullPath)), t);
+    }), F = async (o)=>{
     let e = [], t = [];
     for (let i of o){
         if (i.kind !== "file") continue;
@@ -1329,18 +1757,18 @@ var $743f94428e066832$var$x = new Map([
         let i = t.shift();
         if (i) {
             if (i.isFile) {
-                let s = await $743f94428e066832$var$E(i);
-                $743f94428e066832$var$b.indexOf(s.name) === -1 && e.push(s);
-            } else i.isDirectory && t.push(...await $743f94428e066832$var$w(i.createReader()));
+                let s = await E(i);
+                b.indexOf(s.name) === -1 && e.push(s);
+            } else i.isDirectory && t.push(...await w(i.createReader()));
         } else continue;
     }
     return e;
-}, $743f94428e066832$var$f = async (o)=>{
+}, f = async (o)=>{
     let e = [];
-    for (let t of o)$743f94428e066832$var$b.indexOf(t.name) === -1 && e.push($743f94428e066832$var$g(t));
+    for (let t of o)b.indexOf(t.name) === -1 && e.push(g(t));
     return e;
-}, $743f94428e066832$var$l = async (o)=>o.dataTransfer ? o.dataTransfer.items ? await $743f94428e066832$var$F(o.dataTransfer.items) : await $743f94428e066832$var$f(o.dataTransfer.files) : await $743f94428e066832$var$f(o.target.files);
-var $743f94428e066832$var$n = "files-dropzone", $743f94428e066832$var$v = "TOO_MANY_FILES", $743f94428e066832$var$L = "FILE_TOO_LARGE", $743f94428e066832$var$k = "FILE_TOO_SMALL", $743f94428e066832$var$A = "INVALID_MIME_TYPE", $743f94428e066832$var$z = document.createElement("template"), $743f94428e066832$var$S = `
+}, l = async (o)=>o.dataTransfer ? o.dataTransfer.items ? await F(o.dataTransfer.items) : await f(o.dataTransfer.files) : await f(o.target.files);
+var n = "files-dropzone", v = "TOO_MANY_FILES", L = "FILE_TOO_LARGE", k = "FILE_TOO_SMALL", A = "INVALID_MIME_TYPE", z = document.createElement("template"), S = `
   *,
   *::before,
   *::after {
@@ -1410,9 +1838,9 @@ var $743f94428e066832$var$n = "files-dropzone", $743f94428e066832$var$v = "TOO_M
     }
   }
 `;
-$743f94428e066832$var$z.innerHTML = `
+z.innerHTML = `
   <style>
-    ${$743f94428e066832$var$S}
+    ${S}
   </style>
 
   <input type="file" id="file-input" hidden>
@@ -1421,14 +1849,14 @@ $743f94428e066832$var$z.innerHTML = `
     <slot>Drag 'n' drop files here, or click to select files</slot>
   </div>
 `;
-var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
+var d = class o extends HTMLElement {
     #t = null;
     #e = null;
     constructor(){
         super(), this.shadowRoot || this.attachShadow({
             mode: "open",
             delegatesFocus: !0
-        }).appendChild($743f94428e066832$var$z.content.cloneNode(!0)), this.shadowRoot && (this.#t = this.shadowRoot.getElementById("file-input"), this.#e = this.shadowRoot.getElementById("dropzone"));
+        }).appendChild(z.content.cloneNode(!0)), this.shadowRoot && (this.#t = this.shadowRoot.getElementById("file-input"), this.#e = this.shadowRoot.getElementById("dropzone"));
     }
     static get observedAttributes() {
         return [
@@ -1503,9 +1931,9 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
     }
     #i = async (e)=>{
         try {
-            this.#c(await $743f94428e066832$var$l(e));
+            this.#c(await l(e));
         } catch (t) {
-            this.dispatchEvent(new CustomEvent(`${$743f94428e066832$var$n}-error`, {
+            this.dispatchEvent(new CustomEvent(`${n}-error`, {
                 bubbles: !0,
                 composed: !0,
                 detail: {
@@ -1515,7 +1943,7 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
         }
     };
     #r = ()=>{
-        this.disabled || this.dispatchEvent(new Event(`${$743f94428e066832$var$n}-dragenter`, {
+        this.disabled || this.dispatchEvent(new Event(`${n}-dragenter`, {
             bubbles: !0,
             composed: !0
         }));
@@ -1525,13 +1953,13 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
             e.dataTransfer.dropEffect = "none";
             return;
         }
-        e.dataTransfer.dropEffect = "copy", this.#e && (this.#e.classList.add("dropzone--dragover"), this.#e.part.add("dropzone--dragover")), this.dispatchEvent(new Event(`${$743f94428e066832$var$n}-dragover`, {
+        e.dataTransfer.dropEffect = "copy", this.#e && (this.#e.classList.add("dropzone--dragover"), this.#e.part.add("dropzone--dragover")), this.dispatchEvent(new Event(`${n}-dragover`, {
             bubbles: !0,
             composed: !0
         }));
     };
     #n = ()=>{
-        this.disabled || (this.#e && (this.#e.classList.remove("dropzone--dragover"), this.#e.part.remove("dropzone--dragover")), this.dispatchEvent(new Event(`${$743f94428e066832$var$n}-dragleave`, {
+        this.disabled || (this.#e && (this.#e.classList.remove("dropzone--dragover"), this.#e.part.remove("dropzone--dragover")), this.dispatchEvent(new Event(`${n}-dragleave`, {
             bubbles: !0,
             composed: !0
         })));
@@ -1540,9 +1968,9 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
         if (!this.disabled) {
             e.preventDefault(), this.#e && (this.#e.classList.remove("dropzone--dragover"), this.#e.part.remove("dropzone--dragover"));
             try {
-                this.#c(await $743f94428e066832$var$l(e));
+                this.#c(await l(e));
             } catch (t) {
-                this.dispatchEvent(new CustomEvent(`${$743f94428e066832$var$n}-error`, {
+                this.dispatchEvent(new CustomEvent(`${n}-error`, {
                     bubbles: !0,
                     composed: !0,
                     detail: {
@@ -1565,7 +1993,7 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
             file: r,
             errors: [
                 {
-                    code: $743f94428e066832$var$v,
+                    code: v,
                     message: "Too many files selected. Only 1 file is allowed."
                 }
             ]
@@ -1574,24 +2002,24 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
             file: r,
             errors: [
                 {
-                    code: $743f94428e066832$var$v,
+                    code: v,
                     message: `Too many files selected. Only ${this.maxFiles} ${this.maxFiles > 1 ? "files are" : "file is"} allowed.`
                 }
             ]
         });
         else for (let r of e){
-            let c = $743f94428e066832$var$u(r, this.accept), p = r.size > this.maxSize, h = r.size < this.minSize;
+            let c = u(r, this.accept), p = r.size > this.maxSize, h = r.size < this.minSize;
             if (c && !p && !h) t.push(r);
             else {
                 let a = [];
                 c || a.push({
-                    code: $743f94428e066832$var$A,
+                    code: A,
                     message: `File type "${r.type}" is not accepted.`
                 }), p && a.push({
-                    code: $743f94428e066832$var$L,
+                    code: L,
                     message: `File size ${r.size} exceeds the maximum size of ${this.maxSize}.`
                 }), h && a.push({
-                    code: $743f94428e066832$var$k,
+                    code: k,
                     message: `File size ${r.size} is smaller than the minimum size of ${this.minSize}.`
                 }), i.push({
                     file: r,
@@ -1599,20 +2027,20 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
                 });
             }
         }
-        this.dispatchEvent(new CustomEvent(`${$743f94428e066832$var$n}-drop`, {
+        this.dispatchEvent(new CustomEvent(`${n}-drop`, {
             bubbles: !0,
             composed: !0,
             detail: {
                 acceptedFiles: t,
                 rejectedFiles: i
             }
-        })), t.length > 0 && this.dispatchEvent(new CustomEvent(`${$743f94428e066832$var$n}-drop-accepted`, {
+        })), t.length > 0 && this.dispatchEvent(new CustomEvent(`${n}-drop-accepted`, {
             bubbles: !0,
             composed: !0,
             detail: {
                 acceptedFiles: t
             }
-        })), i.length > 0 && this.dispatchEvent(new CustomEvent(`${$743f94428e066832$var$n}-drop-rejected`, {
+        })), i.length > 0 && this.dispatchEvent(new CustomEvent(`${n}-drop-rejected`, {
             bubbles: !0,
             composed: !0,
             detail: {
@@ -1630,13 +2058,13 @@ var $743f94428e066832$export$6ccd1735166caad9 = class o extends HTMLElement {
             delete t[e], t[e] = i;
         }
     }
-    static defineCustomElement(e = $743f94428e066832$var$n) {
+    static defineCustomElement(e = n) {
         typeof window < "u" && !window.customElements.get(e) && window.customElements.define(e, o);
     }
 };
-$743f94428e066832$export$6ccd1735166caad9.defineCustomElement();
+d.defineCustomElement();
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"cl4Ac":[function(require,module,exports) {
 /*!
  * @georapbox/resize-observer-element
  * A custom element that offers a declarative interface to the ResizeObserver API.
@@ -1645,19 +2073,22 @@ $743f94428e066832$export$6ccd1735166caad9.defineCustomElement();
  * @homepage https://github.com/georapbox/resize-observer-element#readme
  * @author George Raptis <georapbox@gmail.com>
  * @license MIT
- */ var $5d733cc90ca10a65$var$d = ":host { display: contents; }", $5d733cc90ca10a65$var$o = document.createElement("template");
-$5d733cc90ca10a65$var$o.innerHTML = `
-  <style>${$5d733cc90ca10a65$var$d}</style>
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ResizeObserverElement", ()=>s);
+var d = ":host { display: contents; }", o = document.createElement("template");
+o.innerHTML = `
+  <style>${d}</style>
   <slot></slot>
 `;
-var $5d733cc90ca10a65$export$f0e45424cc896229 = class n extends HTMLElement {
+var s = class n extends HTMLElement {
     #e = null;
     #t = null;
     #s = [];
     constructor(){
         super(), this.shadowRoot || this.attachShadow({
             mode: "open"
-        }).appendChild($5d733cc90ca10a65$var$o.content.cloneNode(!0)), this.#e = this.shadowRoot?.querySelector("slot") ?? null;
+        }).appendChild(o.content.cloneNode(!0)), this.#e = this.shadowRoot?.querySelector("slot") ?? null;
     }
     static get observedAttributes() {
         return [
@@ -1709,9 +2140,9 @@ var $5d733cc90ca10a65$export$f0e45424cc896229 = class n extends HTMLElement {
         typeof window < "u" && !window.customElements.get(e) && window.customElements.define(e, n);
     }
 };
-$5d733cc90ca10a65$export$f0e45424cc896229.defineCustomElement();
+s.defineCustomElement();
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"2YBrX":[function(require,module,exports) {
 /*!
  * @georapbox/modal-element
  * A custom element to create a modal, using the native dialog element under the hood.
@@ -1720,7 +2151,10 @@ $5d733cc90ca10a65$export$f0e45424cc896229.defineCustomElement();
  * @homepage https://github.com/georapbox/modal-element#readme
  * @author George Raptis <georapbox@gmail.com>
  * @license MIT
- */ var $f2237eeefc3fe3cb$var$n = document.createElement("template"), $f2237eeefc3fe3cb$var$r = `
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ModalElement", ()=>a);
+var n = document.createElement("template"), r = `
   :host {
     --me-width: 32rem;
     --me-height: fit-content;
@@ -1956,8 +2390,8 @@ $5d733cc90ca10a65$export$f0e45424cc896229.defineCustomElement();
     cursor: not-allowed;
   }
 `;
-$f2237eeefc3fe3cb$var$n.innerHTML = `
-  <style>${$f2237eeefc3fe3cb$var$r}</style>
+n.innerHTML = `
+  <style>${r}</style>
 
   <dialog part="base" class="dialog">
     <div part="panel" class="dialog__panel" aria-labelledby="title">
@@ -1983,7 +2417,7 @@ $f2237eeefc3fe3cb$var$n.innerHTML = `
     </div>
   </dialog>
 `;
-var $f2237eeefc3fe3cb$export$32589115725b904b = class s extends HTMLElement {
+var a = class s extends HTMLElement {
     #e = null;
     #i = null;
     #a = null;
@@ -1991,7 +2425,7 @@ var $f2237eeefc3fe3cb$export$32589115725b904b = class s extends HTMLElement {
     constructor(){
         super(), this.shadowRoot || this.attachShadow({
             mode: "open"
-        }).appendChild($f2237eeefc3fe3cb$var$n.content.cloneNode(!0)), this.shadowRoot && (this.#e = this.shadowRoot.querySelector("dialog"), this.#i = this.shadowRoot.querySelector('slot[name="footer"]'), this.#a = this.shadowRoot.querySelector('slot[name="close"]'));
+        }).appendChild(n.content.cloneNode(!0)), this.shadowRoot && (this.#e = this.shadowRoot.querySelector("dialog"), this.#i = this.shadowRoot.querySelector('slot[name="footer"]'), this.#a = this.shadowRoot.querySelector('slot[name="close"]'));
     }
     static get observedAttributes() {
         return [
@@ -2158,12 +2592,17 @@ var $f2237eeefc3fe3cb$export$32589115725b904b = class s extends HTMLElement {
         typeof window < "u" && !window.customElements.get(e) && window.customElements.define(e, s);
     }
 };
-$f2237eeefc3fe3cb$export$32589115725b904b.defineCustomElement();
+a.defineCustomElement();
 
-
-const $6814df9ff67e3af8$export$d726fc97fa83318d = "experimental";
-const $6814df9ff67e3af8$export$c263bd68c6f5ce7a = "No barcode detected";
-const $6814df9ff67e3af8$export$63e7bed68b07a85c = [
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"lop3z":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "EXPERIMENTAL_FLAG", ()=>EXPERIMENTAL_FLAG);
+parcelHelpers.export(exports, "NO_BARCODE_DETECTED", ()=>NO_BARCODE_DETECTED);
+parcelHelpers.export(exports, "ACCEPTED_MIME_TYPES", ()=>ACCEPTED_MIME_TYPES);
+const EXPERIMENTAL_FLAG = "experimental";
+const NO_BARCODE_DETECTED = "No barcode detected";
+const ACCEPTED_MIME_TYPES = [
     "image/jpg",
     "image/jpeg",
     "image/png",
@@ -2173,27 +2612,102 @@ const $6814df9ff67e3af8$export$63e7bed68b07a85c = [
     "image/avif"
 ];
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"hD7R4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getSettings", ()=>getSettings);
+parcelHelpers.export(exports, "setSettings", ()=>setSettings);
+parcelHelpers.export(exports, "getHistory", ()=>getHistory);
+parcelHelpers.export(exports, "setHistory", ()=>setHistory);
+var _idbKeyval = require("idb-keyval");
+const STORAGE_PREFIX = "barcode-scanner/";
+const SETTINGS_STORAGE_KEY = "settings";
+const HISTORY_STORAGE_KEY = "history";
+/**
+ * Gets an item from the storage.
+ *
+ * @param {string} key - The key to get the item from.
+ * @returns {Promise<[ error: any, value: any ]>} The item and an error if occurred.
+ */ const getItem = async (key)=>{
+    try {
+        return [
+            null,
+            await (0, _idbKeyval.get)(key)
+        ];
+    } catch (error) {
+        return [
+            error,
+            void 0
+        ];
+    }
+};
+/**
+ * Sets an item in the storage.
+ *
+ * @param {string} key - The key to set the item to.
+ * @param {any} data - The data to set.
+ * @returns {Promise<[ error: any ]>} An error if occurred.
+ */ const setItem = async (key, data)=>{
+    try {
+        await (0, _idbKeyval.set)(key, data);
+        return [
+            null
+        ];
+    } catch (error) {
+        return [
+            error
+        ];
+    }
+};
+const getSettings = async ()=>{
+    return getItem(STORAGE_PREFIX + SETTINGS_STORAGE_KEY);
+};
+const setSettings = async (data)=>{
+    return setItem(STORAGE_PREFIX + SETTINGS_STORAGE_KEY, data);
+};
+const getHistory = async ()=>{
+    return getItem(STORAGE_PREFIX + HISTORY_STORAGE_KEY);
+};
+const setHistory = async (data)=>{
+    return setItem(STORAGE_PREFIX + HISTORY_STORAGE_KEY, data);
+};
 
-function $da882a54d23f13ce$var$_slicedToArray(arr, i) {
-    return $da882a54d23f13ce$var$_arrayWithHoles(arr) || $da882a54d23f13ce$var$_iterableToArrayLimit(arr, i) || $da882a54d23f13ce$var$_unsupportedIterableToArray(arr, i) || $da882a54d23f13ce$var$_nonIterableRest();
+},{"idb-keyval":"2aSBk","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"2aSBk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "clear", ()=>clear);
+parcelHelpers.export(exports, "createStore", ()=>createStore);
+parcelHelpers.export(exports, "del", ()=>del);
+parcelHelpers.export(exports, "delMany", ()=>delMany);
+parcelHelpers.export(exports, "entries", ()=>entries);
+parcelHelpers.export(exports, "get", ()=>get);
+parcelHelpers.export(exports, "getMany", ()=>getMany);
+parcelHelpers.export(exports, "keys", ()=>keys);
+parcelHelpers.export(exports, "promisifyRequest", ()=>promisifyRequest);
+parcelHelpers.export(exports, "set", ()=>set);
+parcelHelpers.export(exports, "setMany", ()=>setMany);
+parcelHelpers.export(exports, "update", ()=>update);
+parcelHelpers.export(exports, "values", ()=>values);
+function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-function $da882a54d23f13ce$var$_nonIterableRest() {
+function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function $da882a54d23f13ce$var$_unsupportedIterableToArray(o, minLen) {
+function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
-    if (typeof o === "string") return $da882a54d23f13ce$var$_arrayLikeToArray(o, minLen);
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
     if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return $da882a54d23f13ce$var$_arrayLikeToArray(o, minLen);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
 }
-function $da882a54d23f13ce$var$_arrayLikeToArray(arr, len) {
+function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
 }
-function $da882a54d23f13ce$var$_iterableToArrayLimit(arr, i) {
+function _iterableToArrayLimit(arr, i) {
     var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
     if (_i == null) return;
     var _arr = [];
@@ -2217,10 +2731,10 @@ function $da882a54d23f13ce$var$_iterableToArrayLimit(arr, i) {
     }
     return _arr;
 }
-function $da882a54d23f13ce$var$_arrayWithHoles(arr) {
+function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
 }
-function $da882a54d23f13ce$export$b327150396135fe7(request) {
+function promisifyRequest(request) {
     return new Promise(function(resolve, reject) {
         // @ts-ignore - file size hacks
         request.oncomplete = request.onsuccess = function() {
@@ -2231,32 +2745,32 @@ function $da882a54d23f13ce$export$b327150396135fe7(request) {
         };
     });
 }
-function $da882a54d23f13ce$export$f51a9068ac82ea43(dbName, storeName) {
+function createStore(dbName, storeName) {
     var request = indexedDB.open(dbName);
     request.onupgradeneeded = function() {
         return request.result.createObjectStore(storeName);
     };
-    var dbp = $da882a54d23f13ce$export$b327150396135fe7(request);
+    var dbp = promisifyRequest(request);
     return function(txMode, callback) {
         return dbp.then(function(db) {
             return callback(db.transaction(storeName, txMode).objectStore(storeName));
         });
     };
 }
-var $da882a54d23f13ce$var$defaultGetStoreFunc;
-function $da882a54d23f13ce$var$defaultGetStore() {
-    if (!$da882a54d23f13ce$var$defaultGetStoreFunc) $da882a54d23f13ce$var$defaultGetStoreFunc = $da882a54d23f13ce$export$f51a9068ac82ea43("keyval-store", "keyval");
-    return $da882a54d23f13ce$var$defaultGetStoreFunc;
+var defaultGetStoreFunc;
+function defaultGetStore() {
+    if (!defaultGetStoreFunc) defaultGetStoreFunc = createStore("keyval-store", "keyval");
+    return defaultGetStoreFunc;
 }
 /**
  * Get a value by its key.
  *
  * @param key
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$3988ae62b71be9a3(key) {
-    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function get(key) {
+    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultGetStore();
     return customStore("readonly", function(store) {
-        return $da882a54d23f13ce$export$b327150396135fe7(store.get(key));
+        return promisifyRequest(store.get(key));
     });
 }
 /**
@@ -2265,11 +2779,11 @@ function $da882a54d23f13ce$var$defaultGetStore() {
  * @param key
  * @param value
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$adaa4cf7ef1b65be(key, value) {
-    var customStore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function set(key, value) {
+    var customStore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultGetStore();
     return customStore("readwrite", function(store) {
         store.put(value, key);
-        return $da882a54d23f13ce$export$b327150396135fe7(store.transaction);
+        return promisifyRequest(store.transaction);
     });
 }
 /**
@@ -2278,13 +2792,13 @@ function $da882a54d23f13ce$var$defaultGetStore() {
  *
  * @param entries Array of entries, where each entry is an array of `[key, value]`.
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$daa0a5170277c7a8(entries) {
-    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function setMany(entries) {
+    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultGetStore();
     return customStore("readwrite", function(store) {
         entries.forEach(function(entry) {
             return store.put(entry[1], entry[0]);
         });
-        return $da882a54d23f13ce$export$b327150396135fe7(store.transaction);
+        return promisifyRequest(store.transaction);
     });
 }
 /**
@@ -2292,11 +2806,11 @@ function $da882a54d23f13ce$var$defaultGetStore() {
  *
  * @param keys
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$5df405cccea42673(keys) {
-    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function getMany(keys) {
+    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultGetStore();
     return customStore("readonly", function(store) {
         return Promise.all(keys.map(function(key) {
-            return $da882a54d23f13ce$export$b327150396135fe7(store.get(key));
+            return promisifyRequest(store.get(key));
         }));
     });
 }
@@ -2306,8 +2820,8 @@ function $da882a54d23f13ce$var$defaultGetStore() {
  * @param key
  * @param updater A callback that takes the old value and returns a new value.
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$722fbec263ad908a(key, updater) {
-    var customStore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function update(key, updater) {
+    var customStore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultGetStore();
     return customStore("readwrite", function(store) {
         return(// If I try to chain promises, the transaction closes in browsers
         // that use a promise polyfill (IE10/11).
@@ -2315,7 +2829,7 @@ function $da882a54d23f13ce$var$defaultGetStore() {
             store.get(key).onsuccess = function() {
                 try {
                     store.put(updater(this.result), key);
-                    resolve($da882a54d23f13ce$export$b327150396135fe7(store.transaction));
+                    resolve(promisifyRequest(store.transaction));
                 } catch (err) {
                     reject(err);
                 }
@@ -2328,11 +2842,11 @@ function $da882a54d23f13ce$var$defaultGetStore() {
  *
  * @param key
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$1d2f21e549771e67(key) {
-    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function del(key) {
+    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultGetStore();
     return customStore("readwrite", function(store) {
         store.delete(key);
-        return $da882a54d23f13ce$export$b327150396135fe7(store.transaction);
+        return promisifyRequest(store.transaction);
     });
 }
 /**
@@ -2340,45 +2854,45 @@ function $da882a54d23f13ce$var$defaultGetStore() {
  *
  * @param keys List of keys to delete.
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$c8aa84257229cac8(keys) {
-    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function delMany(keys) {
+    var customStore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultGetStore();
     return customStore("readwrite", function(store) {
         keys.forEach(function(key) {
             return store.delete(key);
         });
-        return $da882a54d23f13ce$export$b327150396135fe7(store.transaction);
+        return promisifyRequest(store.transaction);
     });
 }
 /**
  * Clear all values in the store.
  *
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$42ffd38884aecdac() {
-    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function clear() {
+    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultGetStore();
     return customStore("readwrite", function(store) {
         store.clear();
-        return $da882a54d23f13ce$export$b327150396135fe7(store.transaction);
+        return promisifyRequest(store.transaction);
     });
 }
-function $da882a54d23f13ce$var$eachCursor(store, callback) {
+function eachCursor(store, callback) {
     store.openCursor().onsuccess = function() {
         if (!this.result) return;
         callback(this.result);
         this.result.continue();
     };
-    return $da882a54d23f13ce$export$b327150396135fe7(store.transaction);
+    return promisifyRequest(store.transaction);
 }
 /**
  * Get all keys in the store.
  *
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$ed97f33186d4b816() {
-    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function keys() {
+    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultGetStore();
     return customStore("readonly", function(store) {
         // Fast path for modern browsers
-        if (store.getAllKeys) return $da882a54d23f13ce$export$b327150396135fe7(store.getAllKeys());
+        if (store.getAllKeys) return promisifyRequest(store.getAllKeys());
         var items = [];
-        return $da882a54d23f13ce$var$eachCursor(store, function(cursor) {
+        return eachCursor(store, function(cursor) {
             return items.push(cursor.key);
         }).then(function() {
             return items;
@@ -2389,13 +2903,13 @@ function $da882a54d23f13ce$var$eachCursor(store, callback) {
  * Get all values in the store.
  *
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$68c286be0e7e55b7() {
-    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function values() {
+    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultGetStore();
     return customStore("readonly", function(store) {
         // Fast path for modern browsers
-        if (store.getAll) return $da882a54d23f13ce$export$b327150396135fe7(store.getAll());
+        if (store.getAll) return promisifyRequest(store.getAll());
         var items = [];
-        return $da882a54d23f13ce$var$eachCursor(store, function(cursor) {
+        return eachCursor(store, function(cursor) {
             return items.push(cursor.value);
         }).then(function() {
             return items;
@@ -2406,16 +2920,16 @@ function $da882a54d23f13ce$var$eachCursor(store, callback) {
  * Get all entries in the store. Each entry is an array of `[key, value]`.
  *
  * @param customStore Method to get a custom store. Use with caution (see the docs).
- */ function $da882a54d23f13ce$export$3e9f948b41964866() {
-    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $da882a54d23f13ce$var$defaultGetStore();
+ */ function entries() {
+    var customStore = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultGetStore();
     return customStore("readonly", function(store) {
         // Fast path for modern browsers
         // (although, hopefully we'll get a simpler path some day)
         if (store.getAll && store.getAllKeys) return Promise.all([
-            $da882a54d23f13ce$export$b327150396135fe7(store.getAllKeys()),
-            $da882a54d23f13ce$export$b327150396135fe7(store.getAll())
+            promisifyRequest(store.getAllKeys()),
+            promisifyRequest(store.getAll())
         ]).then(function(_ref) {
-            var _ref2 = $da882a54d23f13ce$var$_slicedToArray(_ref, 2), keys = _ref2[0], values = _ref2[1];
+            var _ref2 = _slicedToArray(_ref, 2), keys = _ref2[0], values = _ref2[1];
             return keys.map(function(key, i) {
                 return [
                     key,
@@ -2425,7 +2939,7 @@ function $da882a54d23f13ce$var$eachCursor(store, callback) {
         });
         var items = [];
         return customStore("readonly", function(store) {
-            return $da882a54d23f13ce$var$eachCursor(store, function(cursor) {
+            return eachCursor(store, function(cursor) {
                 return items.push([
                     cursor.key,
                     cursor.value
@@ -2437,60 +2951,7 @@ function $da882a54d23f13ce$var$eachCursor(store, callback) {
     });
 }
 
-
-const $252772e6b65b7db3$var$STORAGE_PREFIX = "barcode-scanner/";
-const $252772e6b65b7db3$var$SETTINGS_STORAGE_KEY = "settings";
-const $252772e6b65b7db3$var$HISTORY_STORAGE_KEY = "history";
-/**
- * Gets an item from the storage.
- *
- * @param {string} key - The key to get the item from.
- * @returns {Promise<[ error: any, value: any ]>} The item and an error if occurred.
- */ const $252772e6b65b7db3$var$getItem = async (key)=>{
-    try {
-        return [
-            null,
-            await (0, $da882a54d23f13ce$export$3988ae62b71be9a3)(key)
-        ];
-    } catch (error) {
-        return [
-            error,
-            void 0
-        ];
-    }
-};
-/**
- * Sets an item in the storage.
- *
- * @param {string} key - The key to set the item to.
- * @param {any} data - The data to set.
- * @returns {Promise<[ error: any ]>} An error if occurred.
- */ const $252772e6b65b7db3$var$setItem = async (key, data)=>{
-    try {
-        await (0, $da882a54d23f13ce$export$adaa4cf7ef1b65be)(key, data);
-        return [
-            null
-        ];
-    } catch (error) {
-        return [
-            error
-        ];
-    }
-};
-const $252772e6b65b7db3$export$4a647155031ece = async ()=>{
-    return $252772e6b65b7db3$var$getItem($252772e6b65b7db3$var$STORAGE_PREFIX + $252772e6b65b7db3$var$SETTINGS_STORAGE_KEY);
-};
-const $252772e6b65b7db3$export$dc86d17a64679bc7 = async (data)=>{
-    return $252772e6b65b7db3$var$setItem($252772e6b65b7db3$var$STORAGE_PREFIX + $252772e6b65b7db3$var$SETTINGS_STORAGE_KEY, data);
-};
-const $252772e6b65b7db3$export$f9582a3c130d9538 = async ()=>{
-    return $252772e6b65b7db3$var$getItem($252772e6b65b7db3$var$STORAGE_PREFIX + $252772e6b65b7db3$var$HISTORY_STORAGE_KEY);
-};
-const $252772e6b65b7db3$export$96fe1132eb44c325 = async (data)=>{
-    return $252772e6b65b7db3$var$setItem($252772e6b65b7db3$var$STORAGE_PREFIX + $252772e6b65b7db3$var$HISTORY_STORAGE_KEY, data);
-};
-
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"iGYuM":[function(require,module,exports) {
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for
@@ -2509,7 +2970,10 @@ const $252772e6b65b7db3$export$96fe1132eb44c325 = async (data)=>{
  * }, 250);
  *
  * window.addEventListener('resize', debouncedHandler, false);
- */ const $1b63c430b02266a3$export$61fc7d43ac8f84b0 = (fn, wait = 0, immediate = false)=>{
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "debounce", ()=>debounce);
+const debounce = (fn, wait = 0, immediate = false)=>{
     let timerId = null;
     if (typeof fn !== "function") throw new TypeError("Expected a function for first argument");
     return (...args)=>{
@@ -2522,37 +2986,67 @@ const $252772e6b65b7db3$export$96fe1132eb44c325 = async (data)=>{
     };
 };
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"1LMzH":[function(require,module,exports) {
 /**
  * Log to console only in development mode.
  *
  * @param {...any} args - Arguments to log
- */ function $026bdfcd1c53bf0b$export$bef1f36f5486a6a3(...args) {}
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "log", ()=>log);
+function log(...args) {}
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"aHaM8":[function(require,module,exports) {
 /**
  * Check if the dialog element is supported.
  *
  * @returns {boolean} - Returns true if the dialog element is supported.
- */ const $cdd676ababbe44c4$export$c694186e9d94f0 = ()=>{
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "isDialogElementSupported", ()=>isDialogElementSupported);
+const isDialogElementSupported = ()=>{
     return typeof HTMLDialogElement === "function";
 };
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"hg2pQ":[function(require,module,exports) {
 /**
  * Renders the supported formats.
  *
  * @param {Array<string>} formats - Supported barcode formats
- */ function $f1abed042a7c6930$export$f6bb24723b821792(formats) {
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderSupportedFormats", ()=>renderSupportedFormats);
+function renderSupportedFormats(formats) {
     if (!Array.isArray(formats) || formats.length === 0) return;
     const supportedFormatsEl = document.getElementById("supportedFormats");
     if (!supportedFormatsEl) return;
     supportedFormatsEl.textContent = `Supported formats: ${formats.join(", ")}`;
 }
 
-
-
-function $4c5af2a63b39f23d$export$fa9e3380e441c420(data) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"b6yEv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Renders the history list. If there are no items in history, it will show a message.
+ *
+ * @param {Array<string>} data - Hidsoty data as an array of strings
+ */ parcelHelpers.export(exports, "renderHistoryList", ()=>renderHistoryList);
+/**
+ * Adds an item to the history.
+ * If the item is already in history, it will not be added.
+ *
+ * @param {string} item - Item to add to history
+ */ parcelHelpers.export(exports, "addToHistory", ()=>addToHistory);
+/**
+ * Removes an item from the history.
+ *
+ * @param {string} item - Item to remove from history
+ */ parcelHelpers.export(exports, "removeFromHistory", ()=>removeFromHistory);
+/**
+ * Removes all items from the history.
+ */ parcelHelpers.export(exports, "emptyHistory", ()=>emptyHistory);
+var _storageJs = require("../services/storage.js");
+function renderHistoryList(data) {
     const historyList = document.getElementById("historyList");
     if (!historyList) return;
     const emptyHistoryBtn = document.getElementById("emptyHistoryBtn");
@@ -2605,44 +3099,53 @@ function $4c5af2a63b39f23d$export$fa9e3380e441c420(data) {
         });
     }
 }
-async function $4c5af2a63b39f23d$export$7a6a9d84993ff4e(item) {
-    const [, settings] = await (0, $252772e6b65b7db3$export$4a647155031ece)();
+async function addToHistory(item) {
+    const [, settings] = await (0, _storageJs.getSettings)();
     if (!item || !settings?.addToHistory) return;
-    const [getHistoryError, history = []] = await (0, $252772e6b65b7db3$export$f9582a3c130d9538)();
+    const [getHistoryError, history = []] = await (0, _storageJs.getHistory)();
     if (!getHistoryError && Array.isArray(history) && !history.find((h)=>h === item)) {
         const data = [
             ...history,
             item
         ];
-        const [setHistoryError] = await (0, $252772e6b65b7db3$export$96fe1132eb44c325)(data);
-        if (!setHistoryError) $4c5af2a63b39f23d$export$fa9e3380e441c420(data);
+        const [setHistoryError] = await (0, _storageJs.setHistory)(data);
+        if (!setHistoryError) renderHistoryList(data);
     }
 }
-async function $4c5af2a63b39f23d$export$3a61248021dae916(item) {
+async function removeFromHistory(item) {
     if (!item) return;
-    const [getHistoryError, history = []] = await (0, $252772e6b65b7db3$export$f9582a3c130d9538)();
+    const [getHistoryError, history = []] = await (0, _storageJs.getHistory)();
     if (!getHistoryError && Array.isArray(history)) {
         const data = history.filter((el)=>el !== item);
-        const [setHistoryError] = await (0, $252772e6b65b7db3$export$96fe1132eb44c325)(data);
-        if (!setHistoryError) $4c5af2a63b39f23d$export$fa9e3380e441c420(data);
+        const [setHistoryError] = await (0, _storageJs.setHistory)(data);
+        if (!setHistoryError) renderHistoryList(data);
     }
 }
-async function $4c5af2a63b39f23d$export$9f74b61e5d33cda2() {
-    const [setHistoryError] = await (0, $252772e6b65b7db3$export$96fe1132eb44c325)([]);
-    if (!setHistoryError) $4c5af2a63b39f23d$export$fa9e3380e441c420([]);
+async function emptyHistory() {
+    const [setHistoryError] = await (0, _storageJs.setHistory)([]);
+    if (!setHistoryError) renderHistoryList([]);
 }
 
-
+},{"../services/storage.js":"hD7R4","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"j4rPJ":[function(require,module,exports) {
 /**
  * Removes the scanned result from the element where it is shown.
  *
  * @param {HTMLElement} element - The element to remove the result from.
- */ function $60dfa2f9ba25b132$export$ad20350fbdf13c97(element) {
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "hideResult", ()=>hideResult);
+/**
+ * Creates and shows the scanned result inside the given element.
+ *
+ * @param {HTMLElement} element - The element to show the result in.
+ * @param {string} value - The value to create the result with.
+ */ parcelHelpers.export(exports, "showResult", ()=>showResult);
+function hideResult(element) {
     if (!element) return;
     const scanResultEl = element.querySelector("scan-result");
     scanResultEl?.remove();
 }
-async function $60dfa2f9ba25b132$export$97c08f0895810b94(element, value) {
+async function showResult(element, value) {
     if (!element || !value) return;
     const oldScanResultEl = element.querySelector("scan-result");
     if (oldScanResultEl) oldScanResultEl.setAttribute("value", value);
@@ -2656,8 +3159,38 @@ async function $60dfa2f9ba25b132$export$97c08f0895810b94(element, value) {
     }
 }
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"kjGai":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Triggers the scan effects like beep and vibrate.
+ *
+ * @param {Object} options
+ * @param {boolean} [options.success=true] - Whether to trigger the success or error effects.
+ */ parcelHelpers.export(exports, "triggerScanEffects", ()=>triggerScanEffects);
+var _storageJs = require("../services/storage.js");
+var _beepJs = require("../utils/beep.js");
+var _vibrateJs = require("../utils/vibrate.js");
+async function triggerScanEffects(options = {}) {
+    const { success = true } = options;
+    const [, settings] = await (0, _storageJs.getSettings)();
+    if (!settings) return;
+    const beepConfig = success ? {
+        duration: 200,
+        frequency: 860,
+        volume: 0.03,
+        type: "square"
+    } : {
+        duration: 300,
+        frequency: 200,
+        volume: 0.05,
+        type: "sawtooth"
+    };
+    (0, _beepJs.beep)(beepConfig);
+    (0, _vibrateJs.vibrate)(success ? 100 : 200);
+}
 
-
+},{"../services/storage.js":"hD7R4","../utils/beep.js":"3ksT4","../utils/vibrate.js":"dnQpT","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"3ksT4":[function(require,module,exports) {
 /**
  * Beep sound using the `AudioContext` interface.
  *
@@ -2667,11 +3200,14 @@ async function $60dfa2f9ba25b132$export$97c08f0895810b94(element, value) {
  * @param {Number} options.volume - Volume
  * @param {String} options.type - Type of oscillator
  * @param {Function} options.onEnded - Callback function when the sound ends
- */ const $368e8ddaad3faa09$export$d6c943e433460aae = (()=>{
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "beep", ()=>beep);
+const beep = (()=>{
     const audioCtx = new (window.AudioContext || window.webkitAudioContext || window.audioContext)();
     if (!audioCtx) return;
     return (options)=>{
-        const { duration: duration, frequency: frequency, volume: volume, type: type, onEnded: onEnded } = options;
+        const { duration, frequency, volume, type, onEnded } = options;
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
         oscillator.connect(gainNode);
@@ -2685,13 +3221,16 @@ async function $60dfa2f9ba25b132$export$97c08f0895810b94(element, value) {
     };
 })();
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"dnQpT":[function(require,module,exports) {
 /**
  * Vibrate the device.
  * If the device does not support vibration, this function will fail silently.
  *
  * @param {Number} [duration=0] - Duration in milliseconds
- */ async function $c4699aabb1e44834$export$3ca8e905da0a0ca8(duration = 0) {
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "vibrate", ()=>vibrate);
+async function vibrate(duration = 0) {
     if (typeof window.navigator.vibrate !== "function") return;
     try {
         window.navigator.vibrate(duration);
@@ -2700,54 +3239,39 @@ async function $60dfa2f9ba25b132$export$97c08f0895810b94(element, value) {
     }
 }
 
-
-async function $e5047ade60bce166$export$9b466d13e2031a67(options = {}) {
-    const { success: success = true } = options;
-    const [, settings] = await (0, $252772e6b65b7db3$export$4a647155031ece)();
-    if (!settings) return;
-    const beepConfig = success ? {
-        duration: 200,
-        frequency: 860,
-        volume: 0.03,
-        type: "square"
-    } : {
-        duration: 300,
-        frequency: 200,
-        volume: 0.05,
-        type: "sawtooth"
-    };
-    (0, $368e8ddaad3faa09$export$d6c943e433460aae)(beepConfig);
-    (0, $c4699aabb1e44834$export$3ca8e905da0a0ca8)(success ? 100 : 200);
-}
-
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"dSRAh":[function(require,module,exports) {
 /**
  * Resizes the scan frame to match the video element's dimensions.
  *
  * @param {HTMLVideoElement} videoEl - Video element
  * @param {HTMLElement} scanFrameEl - Scan frame element
- */ function $e31ba8761bd275e4$export$1404f0e91c73fec(videoEl, scanFrameEl) {
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "resizeScanFrame", ()=>resizeScanFrame);
+function resizeScanFrame(videoEl, scanFrameEl) {
     if (!videoEl || !scanFrameEl) return;
     const rect = videoEl.getBoundingClientRect();
     scanFrameEl.style.cssText = `width: ${rect.width}px; height: ${rect.height}px`;
 }
 
-
-
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"d28BW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "BarcodeReader", ()=>BarcodeReader);
+var _logJs = require("../utils/log.js");
 /**
  * BarcodeReader class to detect barcodes from images or videos.
  *
  * @see https://developer.mozilla.org/docs/Web/API/BarcodeDetector
- */ class $f8ab580094d06bc8$export$f21d9483ebeee00a {
+ */ class BarcodeReader {
     static async polyfill() {
         if (!("BarcodeDetector" in window)) try {
-            await (parcelRequire("cG93Q"));
-            (0, $026bdfcd1c53bf0b$export$bef1f36f5486a6a3)("Using BarcodeDetector polyfill.");
+            await require("bfcca166d6641c34");
+            (0, _logJs.log)("Using BarcodeDetector polyfill.");
         } catch  {
             throw new Error("BarcodeDetector API is not supported by your browser.");
         }
-        else (0, $026bdfcd1c53bf0b$export$bef1f36f5486a6a3)("Using the native BarcodeDetector API.");
+        else (0, _logJs.log)("Using the native BarcodeDetector API.");
     }
     /**
    * Get the supported barcode formats.
@@ -2763,7 +3287,7 @@ async function $e5047ade60bce166$export$9b466d13e2031a67(options = {}) {
    * @returns {Promise<BarcodeReader>} - New BarcodeReader instance
    */ static async create() {
         const formats = await window.BarcodeDetector.getSupportedFormats();
-        return new $f8ab580094d06bc8$export$f21d9483ebeee00a(formats);
+        return new BarcodeReader(formats);
     }
     /**
    * Initialize the BarcodeReader.
@@ -2771,12 +3295,12 @@ async function $e5047ade60bce166$export$9b466d13e2031a67(options = {}) {
    * @returns {Promise<{ barcodeReader: BarcodeReader, barcodeFormats: Array<string>, barcodeReaderError: Error }>} - BarcodeReader instance, supported formats, and error
    */ static async init() {
         try {
-            await $f8ab580094d06bc8$export$f21d9483ebeee00a.polyfill();
-            const barcodeReader = await $f8ab580094d06bc8$export$f21d9483ebeee00a.create();
-            const barcodeFormats = await $f8ab580094d06bc8$export$f21d9483ebeee00a.getSupportedFormats();
+            await BarcodeReader.polyfill();
+            const barcodeReader = await BarcodeReader.create();
+            const barcodeFormats = await BarcodeReader.getSupportedFormats();
             return {
-                barcodeReader: barcodeReader,
-                barcodeFormats: barcodeFormats,
+                barcodeReader,
+                barcodeFormats,
                 barcodeReaderError: null
             };
         } catch (error) {
@@ -2793,7 +3317,7 @@ async function $e5047ade60bce166$export$9b466d13e2031a67(options = {}) {
    * @param {Array<string>} formats - Supported barcode formats
    */ constructor(formats){
         this.barcodeReader = new window.BarcodeDetector({
-            formats: formats
+            formats
         });
     }
     /**
@@ -2810,10 +3334,83 @@ async function $e5047ade60bce166$export$9b466d13e2031a67(options = {}) {
     }
 }
 
+},{"../utils/log.js":"1LMzH","bfcca166d6641c34":"bsu8n","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"bsu8n":[function(require,module,exports) {
+module.exports = require("9b6037c85e34098e")(require("af1e83c1c90c3e8d").resolve("2xxfu")).then(()=>module.bundle.root("gllhm"));
 
+},{"9b6037c85e34098e":"hZixm","af1e83c1c90c3e8d":"fmMSb"}],"hZixm":[function(require,module,exports) {
+"use strict";
+var cacheLoader = require("ca2a84f7fa4a3bb0");
+module.exports = cacheLoader(function(bundle) {
+    return new Promise(function(resolve, reject) {
+        // Don't insert the same script twice (e.g. if it was already in the HTML)
+        var existingScripts = document.getElementsByTagName("script");
+        if ([].concat(existingScripts).some(function isCurrentBundle(script) {
+            return script.src === bundle;
+        })) {
+            resolve();
+            return;
+        }
+        var preloadLink = document.createElement("link");
+        preloadLink.href = bundle;
+        preloadLink.rel = "preload";
+        preloadLink.as = "script";
+        document.head.appendChild(preloadLink);
+        var script = document.createElement("script");
+        script.async = true;
+        script.type = "text/javascript";
+        script.src = bundle;
+        script.onerror = function(e) {
+            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
+            script.onerror = script.onload = null;
+            script.remove();
+            reject(error);
+        };
+        script.onload = function() {
+            script.onerror = script.onload = null;
+            resolve();
+        };
+        document.getElementsByTagName("head")[0].appendChild(script);
+    });
+});
 
-async function $3db046d89afd7d66$export$9d22ef9ff8e481fe(form) {
-    const [, settings = {}] = await (0, $252772e6b65b7db3$export$4a647155031ece)();
+},{"ca2a84f7fa4a3bb0":"2SQVV"}],"2SQVV":[function(require,module,exports) {
+"use strict";
+var cachedBundles = {};
+var cachedPreloads = {};
+var cachedPrefetches = {};
+function getCache(type) {
+    switch(type){
+        case "preload":
+            return cachedPreloads;
+        case "prefetch":
+            return cachedPrefetches;
+        default:
+            return cachedBundles;
+    }
+}
+module.exports = function(loader, type) {
+    return function(bundle) {
+        var cache = getCache(type);
+        if (cache[bundle]) return cache[bundle];
+        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
+            delete cache[bundle];
+            throw e;
+        });
+    };
+};
+
+},{}],"35ZJG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Initialize the settings form with the saved settings.
+ * If a setting is not found, it will be ignored.
+ *
+ * @param {HTMLFormElement} form - The settings form to initialize.
+ */ parcelHelpers.export(exports, "initializeSettingsForm", ()=>initializeSettingsForm);
+var _storageJs = require("../services/storage.js");
+async function initializeSettingsForm(form) {
+    const [, settings = {}] = await (0, _storageJs.getSettings)();
     Object.entries(settings).forEach(([key, value])=>{
         const settingInput = form.querySelector(`[name="${key}"]`);
         if (!settingInput) return;
@@ -2821,7 +3418,7 @@ async function $3db046d89afd7d66$export$9d22ef9ff8e481fe(form) {
     });
 }
 
-
+},{"../services/storage.js":"hD7R4","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"ivKFA":[function(require,module,exports) {
 /**
  * Toggles the torch button status.
  * The torch button has two icons, one for on and one for off.
@@ -2829,12 +3426,15 @@ async function $3db046d89afd7d66$export$9d22ef9ff8e481fe(form) {
  *
  * @param {HTMLButtonElement} buttonEl - The torch button element.
  * @param {boolean} isTorchOn - The torch state.
- */ function $5594645da3ef4bd9$export$d1bd0b12fe0d046(options = {}) {
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "toggleTorchButtonStatus", ()=>toggleTorchButtonStatus);
+function toggleTorchButtonStatus(options = {}) {
     const defaults = {
         el: document.getElementById("torchButton"),
         isTorchOn: false
     };
-    const { el: el, isTorchOn: isTorchOn } = {
+    const { el, isTorchOn } = {
         ...defaults,
         ...options
     };
@@ -2845,59 +3445,27 @@ async function $3db046d89afd7d66$export$9d22ef9ff8e481fe(form) {
     el.setAttribute("aria-label", `Turn ${isTorchOn ? "off" : "on"} flash`);
 }
 
-
-/**
- * Clamps number within the inclusive `min` and `max` bounds,
- * making sure it does not go beyond them on either side.
- * If `min` is greater than `max` the parameters are swapped to support inverted ranges.
- *
- * @param {number} value - The number to clamp.
- * @param {number} lower - The lower bound.
- * @param {number} upper - The upper bound.
- * @throws {TypeError} - If one or more of the arguments passed is not a number.
- * @returns {number} - The clamped number.
- * @example
- *
- * clamp(10, -5, 5);
- * // => 5
- *
- * clamp(-10, -5, 5);
- * // => -5
- *
- * clamp(-15, 0, 100);
- * // => 0
- *
- * clamp(120, 0, 100);
- * // => 100
- *
- * clamp(-5, NaN, 5); // If any of lower or upper bound are `NaN`, they will be converted to `0`.
- * // => 0
- *
- * clamp(120, 100, 0); // The order of lower and upper bounds is reversed (100 > 0)
- * // => 100
- */ const $7334595827eb95a6$export$7d15b64cf5a3a4c4 = (value, lower, upper)=>{
-    if (Number.isNaN(lower)) lower = 0;
-    if (Number.isNaN(upper)) upper = 0;
-    return Math.min(Math.max(value, Math.min(lower, upper)), Math.max(lower, upper));
-};
-
-
-const $6933dcbb9b79a9cd$var$COMPONENT_NAME = "video-capture";
-const $6933dcbb9b79a9cd$var$styles = /* css */ `
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"cn3e0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "VideoCapture", ()=>VideoCapture);
+var _clampJs = require("../utils/clamp.js");
+const COMPONENT_NAME = "video-capture";
+const styles = /* css */ `
   :host { display: block; box-sizing: border-box; }
   :host *, :host *::before, :host *::after { box-sizing: inherit;}
   :host([hidden]), [hidden], ::slotted([hidden]) { display: none; }
   video { display: block; }
   #output:empty { display: none; }
 `;
-const $6933dcbb9b79a9cd$var$template = document.createElement("template");
-$6933dcbb9b79a9cd$var$template.innerHTML = /* html */ `
-  <style>${$6933dcbb9b79a9cd$var$styles}</style>
+const template = document.createElement("template");
+template.innerHTML = /* html */ `
+  <style>${styles}</style>
   <video part="video" playsinline></video>
   <div part="actions-container"><slot name="actions"></slot></div>
   <slot></slot>
 `;
-class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
+class VideoCapture extends HTMLElement {
     #supportedConstraints = {};
     #stream = null;
     #videoElement = null;
@@ -2908,7 +3476,7 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
             const shadowRoot = this.attachShadow({
                 mode: "open"
             });
-            shadowRoot.appendChild($6933dcbb9b79a9cd$var$template.content.cloneNode(true));
+            shadowRoot.appendChild(template.content.cloneNode(true));
         }
     }
     static get observedAttributes() {
@@ -2944,7 +3512,7 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
         this.#upgradeProperty("torch");
         this.#videoElement = this.shadowRoot?.querySelector("video") || null;
         this.#videoElement?.addEventListener("loadedmetadata", this.#onVideoLoadedMetaData);
-        if (!$6933dcbb9b79a9cd$export$682e9ed90a89bb4a.isSupported()) return this.dispatchEvent(new CustomEvent(`${$6933dcbb9b79a9cd$var$COMPONENT_NAME}:error`, {
+        if (!VideoCapture.isSupported()) return this.dispatchEvent(new CustomEvent(`${COMPONENT_NAME}:error`, {
             bubbles: true,
             composed: true,
             detail: {
@@ -2998,19 +3566,19 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
    */ #onVideoLoadedMetaData = (evt)=>{
         const video = evt.target;
         video.play().then(()=>{
-            this.dispatchEvent(new CustomEvent(`${$6933dcbb9b79a9cd$var$COMPONENT_NAME}:video-play`, {
+            this.dispatchEvent(new CustomEvent(`${COMPONENT_NAME}:video-play`, {
                 bubbles: true,
                 composed: true,
                 detail: {
-                    video: video
+                    video
                 }
             }));
         }).catch((error)=>{
-            this.dispatchEvent(new CustomEvent(`${$6933dcbb9b79a9cd$var$COMPONENT_NAME}:error`, {
+            this.dispatchEvent(new CustomEvent(`${COMPONENT_NAME}:error`, {
                 bubbles: true,
                 composed: true,
                 detail: {
-                    error: error
+                    error
                 }
             }));
         }).finally(()=>{
@@ -3027,7 +3595,7 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
         const [track] = this.#stream.getVideoTracks();
         const trackCapabilities = this.getTrackCapabilities();
         const trackSettings = this.getTrackSettings();
-        const constraintValue = constraint === "pan" || constraint === "tilt" || constraint === "zoom" ? (0, $7334595827eb95a6$export$7d15b64cf5a3a4c4)(Number(value), trackCapabilities[constraint]?.min || 1, trackCapabilities[constraint]?.max || 1) : value;
+        const constraintValue = constraint === "pan" || constraint === "tilt" || constraint === "zoom" ? (0, _clampJs.clamp)(Number(value), trackCapabilities[constraint]?.min || 1, trackCapabilities[constraint]?.max || 1) : value;
         if (constraint in trackSettings) track.applyConstraints({
             advanced: [
                 {
@@ -3059,7 +3627,7 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
    * @param {string} [videoInputId] - The video input device ID.
    * @returns Promise<void>
    */ async startVideoStream(videoInputId) {
-        if (!$6933dcbb9b79a9cd$export$682e9ed90a89bb4a.isSupported() || this.#stream) return;
+        if (!VideoCapture.isSupported() || this.#stream) return;
         this.setAttribute("loading", "");
         const constraints = {
             video: {
@@ -3090,11 +3658,11 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
             this.#applyConstraint("tilt", this.tilt);
             this.#applyConstraint("zoom", this.zoom);
         } catch (error) {
-            this.dispatchEvent(new CustomEvent(`${$6933dcbb9b79a9cd$var$COMPONENT_NAME}:error`, {
+            this.dispatchEvent(new CustomEvent(`${COMPONENT_NAME}:error`, {
                 bubbles: true,
                 composed: true,
                 detail: {
-                    error: error
+                    error
                 }
             }));
         } finally{
@@ -3125,7 +3693,7 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
    * @see https://developer.mozilla.org/docs/Web/API/MediaDevices/getSupportedConstraints
    * @returns {MediaTrackSupportedConstraints | {}}
    */ getSupportedConstraints() {
-        if (!$6933dcbb9b79a9cd$export$682e9ed90a89bb4a.isSupported()) return {};
+        if (!VideoCapture.isSupported()) return {};
         return navigator.mediaDevices.getSupportedConstraints() || {};
     }
     /**
@@ -3173,139 +3741,52 @@ class $6933dcbb9b79a9cd$export$682e9ed90a89bb4a extends HTMLElement {
    * The name must contain a dash (-).
    *
    * @param {string} [elementName='video-capture'] - The name of the custom element.
-   */ static defineCustomElement(elementName = $6933dcbb9b79a9cd$var$COMPONENT_NAME) {
-        if (typeof window !== "undefined" && !window.customElements.get(elementName)) window.customElements.define(elementName, $6933dcbb9b79a9cd$export$682e9ed90a89bb4a);
+   */ static defineCustomElement(elementName = COMPONENT_NAME) {
+        if (typeof window !== "undefined" && !window.customElements.get(elementName)) window.customElements.define(elementName, VideoCapture);
     }
 }
 
-
-/*!
- * @georapbox/clipboard-copy-element
- * A custom element that implements the Clipboard API to copy text content from elements or input values to the clipboard.
+},{"../utils/clamp.js":"fsAmd","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"fsAmd":[function(require,module,exports) {
+/**
+ * Clamps number within the inclusive `min` and `max` bounds,
+ * making sure it does not go beyond them on either side.
+ * If `min` is greater than `max` the parameters are swapped to support inverted ranges.
  *
- * @version 3.0.2
- * @homepage https://github.com/georapbox/clipboard-copy-element#readme
- * @author George Raptis <georapbox@gmail.com>
- * @license MIT
- */ var $ef84680cf4408f5f$var$i = "clipboard-copy";
-var $ef84680cf4408f5f$var$o = "success", $ef84680cf4408f5f$var$n = "error", $ef84680cf4408f5f$var$h = document.createElement("template"), $ef84680cf4408f5f$var$a = `
-  :host([hidden]),
-  [hidden],
-  ::slotted([hidden]) {
-    display: none !important;
-  }
-`;
-$ef84680cf4408f5f$var$h.innerHTML = `
-  <style>${$ef84680cf4408f5f$var$a}</style>
-  <button type="button" part="button">
-    <slot name="copy">Copy</slot>
-    <slot name="success" hidden>Copied!</slot>
-    <slot name="error" hidden>Error</slot>
-  </button>
-`;
-var $ef84680cf4408f5f$export$ea3b71af1761ff40 = class d extends HTMLElement {
-    #e = void 0;
-    #t = null;
-    #s = null;
-    #i = null;
-    #o = null;
-    constructor(){
-        super(), this.shadowRoot || this.attachShadow({
-            mode: "open"
-        }).appendChild($ef84680cf4408f5f$var$h.content.cloneNode(!0)), this.shadowRoot && (this.#t = this.shadowRoot.querySelector("button"), this.#s = this.shadowRoot.querySelector('slot[name="copy"]'), this.#i = this.shadowRoot.querySelector('slot[name="success"]'), this.#o = this.shadowRoot.querySelector('slot[name="error"]'));
-    }
-    static get observedAttributes() {
-        return [
-            "disabled"
-        ];
-    }
-    attributeChangedCallback(t, s, e) {
-        t === "disabled" && s !== e && this.#t && (this.#t.disabled = this.disabled, this.#t.setAttribute("aria-disabled", this.disabled.toString()), this.#t.part.contains("button") && this.#t.part.toggle("button--disabled", this.disabled));
-    }
-    connectedCallback() {
-        this.#n("value"), this.#n("from"), this.#n("disabled"), this.#n("feedbackDuration"), this.#t?.addEventListener("click", this.#r);
-    }
-    disconnectedCallback() {
-        this.#t?.removeEventListener("click", this.#r), this.#a();
-    }
-    get value() {
-        return this.getAttribute("value") || "";
-    }
-    set value(t) {
-        this.setAttribute("value", t != null ? t.toString() : t);
-    }
-    get from() {
-        return this.getAttribute("from") || "";
-    }
-    set from(t) {
-        this.setAttribute("from", t != null ? t.toString() : t);
-    }
-    get disabled() {
-        return this.hasAttribute("disabled");
-    }
-    set disabled(t) {
-        this.toggleAttribute("disabled", !!t);
-    }
-    get feedbackDuration() {
-        return Number(this.getAttribute("feedback-duration")) || 1e3;
-    }
-    set feedbackDuration(t) {
-        this.setAttribute("feedback-duration", t != null ? t.toString() : t);
-    }
-    async #d() {
-        if (!(!this.value && !this.from)) try {
-            let t = "";
-            if (this.value) t = this.value;
-            else if (this.from) {
-                let s = "getRootNode" in Element.prototype ? this.#t?.getRootNode({
-                    composed: !0
-                }) : this.#t?.ownerDocument;
-                if (!s || !(s instanceof Document || s instanceof ShadowRoot)) return;
-                let e = s.querySelector(this.from);
-                if (!e) return;
-                e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement ? t = e.value : e instanceof HTMLAnchorElement && e.hasAttribute("href") ? t = e.href : t = e.textContent || "";
-            }
-            await navigator.clipboard.writeText(t), this.#h($ef84680cf4408f5f$var$o), this.dispatchEvent(new CustomEvent(`${$ef84680cf4408f5f$var$i}-success`, {
-                bubbles: !0,
-                composed: !0,
-                detail: {
-                    value: t
-                }
-            }));
-        } catch (t) {
-            this.#h($ef84680cf4408f5f$var$n), this.dispatchEvent(new CustomEvent(`${$ef84680cf4408f5f$var$i}-error`, {
-                bubbles: !0,
-                composed: !0,
-                detail: {
-                    error: t
-                }
-            }));
-        }
-    }
-    #r = (t)=>{
-        t.preventDefault(), !(this.disabled || this.#e) && this.#d();
-    };
-    #h(t) {
-        this.#s && (this.#s.hidden = !0), this.#i && (this.#i.hidden = t !== $ef84680cf4408f5f$var$o), this.#o && (this.#o.hidden = t !== $ef84680cf4408f5f$var$n), this.#t?.part.remove("button--success"), this.#t?.part.remove("button--error"), this.#t?.part.add(`button--${t}`), this.#e && clearTimeout(this.#e), this.#e = setTimeout(()=>{
-            this.#s && (this.#s.hidden = !1), this.#i && (this.#i.hidden = !0), this.#o && (this.#o.hidden = !0), this.#t?.part.remove(`button--${t}`), this.#e = void 0;
-        }, this.feedbackDuration);
-    }
-    #a() {
-        this.#e && clearTimeout(this.#e), this.#e = void 0, this.#s && (this.#s.hidden = !1), this.#i && (this.#i.hidden = !0), this.#o && (this.#o.hidden = !0), this.#t?.part.remove("button--success"), this.#t?.part.remove("button--error");
-    }
-    #n(t) {
-        let s = this;
-        if (Object.prototype.hasOwnProperty.call(s, t)) {
-            let e = s[t];
-            delete s[t], s[t] = e;
-        }
-    }
-    static defineCustomElement(t = $ef84680cf4408f5f$var$i) {
-        typeof window < "u" && !window.customElements.get(t) && window.customElements.define(t, d);
-    }
+ * @param {number} value - The number to clamp.
+ * @param {number} lower - The lower bound.
+ * @param {number} upper - The upper bound.
+ * @throws {TypeError} - If one or more of the arguments passed is not a number.
+ * @returns {number} - The clamped number.
+ * @example
+ *
+ * clamp(10, -5, 5);
+ * // => 5
+ *
+ * clamp(-10, -5, 5);
+ * // => -5
+ *
+ * clamp(-15, 0, 100);
+ * // => 0
+ *
+ * clamp(120, 0, 100);
+ * // => 100
+ *
+ * clamp(-5, NaN, 5); // If any of lower or upper bound are `NaN`, they will be converted to `0`.
+ * // => 0
+ *
+ * clamp(120, 100, 0); // The order of lower and upper bounds is reversed (100 > 0)
+ * // => 100
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "clamp", ()=>clamp);
+const clamp = (value, lower, upper)=>{
+    if (Number.isNaN(lower)) lower = 0;
+    if (Number.isNaN(upper)) upper = 0;
+    return Math.min(Math.max(value, Math.min(lower, upper)), Math.max(lower, upper));
 };
 
-
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"etXXK":[function(require,module,exports) {
+var _clipboardCopyJs = require("@georapbox/clipboard-copy-element/dist/clipboard-copy.js");
 /**
  * Extends the `ClipboardCopy` element to override the default `copy` and `success` slots,
  * in order to avoid repetition of the same markup throughout the application.
@@ -3313,7 +3794,7 @@ var $ef84680cf4408f5f$export$ea3b71af1761ff40 = class d extends HTMLElement {
  *
  * @class CustomClipboardCopy
  * @extends ClipboardCopy
- */ class $c27cfc23b3a20dc8$var$CustomClipboardCopy extends (0, $ef84680cf4408f5f$export$ea3b71af1761ff40) {
+ */ class CustomClipboardCopy extends (0, _clipboardCopyJs.ClipboardCopy) {
     constructor(){
         super();
         const copySlot = this.shadowRoot.querySelector('slot[name="copy"]');
@@ -3382,28 +3863,146 @@ var $ef84680cf4408f5f$export$ea3b71af1761ff40 = class d extends HTMLElement {
         }
     }
     static defineCustomElement(elementName = "custom-clipboard-copy") {
-        if (typeof window !== "undefined" && !window.customElements.get(elementName)) window.customElements.define(elementName, $c27cfc23b3a20dc8$var$CustomClipboardCopy);
+        if (typeof window !== "undefined" && !window.customElements.get(elementName)) window.customElements.define(elementName, CustomClipboardCopy);
     }
 }
-$c27cfc23b3a20dc8$var$CustomClipboardCopy.defineCustomElement();
+CustomClipboardCopy.defineCustomElement();
 
-
+},{"@georapbox/clipboard-copy-element/dist/clipboard-copy.js":"7ymsf"}],"7ymsf":[function(require,module,exports) {
 /*!
- * @georapbox/web-share-element
- * A custom element that implements the Web Share API to share user-defined data.
+ * @georapbox/clipboard-copy-element
+ * A custom element that implements the Clipboard API to copy text content from elements or input values to the clipboard.
  *
- * @version 3.1.1
- * @homepage https://github.com/georapbox/web-share-element#readme
+ * @version 3.0.2
+ * @homepage https://github.com/georapbox/clipboard-copy-element#readme
  * @author George Raptis <georapbox@gmail.com>
  * @license MIT
- */ function $c93ca68e362e1486$export$c37129e465f64ef0(a) {
-    return a !== null && typeof a == "object" ? "share" in navigator && "canShare" in navigator && navigator.canShare(a) : "share" in navigator;
-}
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ClipboardCopy", ()=>r);
+var i = "clipboard-copy";
+var o = "success", n = "error", h = document.createElement("template"), a = `
+  :host([hidden]),
+  [hidden],
+  ::slotted([hidden]) {
+    display: none !important;
+  }
+`;
+h.innerHTML = `
+  <style>${a}</style>
+  <button type="button" part="button">
+    <slot name="copy">Copy</slot>
+    <slot name="success" hidden>Copied!</slot>
+    <slot name="error" hidden>Error</slot>
+  </button>
+`;
+var r = class d extends HTMLElement {
+    #e = void 0;
+    #t = null;
+    #s = null;
+    #i = null;
+    #o = null;
+    constructor(){
+        super(), this.shadowRoot || this.attachShadow({
+            mode: "open"
+        }).appendChild(h.content.cloneNode(!0)), this.shadowRoot && (this.#t = this.shadowRoot.querySelector("button"), this.#s = this.shadowRoot.querySelector('slot[name="copy"]'), this.#i = this.shadowRoot.querySelector('slot[name="success"]'), this.#o = this.shadowRoot.querySelector('slot[name="error"]'));
+    }
+    static get observedAttributes() {
+        return [
+            "disabled"
+        ];
+    }
+    attributeChangedCallback(t, s, e) {
+        t === "disabled" && s !== e && this.#t && (this.#t.disabled = this.disabled, this.#t.setAttribute("aria-disabled", this.disabled.toString()), this.#t.part.contains("button") && this.#t.part.toggle("button--disabled", this.disabled));
+    }
+    connectedCallback() {
+        this.#n("value"), this.#n("from"), this.#n("disabled"), this.#n("feedbackDuration"), this.#t?.addEventListener("click", this.#r);
+    }
+    disconnectedCallback() {
+        this.#t?.removeEventListener("click", this.#r), this.#a();
+    }
+    get value() {
+        return this.getAttribute("value") || "";
+    }
+    set value(t) {
+        this.setAttribute("value", t != null ? t.toString() : t);
+    }
+    get from() {
+        return this.getAttribute("from") || "";
+    }
+    set from(t) {
+        this.setAttribute("from", t != null ? t.toString() : t);
+    }
+    get disabled() {
+        return this.hasAttribute("disabled");
+    }
+    set disabled(t) {
+        this.toggleAttribute("disabled", !!t);
+    }
+    get feedbackDuration() {
+        return Number(this.getAttribute("feedback-duration")) || 1e3;
+    }
+    set feedbackDuration(t) {
+        this.setAttribute("feedback-duration", t != null ? t.toString() : t);
+    }
+    async #d() {
+        if (!(!this.value && !this.from)) try {
+            let t = "";
+            if (this.value) t = this.value;
+            else if (this.from) {
+                let s = "getRootNode" in Element.prototype ? this.#t?.getRootNode({
+                    composed: !0
+                }) : this.#t?.ownerDocument;
+                if (!s || !(s instanceof Document || s instanceof ShadowRoot)) return;
+                let e = s.querySelector(this.from);
+                if (!e) return;
+                e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement ? t = e.value : e instanceof HTMLAnchorElement && e.hasAttribute("href") ? t = e.href : t = e.textContent || "";
+            }
+            await navigator.clipboard.writeText(t), this.#h(o), this.dispatchEvent(new CustomEvent(`${i}-success`, {
+                bubbles: !0,
+                composed: !0,
+                detail: {
+                    value: t
+                }
+            }));
+        } catch (t) {
+            this.#h(n), this.dispatchEvent(new CustomEvent(`${i}-error`, {
+                bubbles: !0,
+                composed: !0,
+                detail: {
+                    error: t
+                }
+            }));
+        }
+    }
+    #r = (t)=>{
+        t.preventDefault(), !(this.disabled || this.#e) && this.#d();
+    };
+    #h(t) {
+        this.#s && (this.#s.hidden = !0), this.#i && (this.#i.hidden = t !== o), this.#o && (this.#o.hidden = t !== n), this.#t?.part.remove("button--success"), this.#t?.part.remove("button--error"), this.#t?.part.add(`button--${t}`), this.#e && clearTimeout(this.#e), this.#e = setTimeout(()=>{
+            this.#s && (this.#s.hidden = !1), this.#i && (this.#i.hidden = !0), this.#o && (this.#o.hidden = !0), this.#t?.part.remove(`button--${t}`), this.#e = void 0;
+        }, this.feedbackDuration);
+    }
+    #a() {
+        this.#e && clearTimeout(this.#e), this.#e = void 0, this.#s && (this.#s.hidden = !1), this.#i && (this.#i.hidden = !0), this.#o && (this.#o.hidden = !0), this.#t?.part.remove("button--success"), this.#t?.part.remove("button--error");
+    }
+    #n(t) {
+        let s = this;
+        if (Object.prototype.hasOwnProperty.call(s, t)) {
+            let e = s[t];
+            delete s[t], s[t] = e;
+        }
+    }
+    static defineCustomElement(t = i) {
+        typeof window < "u" && !window.customElements.get(t) && window.customElements.define(t, d);
+    }
+};
 
-
-
-
-const $af97ba78aac738a8$var$styles = /* css */ `
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"1Rzot":[function(require,module,exports) {
+var _isWebShareSupportedJs = require("@georapbox/web-share-element/dist/is-web-share-supported.js");
+var _storageJs = require("../services/storage.js");
+var _constantsJs = require("../constants.js");
+const styles = /* css */ `
   :host {
     box-sizing: border-box;
   }
@@ -3475,9 +4074,9 @@ const $af97ba78aac738a8$var$styles = /* css */ `
     cursor: pointer;
   }
 `;
-const $af97ba78aac738a8$var$template = document.createElement("template");
-$af97ba78aac738a8$var$template.innerHTML = /* html */ `
-  <style>${$af97ba78aac738a8$var$styles}</style>
+const template = document.createElement("template");
+template.innerHTML = /* html */ `
+  <style>${styles}</style>
 
   <div class="result">
     <div class="result__actions">
@@ -3494,14 +4093,14 @@ $af97ba78aac738a8$var$template.innerHTML = /* html */ `
     </div>
   </div>
 `;
-class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
+class ScanResult extends HTMLElement {
     constructor(){
         super();
         if (!this.shadowRoot) {
             const shadowRoot = this.attachShadow({
                 mode: "open"
             });
-            shadowRoot.appendChild($af97ba78aac738a8$var$template.content.cloneNode(true));
+            shadowRoot.appendChild(template.content.cloneNode(true));
         }
     }
     get value() {
@@ -3520,7 +4119,7 @@ class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
     }
     connectedCallback() {
         this.#upgradeProperty("value");
-        if (!(0, $c93ca68e362e1486$export$c37129e465f64ef0)()) {
+        if (!(0, _isWebShareSupportedJs.isWebShareSupported)()) {
             const webShareEl = this.shadowRoot.querySelector("web-share");
             if (webShareEl) webShareEl.hidden = true;
         }
@@ -3532,7 +4131,7 @@ class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
         let resultItem;
         if (oldResultItem) oldResultItem.remove();
         try {
-            const [, settings] = await (0, $252772e6b65b7db3$export$4a647155031ece)();
+            const [, settings] = await (0, _storageJs.getSettings)();
             new URL(value);
             resultItem = document.createElement("a");
             resultItem.href = value;
@@ -3546,10 +4145,10 @@ class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
             resultItem = document.createElement("span");
         }
         resultItem.className = "result__item";
-        resultItem.classList.toggle("result__item--no-barcode", value === (0, $6814df9ff67e3af8$export$c263bd68c6f5ce7a));
+        resultItem.classList.toggle("result__item--no-barcode", value === (0, _constantsJs.NO_BARCODE_DETECTED));
         resultItem.textContent = value;
         baseEl?.insertBefore(resultItem, resultActionsEl);
-        const isValidValue = value !== (0, $6814df9ff67e3af8$export$c263bd68c6f5ce7a);
+        const isValidValue = value !== (0, _constantsJs.NO_BARCODE_DETECTED);
         const clipboarCopyEl = baseEl?.querySelector("custom-clipboard-copy");
         const webShareEl = baseEl?.querySelector("web-share");
         if (clipboarCopyEl && isValidValue) {
@@ -3559,7 +4158,7 @@ class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
             clipboarCopyEl.hidden = true;
             clipboarCopyEl.removeAttribute("value");
         }
-        if (webShareEl && (0, $c93ca68e362e1486$export$c37129e465f64ef0)() && isValidValue) {
+        if (webShareEl && (0, _isWebShareSupportedJs.isWebShareSupported)() && isValidValue) {
             webShareEl.setAttribute("share-text", value);
             webShareEl.hidden = false;
         } else {
@@ -3584,366 +4183,27 @@ class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
         }
     }
     static defineCustomElement(elementName = "scan-result") {
-        if (typeof window !== "undefined" && !window.customElements.get(elementName)) window.customElements.define(elementName, $af97ba78aac738a8$var$ScanResult);
+        if (typeof window !== "undefined" && !window.customElements.get(elementName)) window.customElements.define(elementName, ScanResult);
     }
 }
-$af97ba78aac738a8$var$ScanResult.defineCustomElement();
+ScanResult.defineCustomElement();
 
-
-async function $804fe225aa056ad8$export$d2033797c5a03713() {
-    const tabGroupEl = document.querySelector("a-tab-group");
-    const videoCaptureEl = document.querySelector("video-capture");
-    const cameraPanel = document.getElementById("cameraPanel");
-    const filePanel = document.getElementById("filePanel");
-    const scanInstructionsEl = document.getElementById("scanInstructions");
-    const scanBtn = document.getElementById("scanBtn");
-    const dropzoneEl = document.getElementById("dropzone");
-    const resizeObserverEl = document.querySelector("resize-observer");
-    const scanFrameEl = document.getElementById("scanFrame");
-    const torchButton = document.getElementById("torchButton");
-    const globalActionsEl = document.getElementById("globalActions");
-    const historyBtn = document.getElementById("historyBtn");
-    const historyDialog = document.getElementById("historyDialog");
-    const settingsBtn = document.getElementById("settingsBtn");
-    const settingsDialog = document.getElementById("settingsDialog");
-    const settingsForm = document.forms["settings-form"];
-    const cameraSelect = document.getElementById("cameraSelect");
-    let shouldScan = true;
-    let rafId;
-    // By default the dialog elements are hidden for browsers that don't support the dialog element.
-    // If the dialog element is supported, we remove the hidden attribute and the dialogs' visibility
-    // is controlled by using the `showModal()` and `close()` methods.
-    if ((0, $cdd676ababbe44c4$export$c694186e9d94f0)()) {
-        globalActionsEl?.removeAttribute("hidden");
-        historyDialog?.removeAttribute("hidden");
-        settingsDialog?.removeAttribute("hidden");
-    }
-    const { barcodeReader: barcodeReader, barcodeFormats: barcodeFormats, barcodeReaderError: barcodeReaderError } = await (0, $f8ab580094d06bc8$export$f21d9483ebeee00a).init();
-    if (barcodeReaderError) {
-        const alertEl = document.getElementById("barcodeReaderError");
-        shouldScan = false;
-        globalActionsEl?.setAttribute("hidden", "");
-        tabGroupEl?.setAttribute("hidden", "");
-        alertEl?.removeAttribute("hidden");
-        alertEl.textContent = barcodeReaderError?.message;
-        return; // Stop the script execution as BarcodeDetector API is not supported.
-    }
-    videoCaptureEl.addEventListener("video-capture:video-play", handleVideoCapturePlay, {
-        once: true
-    });
-    videoCaptureEl.addEventListener("video-capture:error", handleVideoCaptureError, {
-        once: true
-    });
-    (0, $6933dcbb9b79a9cd$export$682e9ed90a89bb4a).defineCustomElement();
-    const videoCaptureShadowRoot = videoCaptureEl?.shadowRoot;
-    const videoCaptureVideoEl = videoCaptureShadowRoot?.querySelector("video");
-    const videoCaptureActionsEl = videoCaptureShadowRoot?.querySelector('[part="actions-container"]');
-    dropzoneEl.accept = (0, $6814df9ff67e3af8$export$63e7bed68b07a85c).join(",");
-    (0, $3db046d89afd7d66$export$9d22ef9ff8e481fe)(settingsForm);
-    (0, $f1abed042a7c6930$export$f6bb24723b821792)(barcodeFormats);
-    (0, $4c5af2a63b39f23d$export$fa9e3380e441c420)((await (0, $252772e6b65b7db3$export$f9582a3c130d9538)())[1] || []);
-    /**
-   * Scans for barcodes.
-   * If a barcode is detected, it stops scanning and displays the result.
-   *
-   * @returns {Promise<void>} - A Promise that resolves when the barcode is detected.
-   */ async function scan() {
-        (0, $026bdfcd1c53bf0b$export$bef1f36f5486a6a3)("Scanning...");
-        scanInstructionsEl?.removeAttribute("hidden");
-        try {
-            const barcode = await barcodeReader.detect(videoCaptureVideoEl);
-            const barcodeValue = barcode?.rawValue ?? "";
-            if (!barcodeValue) throw new Error((0, $6814df9ff67e3af8$export$c263bd68c6f5ce7a));
-            window.cancelAnimationFrame(rafId);
-            (0, $60dfa2f9ba25b132$export$97c08f0895810b94)(cameraPanel, barcodeValue);
-            (0, $4c5af2a63b39f23d$export$7a6a9d84993ff4e)(barcodeValue);
-            scanInstructionsEl?.setAttribute("hidden", "");
-            scanBtn?.removeAttribute("hidden");
-            scanFrameEl?.setAttribute("hidden", "");
-            videoCaptureActionsEl?.setAttribute("hidden", "");
-            (0, $e5047ade60bce166$export$9b466d13e2031a67)();
-            return;
-        } catch  {
-        // If no barcode is detected, the error is caught here.
-        // We can ignore the error and continue scanning.
-        }
-        if (shouldScan) rafId = window.requestAnimationFrame(()=>scan());
-    }
-    /**
-   * Handles the click event on the scan button.
-   * It is responsible for clearing previous results and starting the scan process again.
-   */ function handleScanButtonClick() {
-        scanBtn?.setAttribute("hidden", "");
-        scanFrameEl?.removeAttribute("hidden");
-        videoCaptureActionsEl?.removeAttribute("hidden");
-        (0, $60dfa2f9ba25b132$export$ad20350fbdf13c97)(cameraPanel);
-        scan();
-    }
-    /**
-   * Handles the tab show event.
-   * It is responsible for starting or stopping the scan process based on the selected tab.
-   *
-   * @param {CustomEvent} evt - The event object.
-   */ function handleTabShow(evt) {
-        const tabId = evt.detail.tabId;
-        const videoCaptureEl = document.querySelector("video-capture"); // Get the latest instance of video-capture element to ensure we don't use the cached one.
-        if (tabId === "cameraTab") {
-            shouldScan = true;
-            if (!videoCaptureEl) return;
-            const hasResult = cameraPanel.querySelector("scan-result") != null;
-            if (!videoCaptureEl.loading && !hasResult) {
-                scanFrameEl?.removeAttribute("hidden");
-                videoCaptureActionsEl?.removeAttribute("hidden");
-                scan();
-            }
-            if (typeof videoCaptureEl.startVideoStream === "function") {
-                const videoDeviceId = cameraSelect?.value || undefined;
-                videoCaptureEl.startVideoStream(videoDeviceId);
-            }
-        } else if (tabId === "fileTab") {
-            shouldScan = false;
-            if (videoCaptureEl != null && typeof videoCaptureEl.stopVideoStream === "function") videoCaptureEl.stopVideoStream();
-            scanFrameEl?.setAttribute("hidden", "");
-            videoCaptureActionsEl?.setAttribute("hidden", "");
-        }
-    }
-    /**
-   * Handles the selection of a file.
-   * It is responsible for displaying the selected file in the dropzone.
-   *
-   * @param {File} file - The selected file.
-   */ function handleFileSelect(file) {
-        if (!file) return;
-        const image = new Image();
-        const reader = new FileReader();
-        reader.onload = (evt)=>{
-            const data = evt.target.result;
-            image.onload = async ()=>{
-                try {
-                    const barcode = await barcodeReader.detect(image);
-                    const barcodeValue = barcode?.rawValue ?? "";
-                    if (!barcodeValue) throw new Error((0, $6814df9ff67e3af8$export$c263bd68c6f5ce7a));
-                    (0, $60dfa2f9ba25b132$export$97c08f0895810b94)(filePanel, barcodeValue);
-                    (0, $4c5af2a63b39f23d$export$7a6a9d84993ff4e)(barcodeValue);
-                    (0, $e5047ade60bce166$export$9b466d13e2031a67)();
-                } catch (err) {
-                    (0, $026bdfcd1c53bf0b$export$bef1f36f5486a6a3)(err);
-                    (0, $60dfa2f9ba25b132$export$97c08f0895810b94)(filePanel, (0, $6814df9ff67e3af8$export$c263bd68c6f5ce7a));
-                    (0, $e5047ade60bce166$export$9b466d13e2031a67)({
-                        success: false
-                    });
-                }
-            };
-            image.src = data;
-            image.alt = "Image preview";
-            dropzoneEl.replaceChildren();
-            const preview = document.createElement("div");
-            preview.className = "dropzone-preview";
-            preview.setAttribute("aria-hidden", "true");
-            const imageWrapper = document.createElement("div");
-            imageWrapper.className = "dropzone-preview__image-wrapper";
-            const fileNameWrapper = document.createElement("div");
-            fileNameWrapper.className = "dropzone-preview__file-name";
-            fileNameWrapper.textContent = file.name;
-            imageWrapper.appendChild(image);
-            preview.appendChild(imageWrapper);
-            preview.appendChild(fileNameWrapper);
-            dropzoneEl.prepend(preview);
-        };
-        reader.readAsDataURL(file);
-    }
-    /**
-   * Handles the drop event on the dropzone.
-   *
-   * @param {CustomEvent} evt - The event object.
-   */ function handleFileDrop(evt) {
-        const file = evt.detail.acceptedFiles[0];
-        handleFileSelect(file);
-    }
-    /**
-   * Handles the resize event on the video-capture element.
-   * It is responsible for resizing the scan frame based on the video element.
-   */ function handleVideoCaptureResize() {
-        (0, $e31ba8761bd275e4$export$1404f0e91c73fec)(videoCaptureEl.shadowRoot.querySelector("video"), scanFrameEl);
-    }
-    /**
-   * Handles the video play event on the video-capture element.
-   * It is responsible for displaying the scan frame and starting the scan process.
-   * It also handles the zoom controls if the browser supports it.
-   *
-   * @param {CustomEvent} evt - The event object.
-   */ async function handleVideoCapturePlay(evt) {
-        scanFrameEl?.removeAttribute("hidden");
-        (0, $e31ba8761bd275e4$export$1404f0e91c73fec)(evt.detail.video, scanFrameEl);
-        scan();
-        const trackSettings = evt.target.getTrackSettings();
-        const trackCapabilities = evt.target.getTrackCapabilities();
-        const zoomLevelEl = document.getElementById("zoomLevel");
-        if (trackCapabilities?.torch) {
-            torchButton?.removeAttribute("hidden");
-            if (videoCaptureEl.hasAttribute("torch")) (0, $5594645da3ef4bd9$export$d1bd0b12fe0d046)({
-                el: torchButton,
-                isTorchOn: true
-            });
-        }
-        if (trackSettings?.zoom && trackCapabilities?.zoom) {
-            const zoomControls = document.getElementById("zoomControls");
-            const minZoom = trackCapabilities?.zoom?.min || 0;
-            const maxZoom = trackCapabilities?.zoom?.max || 10;
-            let currentZoom = trackSettings?.zoom || 1;
-            zoomControls?.removeAttribute("hidden");
-            zoomLevelEl.textContent = currentZoom;
-            const handleZoomControlsClick = (evt)=>{
-                const zoomInBtn = evt.target.closest('[data-action="zoom-in"]');
-                const zoomOutBtn = evt.target.closest('[data-action="zoom-out"]');
-                if (zoomInBtn && currentZoom < maxZoom) currentZoom += 0.5;
-                if (zoomOutBtn && currentZoom > minZoom) currentZoom -= 0.5;
-                zoomLevelEl.textContent = currentZoom;
-                videoCaptureEl.zoom = currentZoom;
-            };
-            zoomControls.addEventListener("click", handleZoomControlsClick);
-        }
-        const videoInputDevices = await (0, $6933dcbb9b79a9cd$export$682e9ed90a89bb4a).getVideoInputDevices();
-        videoInputDevices.forEach((device, index)=>{
-            const option = document.createElement("option");
-            option.value = device.deviceId;
-            option.textContent = device.label || `Camera ${index + 1}`;
-            cameraSelect.appendChild(option);
-        });
-        if (videoInputDevices.length > 1) cameraSelect?.removeAttribute("hidden");
-    }
-    /**
-   * Handles the error event on the video-capture element.
-   * It is responsible for displaying an error message if the camera cannot be accessed or permission is denied.
-   *
-   * @param {CustomEvent} evt - The event object.
-   */ function handleVideoCaptureError(evt) {
-        const error = evt.detail.error;
-        if (error.name === "NotFoundError") // If the browser cannot find all media tracks with the specified types that meet the constraints given.
-        return;
-        const errorMessage = error.name === "NotAllowedError" ? "Permission to use webcam was denied or video Autoplay is disabled. Reload the page to give appropriate permissions to webcam." : error.message;
-        cameraPanel.innerHTML = /* html */ `<div class="alert alert-danger" role="alert" style="margin: 0;">${errorMessage}</div>`;
-    }
-    /**
-   * Handles the settings button click event.
-   * It is responsible for displaying the settings dialog.
-   */ function handleSettingsButtonClick() {
-        settingsDialog.open = true;
-    }
-    /**
-   * Handles the change event on the settings form.
-   * It is responsible for saving the settings to persistent storage and updating the settings.
-   *
-   * @param {Event} evt - The event object.
-   */ function handleSettingsFormChange(evt) {
-        const settings = {};
-        const checkboxes = evt.currentTarget.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach((item)=>settings[item.name] = item.checked);
-        (0, $252772e6b65b7db3$export$dc86d17a64679bc7)(settings);
-    }
-    /**
-   * Handles the click event on the history button.
-   * It is responsible for displaying the history dialog.
-   */ function handleHistoryButtonClick() {
-        historyDialog.open = true;
-    }
-    /**
-   * Handles the click event on the history dialog.
-   * It is responsible for closing the dialog, deleting an item from the history, or emptying the history.
-   *
-   * @param {MouseEvent} evt - The event object.
-   */ function handleHistoryDialogClick(evt) {
-        const target = evt.target;
-        // Handle delete action
-        if (target.closest('[data-action="delete"]')) {
-            const value = target.closest("li").dataset.value;
-            if (window.confirm(`Delete history item ${value}?`)) {
-                (0, $4c5af2a63b39f23d$export$3a61248021dae916)(value);
-                return;
-            }
-        }
-        // Handle empty history action
-        if (target.closest("#emptyHistoryBtn")) {
-            if (window.confirm("Empty history? This action cannot be undone.")) {
-                (0, $4c5af2a63b39f23d$export$9f74b61e5d33cda2)();
-                return;
-            }
-        }
-    }
-    /**
-   * Handles the click event on the torch button.
-   * It is responsible for toggling the torch on and off.
-   *
-   * @param {MouseEvent} evt - The event object.
-   */ function handleTorchButtonClick(evt) {
-        videoCaptureEl.torch = !videoCaptureEl.torch;
-        (0, $5594645da3ef4bd9$export$d1bd0b12fe0d046)({
-            el: evt.currentTarget,
-            isTorchOn: videoCaptureEl.hasAttribute("torch")
-        });
-    }
-    /**
-   * Handles the change event on the camera select element.
-   * It is responsible for restarting the video stream with the selected video input device id.
-   *
-   * @param {Event} evt - The event object.
-   */ function handleCameraSelectChange(evt) {
-        if (typeof videoCaptureEl.restartVideoStream !== "function") return;
-        const videoDeviceId = evt.target.value || undefined;
-        videoCaptureEl.restartVideoStream(videoDeviceId);
-    }
-    /**
-   * Handles the visibility change event on the document.
-   * It is responsible for stopping the scan process when the document is not visible.
-   */ function handleDocumentVisibilityChange() {
-        const selectedTab = tabGroupEl.querySelector("[selected]");
-        const tabId = selectedTab.getAttribute("id");
-        if (tabId !== "cameraTab") return;
-        if (document.visibilityState === "hidden") {
-            shouldScan = false;
-            if (videoCaptureEl != null && typeof videoCaptureEl.stopVideoStream === "function") videoCaptureEl.stopVideoStream();
-        } else {
-            shouldScan = true;
-            // Get the latest instance of video-capture element to ensure we don't use the cached one.
-            const videoCaptureEl = document.querySelector("video-capture");
-            if (!videoCaptureEl) return;
-            if (!videoCaptureEl.loading && !cameraPanel.querySelector("scan-result")) scan();
-            if (typeof videoCaptureEl.startVideoStream === "function") {
-                const videoDeviceId = cameraSelect?.value || undefined;
-                videoCaptureEl.startVideoStream(videoDeviceId);
-            }
-        }
-    }
-    /**
-   * Handles the escape key press event on the document.
-   * It is responsible for triggering the scan button click event if there is already a barcode detected.
-   */ function handleDocumentEscapeKey() {
-        const cameraTabSelected = tabGroupEl.querySelector("#cameraTab").hasAttribute("selected");
-        const scanBtnVisible = !scanBtn.hidden;
-        const settingsDialogOpen = settingsDialog.hasAttribute("open");
-        const historyDialogOpen = historyDialog.hasAttribute("open");
-        const anyDialogOpen = settingsDialogOpen || historyDialogOpen;
-        if (!scanBtnVisible || !cameraTabSelected || anyDialogOpen) return;
-        scanBtn.click();
-    }
-    /**
-   * Handles the key down event on the document.
-   */ function handleDocumentKeyDown(evt) {
-        if (evt.key === "Escape") handleDocumentEscapeKey();
-    }
-    scanBtn.addEventListener("click", handleScanButtonClick);
-    tabGroupEl.addEventListener("a-tab-show", (0, $1b63c430b02266a3$export$61fc7d43ac8f84b0)(handleTabShow, 250));
-    dropzoneEl.addEventListener("files-dropzone-drop", handleFileDrop);
-    resizeObserverEl.addEventListener("resize-observer:resize", handleVideoCaptureResize);
-    settingsBtn.addEventListener("click", handleSettingsButtonClick);
-    settingsForm.addEventListener("change", handleSettingsFormChange);
-    historyBtn.addEventListener("click", handleHistoryButtonClick);
-    historyDialog.addEventListener("click", handleHistoryDialogClick);
-    torchButton.addEventListener("click", handleTorchButtonClick);
-    cameraSelect.addEventListener("change", handleCameraSelectChange);
-    document.addEventListener("visibilitychange", handleDocumentVisibilityChange);
-    document.addEventListener("keydown", handleDocumentKeyDown);
+},{"@georapbox/web-share-element/dist/is-web-share-supported.js":"6lrKZ","../services/storage.js":"hD7R4","../constants.js":"lop3z"}],"6lrKZ":[function(require,module,exports) {
+/*!
+ * @georapbox/web-share-element
+ * A custom element that implements the Web Share API to share user-defined data.
+ *
+ * @version 3.1.1
+ * @homepage https://github.com/georapbox/web-share-element#readme
+ * @author George Raptis <georapbox@gmail.com>
+ * @license MIT
+ */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "isWebShareSupported", ()=>r);
+function r(a) {
+    return a !== null && typeof a == "object" ? "share" in navigator && "canShare" in navigator && navigator.canShare(a) : "share" in navigator;
 }
 
-})();
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}]},["kTXNP","2gcWu"], "2gcWu", "parcelRequirea202")
+
 //# sourceMappingURL=barcode-scanner.js.map
