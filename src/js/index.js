@@ -25,7 +25,7 @@ import { VideoCapture } from './components/video-capture.js';
 import './components/clipboard-copy.js';
 import './components/scan-result.js';
 
-(async function () {
+export async function setupVideo() {
   const tabGroupEl = document.querySelector('a-tab-group');
   const videoCaptureEl = document.querySelector('video-capture');
   const cameraPanel = document.getElementById('cameraPanel');
@@ -511,4 +511,4 @@ import './components/scan-result.js';
   cameraSelect.addEventListener('change', handleCameraSelectChange);
   document.addEventListener('visibilitychange', handleDocumentVisibilityChange);
   document.addEventListener('keydown', handleDocumentKeyDown);
-})();
+};

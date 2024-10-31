@@ -3590,7 +3590,7 @@ class $af97ba78aac738a8$var$ScanResult extends HTMLElement {
 $af97ba78aac738a8$var$ScanResult.defineCustomElement();
 
 
-(async function() {
+async function $804fe225aa056ad8$export$d2033797c5a03713() {
     const tabGroupEl = document.querySelector("a-tab-group");
     const videoCaptureEl = document.querySelector("video-capture");
     const cameraPanel = document.getElementById("cameraPanel");
@@ -3943,7 +3943,7 @@ $af97ba78aac738a8$var$ScanResult.defineCustomElement();
     cameraSelect.addEventListener("change", handleCameraSelectChange);
     document.addEventListener("visibilitychange", handleDocumentVisibilityChange);
     document.addEventListener("keydown", handleDocumentKeyDown);
-})();
+}
 
 })();
 //# sourceMappingURL=barcode-scanner.js.map
