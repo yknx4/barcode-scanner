@@ -1,176 +1,49 @@
-// modules are defined as an array
-// [ module function, map of requires ]
-//
-// map of requires is short require name -> numeric require
-//
-// anything defined in a previous bundle is accessed via the
-// orig method which is the require for previous bundles
+(function () {
 
-(function (modules, entry, mainEntry, parcelRequireName, globalName) {
-  /* eslint-disable no-undef */
-  var globalObject =
-    typeof globalThis !== 'undefined'
-      ? globalThis
-      : typeof self !== 'undefined'
-      ? self
-      : typeof window !== 'undefined'
-      ? window
-      : typeof global !== 'undefined'
-      ? global
-      : {};
-  /* eslint-enable no-undef */
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
 
-  // Save the require from previous bundle to this closure if any
-  var previousRequire =
-    typeof globalObject[parcelRequireName] === 'function' &&
-    globalObject[parcelRequireName];
+      var $parcel$global =
+        typeof globalThis !== 'undefined'
+          ? globalThis
+          : typeof self !== 'undefined'
+          ? self
+          : typeof window !== 'undefined'
+          ? window
+          : typeof global !== 'undefined'
+          ? global
+          : {};
+  var parcelRequire = $parcel$global["parcelRequirea202"];
+var parcelRegister = parcelRequire.register;
+parcelRegister("8cmpF", function(module, exports) {
 
-  var cache = previousRequire.cache || {};
-  // Do not use `require` to prevent Webpack from trying to bundle this call
-  var nodeRequire =
-    typeof module !== 'undefined' &&
-    typeof module.require === 'function' &&
-    module.require.bind(module);
+$parcel$export(module.exports, "BarcodeDetector", function () { return (parcelRequire("1KbDr")).BarcodeDetector; });
+$parcel$export(module.exports, "setZXingModuleOverrides", function () { return (parcelRequire("1KbDr")).setZXingModuleOverrides; });
+parcelRequire("aB5sj");
 
-  function newRequire(name, jumped) {
-    if (!cache[name]) {
-      if (!modules[name]) {
-        // if we cannot find the module within our internal map or
-        // cache jump to the current global require ie. the last bundle
-        // that was added to the page.
-        var currentRequire =
-          typeof globalObject[parcelRequireName] === 'function' &&
-          globalObject[parcelRequireName];
-        if (!jumped && currentRequire) {
-          return currentRequire(name, true);
-        }
+var $1KbDr = parcelRequire("1KbDr");
 
-        // If there are other bundles on this page the require from the
-        // previous one is saved to 'previousRequire'. Repeat this as
-        // many times as there are bundles until the module is found or
-        // we exhaust the require chain.
-        if (previousRequire) {
-          return previousRequire(name, true);
-        }
+});
+parcelRegister("aB5sj", function(module, exports) {
 
-        // Try the node require function if it exists.
-        if (nodeRequire && typeof name === 'string') {
-          return nodeRequire(name);
-        }
+var $1KbDr = parcelRequire("1KbDr");
+var $7b719772d42d4b5f$var$e;
+($7b719772d42d4b5f$var$e = globalThis.BarcodeDetector) != null || (globalThis.BarcodeDetector = (0, $1KbDr.BarcodeDetector));
 
-        var err = new Error("Cannot find module '" + name + "'");
-        err.code = 'MODULE_NOT_FOUND';
-        throw err;
-      }
+});
+parcelRegister("1KbDr", function(module, exports) {
 
-      localRequire.resolve = resolve;
-      localRequire.cache = {};
+$parcel$export(module.exports, "setZXingModuleOverrides", function () { return $14531cd149ccf13b$export$dfa3a52876bf392; });
+$parcel$export(module.exports, "BarcodeDetector", function () { return $14531cd149ccf13b$export$8e93fbbb640edaee; });
 
-      var module = (cache[name] = new newRequire.Module(name));
-
-      modules[name][0].call(
-        module.exports,
-        localRequire,
-        module,
-        module.exports,
-        this
-      );
-    }
-
-    return cache[name].exports;
-
-    function localRequire(x) {
-      var res = localRequire.resolve(x);
-      return res === false ? {} : newRequire(res);
-    }
-
-    function resolve(x) {
-      var id = modules[name][1][x];
-      return id != null ? id : x;
-    }
-  }
-
-  function Module(moduleName) {
-    this.id = moduleName;
-    this.bundle = newRequire;
-    this.exports = {};
-  }
-
-  newRequire.isParcelRequire = true;
-  newRequire.Module = Module;
-  newRequire.modules = modules;
-  newRequire.cache = cache;
-  newRequire.parent = previousRequire;
-  newRequire.register = function (id, exports) {
-    modules[id] = [
-      function (require, module) {
-        module.exports = exports;
-      },
-      {},
-    ];
-  };
-
-  Object.defineProperty(newRequire, 'root', {
-    get: function () {
-      return globalObject[parcelRequireName];
-    },
-  });
-
-  globalObject[parcelRequireName] = newRequire;
-
-  for (var i = 0; i < entry.length; i++) {
-    newRequire(entry[i]);
-  }
-
-  if (mainEntry) {
-    // Expose entry point to Node, AMD or browser globals
-    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
-    var mainExports = newRequire(mainEntry);
-
-    // CommonJS
-    if (typeof exports === 'object' && typeof module !== 'undefined') {
-      module.exports = mainExports;
-
-      // RequireJS
-    } else if (typeof define === 'function' && define.amd) {
-      define(function () {
-        return mainExports;
-      });
-
-      // <script>
-    } else if (globalName) {
-      this[globalName] = mainExports;
-    }
-  }
-})({"gllhm":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "BarcodeDetector", ()=>(0, _pureJs.BarcodeDetector));
-parcelHelpers.export(exports, "setZXingModuleOverrides", ()=>(0, _pureJs.setZXingModuleOverrides));
-var _sideEffectsJs = require("./side-effects.js");
-var _pureJs = require("./pure.js");
-
-},{"./side-effects.js":"3bi33","./pure.js":"1NaWU","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"3bi33":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "setZXingModuleOverrides", ()=>(0, _pureJs.setZXingModuleOverrides));
-var _pureJs = require("./pure.js");
-var e;
-(e = globalThis.BarcodeDetector) != null || (globalThis.BarcodeDetector = (0, _pureJs.BarcodeDetector));
-
-},{"./pure.js":"1NaWU","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"1NaWU":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "BarcodeDetector", ()=>To);
-parcelHelpers.export(exports, "setZXingModuleOverrides", ()=>Co);
-var process = require("777cf5a1c5cdae66");
-var global = arguments[3];
-var Ze = (o)=>{
+var $chdCp = parcelRequire("chdCp");
+var $14531cd149ccf13b$var$Ze = (o)=>{
     throw TypeError(o);
 };
-var Je = (o, d, p)=>d.has(o) || Ze("Cannot " + p);
-var Ke = (o, d, p)=>(Je(o, d, "read from private field"), p ? p.call(o) : d.get(o)), tr = (o, d, p)=>d.has(o) ? Ze("Cannot add the same private member more than once") : d instanceof WeakSet ? d.add(o) : d.set(o, p), er = (o, d, p, y)=>(Je(o, d, "write to private field"), y ? y.call(o, p) : d.set(o, p), p);
-const rr = [
+var $14531cd149ccf13b$var$Je = (o, d, p)=>d.has(o) || $14531cd149ccf13b$var$Ze("Cannot " + p);
+var $14531cd149ccf13b$var$Ke = (o, d, p)=>($14531cd149ccf13b$var$Je(o, d, "read from private field"), p ? p.call(o) : d.get(o)), $14531cd149ccf13b$var$tr = (o, d, p)=>d.has(o) ? $14531cd149ccf13b$var$Ze("Cannot add the same private member more than once") : d instanceof WeakSet ? d.add(o) : d.set(o, p), $14531cd149ccf13b$var$er = (o, d, p, y)=>($14531cd149ccf13b$var$Je(o, d, "write to private field"), y ? y.call(o, p) : d.set(o, p), p);
+const $14531cd149ccf13b$var$rr = [
     "Aztec",
     "Codabar",
     "Code128",
@@ -194,29 +67,29 @@ const rr = [
     "UPC-A",
     "UPC-E"
 ];
-function za(o) {
+function $14531cd149ccf13b$var$za(o) {
     return o.join("|");
 }
-function Na(o) {
-    const d = nr(o);
-    let p = 0, y = rr.length - 1;
+function $14531cd149ccf13b$var$Na(o) {
+    const d = $14531cd149ccf13b$var$nr(o);
+    let p = 0, y = $14531cd149ccf13b$var$rr.length - 1;
     for(; p <= y;){
-        const c = Math.floor((p + y) / 2), $ = rr[c], x = nr($);
+        const c = Math.floor((p + y) / 2), $ = $14531cd149ccf13b$var$rr[c], x = $14531cd149ccf13b$var$nr($);
         if (x === d) return $;
         x < d ? p = c + 1 : y = c - 1;
     }
     return "None";
 }
-function nr(o) {
+function $14531cd149ccf13b$var$nr(o) {
     return o.toLowerCase().replace(/_-\[\]/g, "");
 }
-function Ga(o, d) {
+function $14531cd149ccf13b$var$Ga(o, d) {
     return o.Binarizer[d];
 }
-function Xa(o, d) {
+function $14531cd149ccf13b$var$Xa(o, d) {
     return o.CharacterSet[d];
 }
-const Ya = [
+const $14531cd149ccf13b$var$Ya = [
     "Text",
     "Binary",
     "Mixed",
@@ -224,16 +97,16 @@ const Ya = [
     "ISO15434",
     "UnknownECI"
 ];
-function qa(o) {
-    return Ya[o.value];
+function $14531cd149ccf13b$var$qa(o) {
+    return $14531cd149ccf13b$var$Ya[o.value];
 }
-function Qa(o, d) {
+function $14531cd149ccf13b$var$Qa(o, d) {
     return o.EanAddOnSymbol[d];
 }
-function Za(o, d) {
+function $14531cd149ccf13b$var$Za(o, d) {
     return o.TextMode[d];
 }
-const st = {
+const $14531cd149ccf13b$var$st = {
     formats: [],
     tryHarder: !0,
     tryRotate: !0,
@@ -254,85 +127,85 @@ const st = {
     textMode: "Plain",
     characterSet: "Unknown"
 };
-function or(o, d) {
+function $14531cd149ccf13b$var$or(o, d) {
     return {
         ...d,
-        formats: za(d.formats),
-        binarizer: Ga(o, d.binarizer),
-        eanAddOnSymbol: Qa(o, d.eanAddOnSymbol),
-        textMode: Za(o, d.textMode),
-        characterSet: Xa(o, d.characterSet)
+        formats: $14531cd149ccf13b$var$za(d.formats),
+        binarizer: $14531cd149ccf13b$var$Ga(o, d.binarizer),
+        eanAddOnSymbol: $14531cd149ccf13b$var$Qa(o, d.eanAddOnSymbol),
+        textMode: $14531cd149ccf13b$var$Za(o, d.textMode),
+        characterSet: $14531cd149ccf13b$var$Xa(o, d.characterSet)
     };
 }
-function ir(o) {
+function $14531cd149ccf13b$var$ir(o) {
     return {
         ...o,
-        format: Na(o.format),
+        format: $14531cd149ccf13b$var$Na(o.format),
         eccLevel: o.eccLevel,
-        contentType: qa(o.contentType)
+        contentType: $14531cd149ccf13b$var$qa(o.contentType)
     };
 }
-const Ja = {
+const $14531cd149ccf13b$var$Ja = {
     locateFile: (o, d)=>{
         const p = o.match(/_(.+?)\.wasm$/);
         return p ? `https://fastly.jsdelivr.net/npm/zxing-wasm@1.2.14/dist/${p[1]}/${o}` : d + o;
     }
 };
-let se = /* @__PURE__ */ new WeakMap();
-function ce(o, d) {
+let $14531cd149ccf13b$var$se = /* @__PURE__ */ new WeakMap();
+function $14531cd149ccf13b$var$ce(o, d) {
     var p;
-    const y = se.get(o);
+    const y = $14531cd149ccf13b$var$se.get(o);
     if (y != null && y.modulePromise && d === void 0) return y.modulePromise;
-    const c = (p = y == null ? void 0 : y.moduleOverrides) != null ? p : Ja, $ = o({
+    const c = (p = y == null ? void 0 : y.moduleOverrides) != null ? p : $14531cd149ccf13b$var$Ja, $ = o({
         ...c
     });
-    return se.set(o, {
+    return $14531cd149ccf13b$var$se.set(o, {
         moduleOverrides: c,
         modulePromise: $
     }), $;
 }
-function Ka(o, d) {
-    se.set(o, {
+function $14531cd149ccf13b$var$Ka(o, d) {
+    $14531cd149ccf13b$var$se.set(o, {
         moduleOverrides: d
     });
 }
-async function to(o, d, p = st) {
+async function $14531cd149ccf13b$var$to(o, d, p = $14531cd149ccf13b$var$st) {
     const y = {
-        ...st,
+        ...$14531cd149ccf13b$var$st,
         ...p
-    }, c = await ce(o), { size: $ } = d, x = new Uint8Array(await d.arrayBuffer()), k = c._malloc($);
+    }, c = await $14531cd149ccf13b$var$ce(o), { size: $ } = d, x = new Uint8Array(await d.arrayBuffer()), k = c._malloc($);
     c.HEAPU8.set(x, k);
-    const V = c.readBarcodesFromImage(k, $, or(c, y));
+    const V = c.readBarcodesFromImage(k, $, $14531cd149ccf13b$var$or(c, y));
     c._free(k);
     const W = [];
-    for(let I = 0; I < V.size(); ++I)W.push(ir(V.get(I)));
+    for(let I = 0; I < V.size(); ++I)W.push($14531cd149ccf13b$var$ir(V.get(I)));
     return W;
 }
-async function eo(o, d, p = st) {
+async function $14531cd149ccf13b$var$eo(o, d, p = $14531cd149ccf13b$var$st) {
     const y = {
-        ...st,
+        ...$14531cd149ccf13b$var$st,
         ...p
-    }, c = await ce(o), { data: $, width: x, height: k, data: { byteLength: V } } = d, W = c._malloc(V);
+    }, c = await $14531cd149ccf13b$var$ce(o), { data: $, width: x, height: k, data: { byteLength: V } } = d, W = c._malloc(V);
     c.HEAPU8.set($, W);
-    const I = c.readBarcodesFromPixmap(W, x, k, or(c, y));
+    const I = c.readBarcodesFromPixmap(W, x, k, $14531cd149ccf13b$var$or(c, y));
     c._free(W);
     const N = [];
-    for(let L = 0; L < I.size(); ++L)N.push(ir(I.get(L)));
+    for(let L = 0; L < I.size(); ++L)N.push($14531cd149ccf13b$var$ir(I.get(L)));
     return N;
 }
 ({
-    ...st,
+    ...$14531cd149ccf13b$var$st,
     formats: [
-        ...st.formats
+        ...$14531cd149ccf13b$var$st.formats
     ]
 });
-var Ut = (()=>{
+var $14531cd149ccf13b$var$Ut = (()=>{
     var o, d = typeof document < "u" && ((o = document.currentScript) == null ? void 0 : o.tagName.toUpperCase()) === "SCRIPT" ? document.currentScript.src : void 0;
     return function(p = {}) {
         var y, c = p, $, x, k = new Promise((t, e)=>{
             $ = t, x = e;
         }), V = typeof window == "object", W = typeof Bun < "u", I = typeof importScripts == "function";
-        typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && process.type;
+        typeof $chdCp == "object" && typeof $chdCp.versions == "object" && typeof $chdCp.versions.node == "string" && $chdCp.type;
         var N = Object.assign({}, c), L = "./this.program", R = "";
         function ut(t) {
             return c.locateFile ? c.locateFile(t, R) : R + t;
@@ -1370,7 +1243,7 @@ var Ut = (()=>{
                 var r = typeof $$$embind_global$$$ == "object" && e.$$$embind_global$$$ == e;
                 return r || delete e.$$$embind_global$$$, r;
             }
-            if (typeof $$$embind_global$$$ == "object" || (typeof global == "object" && t(global) ? $$$embind_global$$$ = global : typeof self == "object" && t(self) && ($$$embind_global$$$ = self), typeof $$$embind_global$$$ == "object")) return $$$embind_global$$$;
+            if (typeof $$$embind_global$$$ == "object" || (typeof $parcel$global == "object" && t($parcel$global) ? $$$embind_global$$$ = $parcel$global : typeof self == "object" && t(self) && ($$$embind_global$$$ = self), typeof $$$embind_global$$$ == "object")) return $$$embind_global$$$;
             throw Error("unable to get global object.");
         }, Zn = (t)=>t === 0 ? Y.toHandle(Re()) : (t = Qn(t), Y.toHandle(Re()[t])), Jn = (t)=>{
             var e = ae.length;
@@ -1764,19 +1637,19 @@ var Ut = (()=>{
         return Ge(), y = k, y;
     };
 })();
-function ro(o) {
-    return ce(Ut, o);
+function $14531cd149ccf13b$var$ro(o) {
+    return $14531cd149ccf13b$var$ce($14531cd149ccf13b$var$Ut, o);
 }
-function Co(o) {
-    return Ka(Ut, o);
+function $14531cd149ccf13b$export$dfa3a52876bf392(o) {
+    return $14531cd149ccf13b$var$Ka($14531cd149ccf13b$var$Ut, o);
 }
-async function no(o, d) {
-    return to(Ut, o, d);
+async function $14531cd149ccf13b$var$no(o, d) {
+    return $14531cd149ccf13b$var$to($14531cd149ccf13b$var$Ut, o, d);
 }
-async function ao(o, d) {
-    return eo(Ut, o, d);
+async function $14531cd149ccf13b$var$ao(o, d) {
+    return $14531cd149ccf13b$var$eo($14531cd149ccf13b$var$Ut, o, d);
 }
-const sr = [
+const $14531cd149ccf13b$var$sr = [
     [
         "aztec",
         "Aztec"
@@ -1861,48 +1734,48 @@ const sr = [
         "matrix_codes",
         "Matrix-Codes"
     ]
-], oo = [
-    ...sr,
+], $14531cd149ccf13b$var$oo = [
+    ...$14531cd149ccf13b$var$sr,
     [
         "unknown"
     ]
-].map((o)=>o[0]), ue = new Map(sr);
-function io(o) {
-    for (const [d, p] of ue)if (o === p) return d;
+].map((o)=>o[0]), $14531cd149ccf13b$var$ue = new Map($14531cd149ccf13b$var$sr);
+function $14531cd149ccf13b$var$io(o) {
+    for (const [d, p] of $14531cd149ccf13b$var$ue)if (o === p) return d;
     return "unknown";
 }
-function so(o) {
-    if (ur(o)) return {
+function $14531cd149ccf13b$var$so(o) {
+    if ($14531cd149ccf13b$var$ur(o)) return {
         width: o.naturalWidth,
         height: o.naturalHeight
     };
-    if (cr(o)) return {
+    if ($14531cd149ccf13b$var$cr(o)) return {
         width: o.width.baseVal.value,
         height: o.height.baseVal.value
     };
-    if (lr(o)) return {
+    if ($14531cd149ccf13b$var$lr(o)) return {
         width: o.videoWidth,
         height: o.videoHeight
     };
-    if (fr(o)) return {
+    if ($14531cd149ccf13b$var$fr(o)) return {
         width: o.width,
         height: o.height
     };
-    if (pr(o)) return {
+    if ($14531cd149ccf13b$var$pr(o)) return {
         width: o.displayWidth,
         height: o.displayHeight
     };
-    if (dr(o)) return {
+    if ($14531cd149ccf13b$var$dr(o)) return {
         width: o.width,
         height: o.height
     };
-    if (hr(o)) return {
+    if ($14531cd149ccf13b$var$hr(o)) return {
         width: o.width,
         height: o.height
     };
     throw new TypeError("The provided value is not of type '(Blob or HTMLCanvasElement or HTMLImageElement or HTMLVideoElement or ImageBitmap or ImageData or OffscreenCanvas or SVGImageElement or VideoFrame)'.");
 }
-function ur(o) {
+function $14531cd149ccf13b$var$ur(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.HTMLImageElement);
@@ -1910,7 +1783,7 @@ function ur(o) {
         return !1;
     }
 }
-function cr(o) {
+function $14531cd149ccf13b$var$cr(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.SVGImageElement);
@@ -1918,7 +1791,7 @@ function cr(o) {
         return !1;
     }
 }
-function lr(o) {
+function $14531cd149ccf13b$var$lr(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.HTMLVideoElement);
@@ -1926,7 +1799,7 @@ function lr(o) {
         return !1;
     }
 }
-function dr(o) {
+function $14531cd149ccf13b$var$dr(o) {
     var d, p;
     try {
         return o instanceof ((p = (d = o == null ? void 0 : o.ownerDocument) == null ? void 0 : d.defaultView) == null ? void 0 : p.HTMLCanvasElement);
@@ -1934,42 +1807,42 @@ function dr(o) {
         return !1;
     }
 }
-function fr(o) {
+function $14531cd149ccf13b$var$fr(o) {
     try {
         return o instanceof ImageBitmap || Object.prototype.toString.call(o) === "[object ImageBitmap]";
     } catch  {
         return !1;
     }
 }
-function hr(o) {
+function $14531cd149ccf13b$var$hr(o) {
     try {
         return o instanceof OffscreenCanvas || Object.prototype.toString.call(o) === "[object OffscreenCanvas]";
     } catch  {
         return !1;
     }
 }
-function pr(o) {
+function $14531cd149ccf13b$var$pr(o) {
     try {
         return o instanceof VideoFrame || Object.prototype.toString.call(o) === "[object VideoFrame]";
     } catch  {
         return !1;
     }
 }
-function vr(o) {
+function $14531cd149ccf13b$var$vr(o) {
     try {
         return o instanceof Blob || Object.prototype.toString.call(o) === "[object Blob]";
     } catch  {
         return !1;
     }
 }
-function uo(o) {
+function $14531cd149ccf13b$var$uo(o) {
     try {
         return o instanceof ImageData || Object.prototype.toString.call(o) === "[object ImageData]";
     } catch  {
         return !1;
     }
 }
-function co(o, d) {
+function $14531cd149ccf13b$var$co(o, d) {
     try {
         const p = new OffscreenCanvas(o, d);
         if (p.getContext("2d") instanceof OffscreenCanvasRenderingContext2D) return p;
@@ -1979,15 +1852,15 @@ function co(o, d) {
         return p.width = o, p.height = d, p;
     }
 }
-async function yr(o) {
-    if (ur(o) && !await po(o)) throw new DOMException("Failed to load or decode HTMLImageElement.", "InvalidStateError");
-    if (cr(o) && !await vo(o)) throw new DOMException("Failed to load or decode SVGImageElement.", "InvalidStateError");
-    if (pr(o) && yo(o)) throw new DOMException("VideoFrame is closed.", "InvalidStateError");
-    if (lr(o) && (o.readyState === 0 || o.readyState === 1)) throw new DOMException("Invalid element or state.", "InvalidStateError");
-    if (fr(o) && go(o)) throw new DOMException("The image source is detached.", "InvalidStateError");
-    const { width: d, height: p } = so(o);
+async function $14531cd149ccf13b$var$yr(o) {
+    if ($14531cd149ccf13b$var$ur(o) && !await $14531cd149ccf13b$var$po(o)) throw new DOMException("Failed to load or decode HTMLImageElement.", "InvalidStateError");
+    if ($14531cd149ccf13b$var$cr(o) && !await $14531cd149ccf13b$var$vo(o)) throw new DOMException("Failed to load or decode SVGImageElement.", "InvalidStateError");
+    if ($14531cd149ccf13b$var$pr(o) && $14531cd149ccf13b$var$yo(o)) throw new DOMException("VideoFrame is closed.", "InvalidStateError");
+    if ($14531cd149ccf13b$var$lr(o) && (o.readyState === 0 || o.readyState === 1)) throw new DOMException("Invalid element or state.", "InvalidStateError");
+    if ($14531cd149ccf13b$var$fr(o) && $14531cd149ccf13b$var$go(o)) throw new DOMException("The image source is detached.", "InvalidStateError");
+    const { width: d, height: p } = $14531cd149ccf13b$var$so(o);
     if (d === 0 || p === 0) return null;
-    const c = co(d, p).getContext("2d");
+    const c = $14531cd149ccf13b$var$co(d, p).getContext("2d");
     c.drawImage(o, 0, 0);
     try {
         return c.getImageData(0, 0, d, p);
@@ -1995,7 +1868,7 @@ async function yr(o) {
         throw new DOMException("Source would taint origin.", "SecurityError");
     }
 }
-async function lo(o) {
+async function $14531cd149ccf13b$var$lo(o) {
     let d;
     try {
         if (globalThis.createImageBitmap) d = await createImageBitmap(o);
@@ -2011,9 +1884,9 @@ async function lo(o) {
     } catch  {
         throw new DOMException("Failed to load or decode Blob.", "InvalidStateError");
     }
-    return await yr(d);
+    return await $14531cd149ccf13b$var$yr(d);
 }
-function fo(o) {
+function $14531cd149ccf13b$var$fo(o) {
     const { width: d, height: p } = o;
     if (d === 0 || p === 0) return null;
     const y = o.getContext("2d");
@@ -2023,22 +1896,22 @@ function fo(o) {
         throw new DOMException("Source would taint origin.", "SecurityError");
     }
 }
-async function ho(o) {
-    if (vr(o)) return await lo(o);
-    if (uo(o)) {
-        if (mo(o)) throw new DOMException("The image data has been detached.", "InvalidStateError");
+async function $14531cd149ccf13b$var$ho(o) {
+    if ($14531cd149ccf13b$var$vr(o)) return await $14531cd149ccf13b$var$lo(o);
+    if ($14531cd149ccf13b$var$uo(o)) {
+        if ($14531cd149ccf13b$var$mo(o)) throw new DOMException("The image data has been detached.", "InvalidStateError");
         return o;
     }
-    return dr(o) || hr(o) ? fo(o) : await yr(o);
+    return $14531cd149ccf13b$var$dr(o) || $14531cd149ccf13b$var$hr(o) ? $14531cd149ccf13b$var$fo(o) : await $14531cd149ccf13b$var$yr(o);
 }
-async function po(o) {
+async function $14531cd149ccf13b$var$po(o) {
     try {
         return await o.decode(), !0;
     } catch  {
         return !1;
     }
 }
-async function vo(o) {
+async function $14531cd149ccf13b$var$vo(o) {
     var d;
     try {
         return await ((d = o.decode) == null ? void 0 : d.call(o)), !0;
@@ -2046,35 +1919,35 @@ async function vo(o) {
         return !1;
     }
 }
-function yo(o) {
+function $14531cd149ccf13b$var$yo(o) {
     return o.format === null;
 }
-function mo(o) {
+function $14531cd149ccf13b$var$mo(o) {
     return o.data.buffer.byteLength === 0;
 }
-function go(o) {
+function $14531cd149ccf13b$var$go(o) {
     return o.width === 0 && o.height === 0;
 }
-function ar(o, d) {
-    return wo(o) ? new DOMException(`${d}: ${o.message}`, o.name) : $o(o) ? new o.constructor(`${d}: ${o.message}`) : new Error(`${d}: ${o}`);
+function $14531cd149ccf13b$var$ar(o, d) {
+    return $14531cd149ccf13b$var$wo(o) ? new DOMException(`${d}: ${o.message}`, o.name) : $14531cd149ccf13b$var$$o(o) ? new o.constructor(`${d}: ${o.message}`) : new Error(`${d}: ${o}`);
 }
-function wo(o) {
+function $14531cd149ccf13b$var$wo(o) {
     return o instanceof DOMException || Object.prototype.toString.call(o) === "[object DOMException]";
 }
-function $o(o) {
+function $14531cd149ccf13b$var$$o(o) {
     return o instanceof Error || Object.prototype.toString.call(o) === "[object Error]";
 }
-var bt;
-class To extends EventTarget {
+var $14531cd149ccf13b$var$bt;
+class $14531cd149ccf13b$export$8e93fbbb640edaee extends EventTarget {
     constructor(p = {}){
         var y;
         super();
-        tr(this, bt);
+        $14531cd149ccf13b$var$tr(this, $14531cd149ccf13b$var$bt);
         try {
             const c = (y = p == null ? void 0 : p.formats) == null ? void 0 : y.filter(($)=>$ !== "unknown");
             if ((c == null ? void 0 : c.length) === 0) throw new TypeError("Hint option provided, but is empty.");
-            for (const $ of c != null ? c : [])if (!ue.has($)) throw new TypeError(`Failed to read the 'formats' property from 'BarcodeDetectorOptions': The provided value '${$}' is not a valid enum value of type BarcodeFormat.`);
-            er(this, bt, c != null ? c : []), ro().then(($)=>{
+            for (const $ of c != null ? c : [])if (!$14531cd149ccf13b$var$ue.has($)) throw new TypeError(`Failed to read the 'formats' property from 'BarcodeDetectorOptions': The provided value '${$}' is not a valid enum value of type BarcodeFormat.`);
+            $14531cd149ccf13b$var$er(this, $14531cd149ccf13b$var$bt, c != null ? c : []), $14531cd149ccf13b$var$ro().then(($)=>{
                 this.dispatchEvent(new CustomEvent("load", {
                     detail: $
                 }));
@@ -2084,25 +1957,25 @@ class To extends EventTarget {
                 }));
             });
         } catch (c) {
-            throw ar(c, "Failed to construct 'BarcodeDetector'");
+            throw $14531cd149ccf13b$var$ar(c, "Failed to construct 'BarcodeDetector'");
         }
     }
     static async getSupportedFormats() {
-        return oo.filter((p)=>p !== "unknown");
+        return $14531cd149ccf13b$var$oo.filter((p)=>p !== "unknown");
     }
     async detect(p) {
         try {
-            const y = await ho(p);
+            const y = await $14531cd149ccf13b$var$ho(p);
             if (y === null) return [];
             let c;
             const $ = {
                 tryHarder: !0,
                 // https://github.com/Sec-ant/barcode-detector/issues/91
                 returnCodabarStartEnd: !0,
-                formats: Ke(this, bt).map((x)=>ue.get(x))
+                formats: $14531cd149ccf13b$var$Ke(this, $14531cd149ccf13b$var$bt).map((x)=>$14531cd149ccf13b$var$ue.get(x))
             };
             try {
-                vr(y) ? c = await no(y, $) : c = await ao(y, $);
+                $14531cd149ccf13b$var$vr(y) ? c = await $14531cd149ccf13b$var$no(y, $) : c = await $14531cd149ccf13b$var$ao(y, $);
             } catch (x) {
                 throw console.error(x), new DOMException("Barcode detection service unavailable.", "NotSupportedError");
             }
@@ -2111,7 +1984,7 @@ class To extends EventTarget {
                 return {
                     boundingBox: new DOMRectReadOnly(ct, rt, lt - ct, Vt - rt),
                     rawValue: x.text,
-                    format: io(x.format),
+                    format: $14531cd149ccf13b$var$io(x.format),
                     cornerPoints: [
                         {
                             x: k,
@@ -2133,157 +2006,162 @@ class To extends EventTarget {
                 };
             });
         } catch (y) {
-            throw ar(y, "Failed to execute 'detect' on 'BarcodeDetector'");
+            throw $14531cd149ccf13b$var$ar(y, "Failed to execute 'detect' on 'BarcodeDetector'");
         }
     }
 }
-bt = new WeakMap();
+$14531cd149ccf13b$var$bt = new WeakMap();
 
-},{"777cf5a1c5cdae66":"3tdeh","@parcel/transformer-js/src/esmodule-helpers.js":"73vyb"}],"3tdeh":[function(require,module,exports) {
+});
+parcelRegister("chdCp", function(module, exports) {
 // shim for using process in browser
-var process = module.exports = {};
+var $8f01a2ef964e8945$var$process = module.exports = {};
 // cached from whatever global is present so that test runners that stub it
 // don't break things.  But we need to wrap it in a try catch in case it is
 // wrapped in strict mode code which doesn't define any globals.  It's inside a
 // function because try/catches deoptimize in certain engines.
-var cachedSetTimeout;
-var cachedClearTimeout;
-function defaultSetTimout() {
+var $8f01a2ef964e8945$var$cachedSetTimeout;
+var $8f01a2ef964e8945$var$cachedClearTimeout;
+function $8f01a2ef964e8945$var$defaultSetTimout() {
     throw new Error("setTimeout has not been defined");
 }
-function defaultClearTimeout() {
+function $8f01a2ef964e8945$var$defaultClearTimeout() {
     throw new Error("clearTimeout has not been defined");
 }
 (function() {
     try {
-        if (typeof setTimeout === "function") cachedSetTimeout = setTimeout;
-        else cachedSetTimeout = defaultSetTimout;
+        if (typeof setTimeout === "function") $8f01a2ef964e8945$var$cachedSetTimeout = setTimeout;
+        else $8f01a2ef964e8945$var$cachedSetTimeout = $8f01a2ef964e8945$var$defaultSetTimout;
     } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
+        $8f01a2ef964e8945$var$cachedSetTimeout = $8f01a2ef964e8945$var$defaultSetTimout;
     }
     try {
-        if (typeof clearTimeout === "function") cachedClearTimeout = clearTimeout;
-        else cachedClearTimeout = defaultClearTimeout;
+        if (typeof clearTimeout === "function") $8f01a2ef964e8945$var$cachedClearTimeout = clearTimeout;
+        else $8f01a2ef964e8945$var$cachedClearTimeout = $8f01a2ef964e8945$var$defaultClearTimeout;
     } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
+        $8f01a2ef964e8945$var$cachedClearTimeout = $8f01a2ef964e8945$var$defaultClearTimeout;
     }
 })();
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) //normal enviroments in sane situations
+function $8f01a2ef964e8945$var$runTimeout(fun) {
+    if ($8f01a2ef964e8945$var$cachedSetTimeout === setTimeout) //normal enviroments in sane situations
     return setTimeout(fun, 0);
     // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
+    if (($8f01a2ef964e8945$var$cachedSetTimeout === $8f01a2ef964e8945$var$defaultSetTimout || !$8f01a2ef964e8945$var$cachedSetTimeout) && setTimeout) {
+        $8f01a2ef964e8945$var$cachedSetTimeout = setTimeout;
         return setTimeout(fun, 0);
     }
     try {
         // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
+        return $8f01a2ef964e8945$var$cachedSetTimeout(fun, 0);
     } catch (e) {
         try {
             // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
+            return $8f01a2ef964e8945$var$cachedSetTimeout.call(null, fun, 0);
         } catch (e) {
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
+            return $8f01a2ef964e8945$var$cachedSetTimeout.call(this, fun, 0);
         }
     }
 }
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
+function $8f01a2ef964e8945$var$runClearTimeout(marker) {
+    if ($8f01a2ef964e8945$var$cachedClearTimeout === clearTimeout) //normal enviroments in sane situations
     return clearTimeout(marker);
     // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
+    if (($8f01a2ef964e8945$var$cachedClearTimeout === $8f01a2ef964e8945$var$defaultClearTimeout || !$8f01a2ef964e8945$var$cachedClearTimeout) && clearTimeout) {
+        $8f01a2ef964e8945$var$cachedClearTimeout = clearTimeout;
         return clearTimeout(marker);
     }
     try {
         // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
+        return $8f01a2ef964e8945$var$cachedClearTimeout(marker);
     } catch (e) {
         try {
             // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
+            return $8f01a2ef964e8945$var$cachedClearTimeout.call(null, marker);
         } catch (e) {
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
             // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
+            return $8f01a2ef964e8945$var$cachedClearTimeout.call(this, marker);
         }
     }
 }
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) return;
-    draining = false;
-    if (currentQueue.length) queue = currentQueue.concat(queue);
-    else queueIndex = -1;
-    if (queue.length) drainQueue();
+var $8f01a2ef964e8945$var$queue = [];
+var $8f01a2ef964e8945$var$draining = false;
+var $8f01a2ef964e8945$var$currentQueue;
+var $8f01a2ef964e8945$var$queueIndex = -1;
+function $8f01a2ef964e8945$var$cleanUpNextTick() {
+    if (!$8f01a2ef964e8945$var$draining || !$8f01a2ef964e8945$var$currentQueue) return;
+    $8f01a2ef964e8945$var$draining = false;
+    if ($8f01a2ef964e8945$var$currentQueue.length) $8f01a2ef964e8945$var$queue = $8f01a2ef964e8945$var$currentQueue.concat($8f01a2ef964e8945$var$queue);
+    else $8f01a2ef964e8945$var$queueIndex = -1;
+    if ($8f01a2ef964e8945$var$queue.length) $8f01a2ef964e8945$var$drainQueue();
 }
-function drainQueue() {
-    if (draining) return;
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-    var len = queue.length;
+function $8f01a2ef964e8945$var$drainQueue() {
+    if ($8f01a2ef964e8945$var$draining) return;
+    var timeout = $8f01a2ef964e8945$var$runTimeout($8f01a2ef964e8945$var$cleanUpNextTick);
+    $8f01a2ef964e8945$var$draining = true;
+    var len = $8f01a2ef964e8945$var$queue.length;
     while(len){
-        currentQueue = queue;
-        queue = [];
-        while(++queueIndex < len)if (currentQueue) currentQueue[queueIndex].run();
-        queueIndex = -1;
-        len = queue.length;
+        $8f01a2ef964e8945$var$currentQueue = $8f01a2ef964e8945$var$queue;
+        $8f01a2ef964e8945$var$queue = [];
+        while(++$8f01a2ef964e8945$var$queueIndex < len)if ($8f01a2ef964e8945$var$currentQueue) $8f01a2ef964e8945$var$currentQueue[$8f01a2ef964e8945$var$queueIndex].run();
+        $8f01a2ef964e8945$var$queueIndex = -1;
+        len = $8f01a2ef964e8945$var$queue.length;
     }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
+    $8f01a2ef964e8945$var$currentQueue = null;
+    $8f01a2ef964e8945$var$draining = false;
+    $8f01a2ef964e8945$var$runClearTimeout(timeout);
 }
-process.nextTick = function(fun) {
+$8f01a2ef964e8945$var$process.nextTick = function(fun) {
     var args = new Array(arguments.length - 1);
     if (arguments.length > 1) for(var i = 1; i < arguments.length; i++)args[i - 1] = arguments[i];
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) runTimeout(drainQueue);
+    $8f01a2ef964e8945$var$queue.push(new $8f01a2ef964e8945$var$Item(fun, args));
+    if ($8f01a2ef964e8945$var$queue.length === 1 && !$8f01a2ef964e8945$var$draining) $8f01a2ef964e8945$var$runTimeout($8f01a2ef964e8945$var$drainQueue);
 };
 // v8 likes predictible objects
-function Item(fun, array) {
+function $8f01a2ef964e8945$var$Item(fun, array) {
     this.fun = fun;
     this.array = array;
 }
-Item.prototype.run = function() {
+$8f01a2ef964e8945$var$Item.prototype.run = function() {
     this.fun.apply(null, this.array);
 };
-process.title = "browser";
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ""; // empty string to avoid regexp issues
-process.versions = {};
-function noop() {}
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-process.listeners = function(name) {
+$8f01a2ef964e8945$var$process.title = "browser";
+$8f01a2ef964e8945$var$process.browser = true;
+$8f01a2ef964e8945$var$process.env = {};
+$8f01a2ef964e8945$var$process.argv = [];
+$8f01a2ef964e8945$var$process.version = ""; // empty string to avoid regexp issues
+$8f01a2ef964e8945$var$process.versions = {};
+function $8f01a2ef964e8945$var$noop() {}
+$8f01a2ef964e8945$var$process.on = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.addListener = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.once = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.off = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.removeListener = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.removeAllListeners = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.emit = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.prependListener = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.prependOnceListener = $8f01a2ef964e8945$var$noop;
+$8f01a2ef964e8945$var$process.listeners = function(name) {
     return [];
 };
-process.binding = function(name) {
+$8f01a2ef964e8945$var$process.binding = function(name) {
     throw new Error("process.binding is not supported");
 };
-process.cwd = function() {
+$8f01a2ef964e8945$var$process.cwd = function() {
     return "/";
 };
-process.chdir = function(dir) {
+$8f01a2ef964e8945$var$process.chdir = function(dir) {
     throw new Error("process.chdir is not supported");
 };
-process.umask = function() {
+$8f01a2ef964e8945$var$process.umask = function() {
     return 0;
 };
 
-},{}]},[], null, "parcelRequirea202")
+});
 
-//# sourceMappingURL=es.321f06f5.js.map
+
+
+
+})();
+//# sourceMappingURL=es.0b687cfd.js.map
